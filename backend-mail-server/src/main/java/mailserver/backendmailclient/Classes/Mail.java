@@ -19,6 +19,14 @@ public class Mail {
         this.subject = subject;
     }
 
+    public List<File> getAttachments() {
+        return attachments;
+    }
+
+    public void setAttachments(List<File> attachments) {
+        this.attachments = attachments;
+    }
+
     public int getDate() {
         return date;
     }
