@@ -1,6 +1,7 @@
 package mailserver.backendmailclient.Classes;
 
 import java.io.File;
+import java.util.Date;
 import java.util.List;
 
 public class MailBuilder implements mailserver.backendmailclient.Interfaces.MailBuilder {
@@ -15,14 +16,10 @@ public class MailBuilder implements mailserver.backendmailclient.Interfaces.Mail
     }
 
     @Override
-    public void buildDate(int date) {
-       mail.setDate(date);
-    }
+    public void buildDate(Date date) { mail.setDate(date);}
 
     @Override
-    public void buildBody(String body) {
-       mail.setBody(body);
-    }
+    public void buildBody(String body) { mail.setBody(body);}
 
     @Override
     public void buildAttachments(List<File> attachment) {

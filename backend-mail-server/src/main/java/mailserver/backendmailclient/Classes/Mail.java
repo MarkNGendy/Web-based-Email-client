@@ -1,11 +1,13 @@
 package mailserver.backendmailclient.Classes;
 
+import javax.xml.crypto.Data;
 import java.io.File;
+import java.util.Date;
 import java.util.List;
 
 public class Mail {
     private String subject;
-    private int date;
+    private Date date;
     private String body;
     private List<File> attachments;
     private Contact sender;
@@ -27,13 +29,11 @@ public class Mail {
         this.attachments = attachments;
     }
 
-    public int getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(int date) {
-        this.date = date;
-    }
+    public void setDate(Date date) { this.date = date;}
 
     public String getBody() {
         return body;
