@@ -9,6 +9,89 @@ import mailserver.backendmailclient.Interfaces.IUser;
 
 public class User implements IUser {
 
+    private List<Mail> inbox;
+    private List<Mail> sent;
+    private List<Mail> draft;
+    private List<Mail> trash;
+    private List<Contact> friends;
+    private String emailaddress;
+    private String password;
+    private String username;
+
+    public List<Mail> getInbox() {
+        return inbox;
+    }
+
+    public void setInbox(List<Mail> inbox) {
+        this.inbox = inbox;
+    }
+
+    public List<Mail> getSent() {
+        return sent;
+    }
+
+    public void setSent(List<Mail> sent) {
+        this.sent = sent;
+    }
+
+    public List<Mail> getDraft() {
+        return draft;
+    }
+
+    public void setDraft(List<Mail> draft) {
+        this.draft = draft;
+    }
+
+    public List<Mail> getTrash() {
+        return trash;
+    }
+
+    public void setTrash(List<Mail> trash) {
+        this.trash = trash;
+    }
+
+    public List<Contact> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(List<Contact> friends) {
+        this.friends = friends;
+    }
+
+    public String getEmailaddress() {
+        return emailaddress;
+    }
+
+    public void setEmailaddress(String emailaddress) {
+        this.emailaddress = emailaddress;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getWrong() {
+        return wrong;
+    }
+
+    public void setWrong(String wrong) {
+        this.wrong = wrong;
+    }
+
+
+
     private String wrong = "Something wrong!";
 
     @Override
