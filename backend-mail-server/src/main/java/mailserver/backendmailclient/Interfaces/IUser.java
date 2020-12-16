@@ -2,10 +2,13 @@ package mailserver.backendmailclient.Interfaces;
 
 import java.util.List;
 
-public interface IUser {
-    public boolean signin(String email, String password);
+import mailserver.backendmailclient.Classes.Answer;
+import mailserver.backendmailclient.Classes.DemoUsers;
 
-    public boolean signup(String email, String password, String username);
+public interface IUser {
+    public Answer signin(DemoUsers input);
+
+    public Answer signup(DemoUsers input);
 
     public boolean setFolderList(List<IFolder> folders);
 
