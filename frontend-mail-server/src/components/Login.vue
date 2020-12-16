@@ -1,5 +1,7 @@
 <template>
   <section class="container h-100">
+  <router-link to="/">Login</router-link> |
+  <router-link to="/register">Register</router-link>
     <div class="row h-100 justify-content-center align-items-center">
       <div class="col wrapper-box">
         <img

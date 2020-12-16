@@ -1,5 +1,7 @@
 <template>
   <section class="container h-100">
+  <router-link to="/">Login</router-link> |
+  <router-link to="/register">Register</router-link>
     <div class="row h-100 justify-content-center align-items-center">
       <div class="col wrapper-box">
         <img class="mx-auto d-block" src="../assets/logo-new-color-site.png" alt="Compacto Records" title="Compacto Records">
@@ -102,6 +104,7 @@
         return this.error.username !== ''
       },
       newUser() {
+        this.$router.push('/user');
         if (this.username_check()) return
         if (this.password_check()) return
         if (this.match_check()) return
