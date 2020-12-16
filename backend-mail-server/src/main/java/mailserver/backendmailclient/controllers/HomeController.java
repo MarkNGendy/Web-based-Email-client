@@ -1,22 +1,20 @@
 package mailserver.backendmailclient.controllers;
 
-
 import mailserver.backendmailclient.Classes.Contact;
 import mailserver.backendmailclient.Classes.Mail;
 import mailserver.backendmailclient.Classes.MailBuilder;
 import mailserver.backendmailclient.Classes.User;
 import org.springframework.web.bind.annotation.*;
 
-
 @RestController
 @CrossOrigin
 public class HomeController {
 
     @PostMapping("/mails/")
-    public java.util.List<Mail> getUserMails(@RequestBody listBody listbody){
+    public java.util.List<Mail> getUserMails(@RequestBody listBody listbody) {
         User currentUser = listbody.user;
         List currentList = listbody.list;
-        switch (currentList){
+        switch (currentList) {
             case SENT -> {
                 return currentUser.getSent();
             }
@@ -35,8 +33,9 @@ public class HomeController {
 
         }
     }
+
     @PostMapping("/compose/")
-    public Mail composedMail(@RequestBody mailBody mailbody){
+    public Mail composedMail(@RequestBody MailBody mailbody) {
 
         MailBuilder mailBuilder = new MailBuilder();
         mailBuilder.buildSender(mailbody.sender);
@@ -49,9 +48,6 @@ public class HomeController {
         Mail mail = mailBuilder.getMail();
 
         return mail;
-
-
-
 
     }
 

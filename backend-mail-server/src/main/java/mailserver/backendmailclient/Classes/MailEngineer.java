@@ -6,13 +6,17 @@ import java.util.List;
 
 public class MailEngineer {
     private MailBuilder mailBuilder;
-    public MailEngineer(MailBuilder mailBuilder){
+
+    public MailEngineer(MailBuilder mailBuilder) {
         this.mailBuilder = mailBuilder;
     }
-    public Mail getmail(){
+
+    public Mail getmail() {
         return this.mailBuilder.getMail();
     }
-    public void makeMail(String subject, Date date , String body , List<File> attachment , Contact sender , Contact reciever){
+
+    public void makeMail(String subject, Date date, String body, List<File> attachment, String sender,
+            List<String> reciever) {
         this.mailBuilder.buildSubject(subject);
         this.mailBuilder.buildDate(date);
         this.mailBuilder.buildAttachments(attachment);
@@ -20,5 +24,5 @@ public class MailEngineer {
         this.mailBuilder.buildReciever(reciever);
 
     }
-    
+
 }

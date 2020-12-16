@@ -7,16 +7,17 @@ import java.io.File;
 import java.util.Date;
 import java.util.List;
 
-public class mailBody {
+public class MailBody {
     String subject;
     Date date;
     String body;
     List<File> attachments;
-    Contact sender;
-    Contact reciever;
-    public mailBody(String subject, Date date, String body,
-                    List<File> attachments, User sender, User reciever){
-        this.subject =subject;
+    String sender;
+    List<String> reciever;
+
+    public MailBody(String subject, Date date, String body, List<File> attachments, String sender,
+            List<String> reciever) {
+        this.subject = subject;
         this.date = date;
         this.body = body;
         this.attachments = attachments;

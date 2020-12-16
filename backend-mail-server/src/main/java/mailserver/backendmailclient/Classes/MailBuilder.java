@@ -4,22 +4,27 @@ import java.io.File;
 import java.util.Date;
 import java.util.List;
 
-public class MailBuilder implements mailserver.backendmailclient.Interfaces.MailBuilder {
-   private Mail mail;
-   public MailBuilder(){
-       this.mail = new Mail();
-   }
+public class MailBuilder implements mailserver.backendmailclient.Interfaces.IMailBuilder {
+    private Mail mail;
 
-    @Override
-    public void buildSubject(String subject) {
-       mail.setSubject(subject);
+    public MailBuilder() {
+        this.mail = new Mail();
     }
 
     @Override
-    public void buildDate(Date date) { mail.setDate(date);}
+    public void buildSubject(String subject) {
+        mail.setSubject(subject);
+    }
 
     @Override
-    public void buildBody(String body) { mail.setBody(body);}
+    public void buildDate(Date date) {
+        mail.setDate(date);
+    }
+
+    @Override
+    public void buildBody(String body) {
+        mail.setBody(body);
+    }
 
     @Override
     public void buildAttachments(List<File> attachment) {
@@ -27,13 +32,13 @@ public class MailBuilder implements mailserver.backendmailclient.Interfaces.Mail
     }
 
     @Override
-    public void buildSender(Contact sender) {
-       mail.setSender(sender);
+    public void buildSender(String sender) {
+        mail.setSender(sender);
     }
 
     @Override
-    public void buildReciever(Contact reciever) {
-       mail.setReciever(reciever);
+    public void buildReciever(List<String> reciever) {
+        mail.setReciever(reciever);
     }
 
     @Override

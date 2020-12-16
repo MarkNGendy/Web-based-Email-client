@@ -1,10 +1,7 @@
 <template>
-  <div id="nav">
-  </div>
+  <div id="nav"></div>
   <router-view />
 </template>
-
-
 
 <style lang="scss">
 #app {
@@ -32,5 +29,4 @@
 @import "./assets/scss/form.scss";
 @import "./assets/scss/main.scss";
 @import "./assets/css/font-awesome.min.css";
-
 </style>

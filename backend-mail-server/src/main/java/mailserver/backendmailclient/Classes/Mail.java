@@ -10,8 +10,8 @@ public class Mail {
     private Date date;
     private String body;
     private List<File> attachments;
-    private Contact sender;
-    private Contact reciever;
+    private String sender;
+    private List<String> reciever;
 
     public String getSubject() {
         return subject;
@@ -33,7 +33,9 @@ public class Mail {
         return date;
     }
 
-    public void setDate(Date date) { this.date = date;}
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
     public String getBody() {
         return body;
@@ -43,19 +45,19 @@ public class Mail {
         this.body = body;
     }
 
-    public Contact getSender() {
+    public String getSender() {
         return sender;
     }
 
-    public void setSender(Contact sender) {
+    public void setSender(String sender) {
         this.sender = sender;
     }
 
-    public Contact getReciever() {
+    public List<String> getRecievers() {
         return reciever;
     }
 
-    public void setReciever(Contact reciever) {
+    public void setReciever(List<String> reciever) {
         this.reciever = reciever;
     }
 }

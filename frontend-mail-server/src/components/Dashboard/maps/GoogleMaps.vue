@@ -1,9 +1,5 @@
 <template>
-  <v-container
-    id="google-maps"
-    fluid
-    tag="section"
-  >
+  <v-container id="google-maps" fluid tag="section">
     <v-row>
       <v-col cols="12">
         <base-material-card
@@ -26,10 +22,7 @@
         </base-material-card>
       </v-col>
 
-      <v-col
-        cols="12"
-        md="6"
-      >
+      <v-col cols="12" md="6">
         <base-material-card
           color="success"
           title="Satellite Map"
@@ -50,10 +43,7 @@
         </base-material-card>
       </v-col>
 
-      <v-col
-        cols="12"
-        md="6"
-      >
+      <v-col cols="12" md="6">
         <base-material-card
           color="success"
           title="Custom Skin & Settings Map"
