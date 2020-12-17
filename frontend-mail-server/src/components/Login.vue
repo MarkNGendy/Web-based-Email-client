@@ -1,8 +1,10 @@
 <template>
+  <router-link to="/">Login</router-link> |
+  <router-link to="/register">Register</router-link>
   <section class="container h-100">
-    <router-link to="/">Login</router-link> |
-    <router-link to="/register">Register</router-link>
-    <div class="row h-100 justify-content-center align-items-center">
+    <div class="row h-100 justify-content-center align-items-center"
+    align="center"
+    justify="center">
       <div class="col wrapper-box">
         <img
           class="mx-auto d-block"
@@ -112,7 +114,12 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+@import "./styles/scss/variables.scss";
+@import "./styles/scss/form.scss";
+body {
+  align-self: center;
+}
 .fade-enter,
 .fade-leave-active {
   opacity: 0;

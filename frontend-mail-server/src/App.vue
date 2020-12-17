@@ -1,32 +1,24 @@
 <template>
-  <div id="nav"></div>
-  <router-view />
+<div id="app">
+  <router-view />  
+</div>
 </template>
 
-<style lang="scss">
+
+<style lang="scss" scoped>
+@import "./components/styles/scss/variables.scss";
+@import "./components/styles/scss/main.scss";
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Roboto', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
 }
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+body {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
 }
 
-@import "./assets/scss/variables.scss";
-@import "./assets/scss/form.scss";
-@import "./assets/scss/main.scss";
-@import "./assets/css/font-awesome.min.css";
 </style>
