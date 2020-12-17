@@ -3,7 +3,7 @@
   <button class="tablink" onclick="openCity('Paris', this, 'green')">Delete</button>
   <button class="tablink" onclick="openCity('Tokyo', this, 'blue')">Next Page</button>
   <button class="tablink" onclick="openCity('Oslo', this, 'orange')">Previous Page</button>
-  <div class="sent">
+  <div class="user-folders">
     <table class="content-table">
       <thead>
         <tr>
@@ -75,7 +75,7 @@ export default {
   padding: 50px;
   text-align: center;
 }
-.sent {
+.user-folders {
   display: flex;
   justify-content: center;
   align-items: top;

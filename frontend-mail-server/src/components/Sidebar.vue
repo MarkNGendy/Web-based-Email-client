@@ -24,6 +24,11 @@
                     Draft
                 </div>
             </router-link>
+            <router-link :to="{name: 'user-folders', params: {username :$route.params.username}}" active-class="active" tag="button" exact class="side-btn">
+                <div class="link-container">
+                    UserFolders
+                </div>
+            </router-link>
             <router-link to="/" active-class="active" tag="button" exact class="side-btn">
                 <div class="link-container">
                     Logout
@@ -58,7 +63,7 @@ export default {
 .menu-items {
     display: flex;
     flex-direction: column;
-    margin-top: 40px;
+    margin-top: 5px;
     margin-left: 6px;
 }
 

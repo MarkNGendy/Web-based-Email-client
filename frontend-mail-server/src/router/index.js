@@ -41,6 +41,11 @@ const routes = [
         path: "/sent",
         name:"sent",
         component: () => import("../views/Sent.vue")
+      },
+      {
+        path: "/user-folders",
+        name:"user-folders",
+        component: () => import("../views/UserFolders.vue")
       }
     ]
   }
