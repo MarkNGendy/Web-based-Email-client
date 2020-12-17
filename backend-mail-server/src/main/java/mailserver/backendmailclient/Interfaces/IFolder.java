@@ -2,6 +2,8 @@ package mailserver.backendmailclient.Interfaces;
 
 import java.util.List;
 
+import mailserver.backendmailclient.Classes.DemoUsers;
+
 public interface IFolder {
     public boolean deleteFolder(String path);
 
@@ -9,7 +11,7 @@ public interface IFolder {
 
     public boolean moveFolder(String destination, String source);
 
-    public Object readJson(String path);
+    public String toStringJson(String path);
 
     public boolean writeJson(Object object, String path);
 }

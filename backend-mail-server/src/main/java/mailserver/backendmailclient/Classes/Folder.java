@@ -5,7 +5,6 @@ import java.nio.file.Files;
 import java.util.*;
 
 import com.google.gson.Gson;
-
 import mailserver.backendmailclient.Interfaces.IFolder;
 
 public class Folder implements IFolder {
@@ -64,7 +63,7 @@ public class Folder implements IFolder {
     }
 
     @Override
-    public Object readJson(String path) {
+    public String toStringJson(String path) {
         String jsonString = "";
         try {
             FileReader fileReader = new FileReader(path);
@@ -82,7 +81,8 @@ public class Folder implements IFolder {
                 stringBuilder.append(line);
                 stringBuilder.append(ls);
             }
-            stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+            if (stringBuilder.length() > 0)
+                stringBuilder.deleteCharAt(stringBuilder.length() - 1);
             try {
                 reader.close();
             } catch (IOException e) {
@@ -92,7 +92,7 @@ public class Folder implements IFolder {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        return new Gson().fromJson(jsonString, Object.class);
+        return jsonString;
     }
 
     @Override

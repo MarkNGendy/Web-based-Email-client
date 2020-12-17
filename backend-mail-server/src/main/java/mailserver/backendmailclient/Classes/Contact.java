@@ -1,10 +1,12 @@
 package mailserver.backendmailclient.Classes;
 
+import java.util.*;
+
 public class Contact {
     private String username;
-    private String email;
+    private List<String> email;
 
-    public Contact(String username, String email) {
+    public Contact(String username, List<String> email) {
         this.username = username;
         this.email = email;
     }
@@ -17,11 +19,11 @@ public class Contact {
         this.username = username;
     }
 
-    public String getEmail() {
+    public List<String> getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(List<String> email) {
         this.email = email;
     }
 }

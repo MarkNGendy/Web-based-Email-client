@@ -23,6 +23,8 @@ public class UserBuilder {
             e1.printStackTrace();
             return false;
         }
+        userfolder = new File(userfolder, "folders");
+        userfolder.mkdir();
         for (String folder : folders) {
             File currfolder = new File(userfolder, folder);
             currfolder.mkdir();
@@ -43,16 +45,6 @@ public class UserBuilder {
                 }
             }
         }
-        File userInfo = new File(userfolder, "userinfo.json");
-        try {
-            userInfo.createNewFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
-        IFolder son = new Folder();
-        if (!son.writeJson(input, userInfo.getPath()))
-            return false;
         return true;
     }
 }

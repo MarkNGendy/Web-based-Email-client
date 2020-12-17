@@ -18,10 +18,6 @@ public interface IUser {
 
     public boolean removeFolder(int index);
 
-    public boolean setContacts(List<IContact> contacts);
-
-    public List<IContact> getContacts();
-
     public boolean addContact(IContact contact);
 
     public boolean removeContact(int index);
