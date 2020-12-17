@@ -1,9 +1,14 @@
 package mailserver.backendmailclient.controllers;
 
 import mailserver.backendmailclient.Classes.Contact;
+import mailserver.backendmailclient.Classes.DemoMail;
 import mailserver.backendmailclient.Classes.Mail;
-import mailserver.backendmailclient.Classes.MailBuilder;
-import mailserver.backendmailclient.Classes.User;
+import mailserver.backendmailclient.Classes.*;
+import mailserver.backendmailclient.JsonReaders.*;
+
+import java.io.File;
+import java.util.List;
+
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -11,44 +16,18 @@ import org.springframework.web.bind.annotation.*;
 public class HomeController {
 
     @PostMapping("/mails/")
-    public java.util.List<Mail> getUserMails(@RequestBody listBody listbody) {
-        User currentUser = listbody.user;
-        List currentList = listbody.list;
-        switch (currentList) {
-            case SENT -> {
-                return currentUser.getSent();
-            }
-            case INBOX -> {
-                return currentUser.getInbox();
-            }
-            case DRAFT -> {
-                return currentUser.getDraft();
-            }
-            case TRASH -> {
-                return currentUser.getTrash();
-            }
-            default -> {
-                return null;
-            }
-
-        }
+    public List<DemoMail> getUserMails(@RequestBody ListRequest listRequest) {
+        File file = new File(
+                "server/" + listRequest.getuser() + "/folders/" + listRequest.getListname() + "/mails.json");
+        ReaderList<DemoMail> readlist = new MailsJson();
+        readlist.toList(file.getPath());
+        List<DemoMail> mails = readlist.getList();
+        return mails;
     }
 
     @PostMapping("/compose/")
     public Mail composedMail(@RequestBody MailBody mailbody) {
-
-        MailBuilder mailBuilder = new MailBuilder();
-        mailBuilder.buildSender(mailbody.sender);
-        mailBuilder.buildReciever(mailbody.reciever);
-        mailBuilder.buildSubject(mailbody.subject);
-        mailBuilder.buildBody(mailbody.body);
-        mailBuilder.buildDate(mailbody.date);
-        mailBuilder.buildAttachments(mailbody.attachments);
-
-        Mail mail = mailBuilder.getMail();
-
-        return mail;
-
+        return null;
     }
 
 }

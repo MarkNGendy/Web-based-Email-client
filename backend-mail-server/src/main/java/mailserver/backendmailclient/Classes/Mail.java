@@ -1,24 +1,26 @@
 package mailserver.backendmailclient.Classes;
 
-import javax.xml.crypto.Data;
 import java.io.File;
-import java.util.Date;
 import java.util.List;
 
-public class Mail {
-    private String subject;
-    private Date date;
+import org.apache.tomcat.util.bcel.Const;
+
+import mailserver.backendmailclient.Interfaces.IFolder;
+import mailserver.backendmailclient.controllers.MailBody;
+
+public class Mail extends DemoMail {
     private String body;
     private List<File> attachments;
-    private String sender;
-    private List<String> reciever;
 
-    public String getSubject() {
-        return subject;
+    public Mail() {
     }
 
-    public void setSubject(String subject) {
+    public Mail(String sender, List<String> reciever, String subject, String body, List<File> attachments) {
+        this.sender = sender;
+        this.reciever = reciever;
         this.subject = subject;
+        this.body = body;
+        this.attachments = attachments;
     }
 
     public List<File> getAttachments() {
@@ -29,14 +31,6 @@ public class Mail {
         this.attachments = attachments;
     }
 
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
     public String getBody() {
         return body;
     }
@@ -45,19 +39,36 @@ public class Mail {
         this.body = body;
     }
 
-    public String getSender() {
-        return sender;
+    private String wrong = "Something wrong!";
+
+    public Answer saveDraft(MailBody mailBody) {
+        Mail mail = mailBody.toMail();
+        mail.setSrcFolder("Draft");
+        BuilderMail builderMail = new BuilderMail();
+        if (builderMail.buildMail(mail)) {
+            return new Answer(true, "Draft saved successfully.");
+        }
+        return new Answer(false, wrong);
     }
 
-    public void setSender(String sender) {
-        this.sender = sender;
-    }
-
-    public List<String> getRecievers() {
-        return reciever;
-    }
-
-    public void setReciever(List<String> reciever) {
-        this.reciever = reciever;
+    public Answer sendMail(MailBody mailBody) {
+        Mail mail = mailBody.toMail();
+        mail.setSrcFolder("Sent");
+        BuilderMail builderMail = new BuilderMail();
+        if (!builderMail.buildMail(mail)) {
+            return new Answer(false, wrong);
+        }
+        IFolder folder = new Folder();
+        File source = new File("server/" + mail.getSender() + "/folders/Sent/" + mail.getID());
+        mail.setSrcFolder("Inbox");
+        for (String reciever : mail.getRecievers()) {
+            File inbox = new File("server/" + reciever + "/folders/Inbox");
+            File dest = new File(inbox, mail.getID());
+            if (!folder.copyFolder(dest.getPath(), source.getPath()))
+                return new Answer(false, wrong);
+            DemoMail demoMail = mail;
+            builderMail.addToMailsFile(inbox, demoMail);
+        }
+        return new Answer(true, "Mail sent successfully.");
     }
 }

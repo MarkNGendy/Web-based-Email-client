@@ -1,9 +1,12 @@
 package mailserver.backendmailclient.Classes;
 
 public class DemoUsers {
-    private String email = "";
-    private String password = "";
-    private String username = "";
+    protected String email = "";
+    protected String password = "";
+    protected String username = "";
+
+    public DemoUsers() {
+    }
 
     public DemoUsers(String email, String password) {
         this.password = password;

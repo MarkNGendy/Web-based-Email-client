@@ -5,18 +5,17 @@ import java.util.*;
 import mailserver.backendmailclient.Interfaces.*;
 import mailserver.backendmailclient.JsonReaders.*;
 
-public class User implements IUser {
+public class User extends DemoUsers implements IUser {
 
-    private List<Mail> mails;
+    private List<DemoMail> mails;
     private List<Contact> friends;
     private List<IFolder> folders;
-    private String emailaddress;
 
-    public List<Mail> getMails() {
+    public List<DemoMail> getMails() {
         return mails;
     }
 
-    public void setInbox(List<Mail> mails) {
+    public void setInbox(List<DemoMail> mails) {
         this.mails = mails;
     }
 
@@ -38,14 +37,6 @@ public class User implements IUser {
     public List<IFolder> getFolderList() {
         // TODO Auto-generated method stub
         return null;
-    }
-
-    public String getEmailaddress() {
-        return emailaddress;
-    }
-
-    public void setEmailaddress(String emailaddress) {
-        this.emailaddress = emailaddress;
     }
 
     private String wrong = "Something wrong!";

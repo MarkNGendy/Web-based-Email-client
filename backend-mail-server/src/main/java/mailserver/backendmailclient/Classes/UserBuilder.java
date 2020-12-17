@@ -3,8 +3,6 @@ package mailserver.backendmailclient.Classes;
 import java.io.File;
 import java.io.IOException;
 
-import mailserver.backendmailclient.Interfaces.IFolder;
-
 public class UserBuilder {
     DemoUsers input;
 
