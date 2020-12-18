@@ -56,7 +56,7 @@ public class User extends DemoUsers implements IUser {
         for (DemoUsers demoUsers : userslist) {
             if (input.getemail().equalsIgnoreCase(demoUsers.getemail())
                     && input.getPassword().equals(demoUsers.getPassword())) {
-                return new Answer(true, "Signed in successfully");
+                return new Answer(true, demoUsers.getUsername());
             }
         }
         return new Answer(false, "Email or password is wrong!");

@@ -18,13 +18,13 @@
             <div class="form-group">
               <label for="inputUser">E-mail</label>
               <input
-                v-model="input.username"
+                v-model="input.email"
                 @focus="clearError()"
                 id="inputUser"
                 type="text"
-                name="username"
+                name="email"
                 class="form-control"
-                placeholder="Username"
+                placeholder="Email"
               />
             </div>
             <div class="form-group">
@@ -74,6 +74,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "Login",
   metaInfo: {
@@ -83,28 +84,27 @@ export default {
   data() {
     return {
       input: {
-        username: "",
+        email: "",
         password: ""
       },
       error: ""
     };
   },
   methods: {
-    login() {
-      if (this.input.username != "" && this.input.password != "") {
-        if (
-          this.input.username == this.$parent.mockAccount.username &&
-          this.input.password == this.$parent.mockAccount.password
-        ) {
-          this.$emit("authenticated", true);
-          this.$router.replace({ name: "secure" });
-        } else {
-          this.error = "E-mail or password incorrect";
-          console.log("The username and / or password is incorrect");
-        }
+    async login() {
+      this.email = this.input.email;
+      this.password = this.input.password;
+      const response = await axios.post("http://localhost:8095/signin/", {
+        email: this.email,
+        username: "",
+        password: this.password
+      });
+      if(response.data.success == true) {
+        this.username = response.data.ans;
+        this.$router.push({ name: "user", params: { username: this.username } });
       } else {
-        this.error = "Enter a valid e-mail and password";
-        console.log("A username and password must be present");
+        prompt("You entered wrong email or password");
+        return this.error === "";
       }
     },
     clearError() {

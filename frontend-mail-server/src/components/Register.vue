@@ -17,8 +17,8 @@
         <p class="wrapper-box__title text-center">Welcome</p>
         <div>
           <form class="form form-newaccount" id="passwordForm">
-          <div class="form-group">
-              <label for="">Username</label>
+            <div class="form-group">
+              <label for="">Full Name</label>
               <input
                 type="text"
                 v-model="input.username"
@@ -34,9 +34,9 @@
               <label for="">E-mail</label>
               <input
                 type="text"
-                v-model="input.username"
+                v-model="input.email"
                 @focus="clearError('Email')"
-                @blur="username_check"
+                @blur="email_check"
                 :class="{ orange: error.username !== '' }"
                 name="email"
                 class="form-control"
@@ -150,6 +150,7 @@ export default {
   data() {
     return {
       input: {
+        email: "",
         username: "",
         password: "",
         match_password: ""
@@ -201,17 +202,41 @@ export default {
     },
     username_check() {
       this.error.username = "";
-      if (!this.validEmail(this.input.username))
-        this.error.username = "Enter a valid e-mail address";
-      if (this.input.username === "") this.error.username = "Enter an e-mail";
+      if (!this.validUsername(this.input.username))
+        this.error.username = "Enter a valid username";
+      if (this.input.username === "") this.error.username = "Enter a username";
       return this.error.username !== "";
     },
-    newUser() {
+    email_check() {
+      this.error.email = "";
+      if (!this.validEmail(this.input.email))
+        this.error.email = "Enter a valid e-mail address";
+      if (this.input.email === "") this.error.email = "Enter an e-mail";
+      return this.error.username !== "";
+    },
+    async newUser() {
+      this.username = this.input.username;
+      this.email = this.input.email;
+      this.password = this.input.password;
       if (this.username_check()) return;
       if (this.password_check()) return;
       if (this.match_check()) return;
-      this.$router.push({ name: "user", params: { username: "Test" } });
+      const response = await axios.post("http://localhost:8095/signup/", {
+        email: this.email,
+        username: this.username,
+        password: this.password
+      });
+      console.log(response);
+      if(response.data.success == true) {
+        this.$router.push({ name: "user", params: { username: this.username } });
+      } else {
+        prompt("This email already exists");
+      }
       return this.error === "";
+    },
+    validUsername(username) {
+      if(username != "" && username.includes(" ") == false) return true;
+      return false;
     },
     validEmail(email) {
       var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@(([[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -224,17 +249,6 @@ export default {
       this.error.username = "Enter a valid e-mail address";
     if (this.input.username === "") this.error.username = "Enter an e-mail";
     return this.error.username !== "";
-  },
-  async newUser() {
-    this.$router.push("/user");
-    if (this.username_check()) return;
-    if (this.password_check()) return;
-    if (this.match_check()) return;
-    const response = await axios.post("http://localhost:8095/signup/", {
-
-    })
-    this.$router.replace({ name: "login" });
-    return this.error === "";
   },
   validEmail(email) {
     var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@(([[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
