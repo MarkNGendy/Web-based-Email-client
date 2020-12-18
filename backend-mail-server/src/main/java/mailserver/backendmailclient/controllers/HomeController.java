@@ -1,7 +1,7 @@
 package mailserver.backendmailclient.controllers;
 
-import mailserver.backendmailclient.Classes.*;
-import mailserver.backendmailclient.JsonReaders.*;
+import mailserver.backendmailclient.classes.*;
+import mailserver.backendmailclient.jsonReaders.*;
 
 import java.io.File;
 import java.util.List;

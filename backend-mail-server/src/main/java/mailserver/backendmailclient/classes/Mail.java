@@ -1,10 +1,10 @@
-package mailserver.backendmailclient.Classes;
+package mailserver.backendmailclient.classes;
 
 import java.io.File;
 import java.util.List;
 
-import mailserver.backendmailclient.Interfaces.IFolder;
-import mailserver.backendmailclient.JsonReaders.*;
+import mailserver.backendmailclient.interfaces.IFolder;
+import mailserver.backendmailclient.jsonReaders.*;
 import mailserver.backendmailclient.controllers.MailBody;
 
 public class Mail extends DemoMail {

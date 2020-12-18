@@ -1,9 +1,9 @@
-package mailserver.backendmailclient.Classes;
+package mailserver.backendmailclient.classes;
 
 import java.io.File;
 import java.util.List;
 
-import mailserver.backendmailclient.JsonReaders.*;
+import mailserver.backendmailclient.jsonReaders.*;
 
 public class Index {
     private List<DemoMail> demoList;

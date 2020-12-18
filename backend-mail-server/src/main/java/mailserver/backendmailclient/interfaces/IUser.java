@@ -1,9 +1,9 @@
-package mailserver.backendmailclient.Interfaces;
+package mailserver.backendmailclient.interfaces;
 
 import java.util.List;
 
-import mailserver.backendmailclient.Classes.Answer;
-import mailserver.backendmailclient.Classes.DemoUsers;
+import mailserver.backendmailclient.classes.Answer;
+import mailserver.backendmailclient.classes.DemoUsers;
 
 public interface IUser {
     public Answer signin(DemoUsers input);

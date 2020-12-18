@@ -17,8 +17,8 @@
         <p class="wrapper-box__title text-center">Welcome</p>
         <div>
           <form class="form form-newaccount" id="passwordForm">
-            <div class="form-group">
-              <label for="">E-mail</label>
+          <div class="form-group">
+              <label for="">Username</label>
               <input
                 type="text"
                 v-model="input.username"
@@ -28,6 +28,19 @@
                 name="username"
                 class="form-control"
                 id="username"
+              />
+            </div>
+            <div class="form-group">
+              <label for="">E-mail</label>
+              <input
+                type="text"
+                v-model="input.username"
+                @focus="clearError('Email')"
+                @blur="username_check"
+                :class="{ orange: error.username !== '' }"
+                name="email"
+                class="form-control"
+                id="email"
               />
             </div>
             <div class="form-group">
@@ -41,8 +54,8 @@
                   yellow: passValid === 2,
                   orange: passValid === 1
                 }"
-                name="password1"
-                id="password1"
+                name="password"
+                id="password"
                 autocomplete="off"
               />
               <div class="row">
@@ -127,6 +140,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "Login",
   metaInfo: {
@@ -193,11 +207,10 @@ export default {
       return this.error.username !== "";
     },
     newUser() {
-      this.$router.push({ name: "user", params: { username: "Test" } });
       if (this.username_check()) return;
       if (this.password_check()) return;
       if (this.match_check()) return;
-      this.$router.push({ path: "/login" });
+      this.$router.push({ name: "user", params: { username: "Test" } });
       return this.error === "";
     },
     validEmail(email) {
@@ -212,12 +225,14 @@ export default {
     if (this.input.username === "") this.error.username = "Enter an e-mail";
     return this.error.username !== "";
   },
-  newUser() {
+  async newUser() {
     this.$router.push("/user");
     if (this.username_check()) return;
     if (this.password_check()) return;
     if (this.match_check()) return;
-    // TODO: cadastrar e redirecionar
+    const response = await axios.post("http://localhost:8095/signup/", {
+
+    })
     this.$router.replace({ name: "login" });
     return this.error === "";
   },

@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.Date;
 import java.util.List;
 
-import mailserver.backendmailclient.Classes.Mail;
+import mailserver.backendmailclient.classes.Mail;
 
 public class MailBody {
     private String subject;

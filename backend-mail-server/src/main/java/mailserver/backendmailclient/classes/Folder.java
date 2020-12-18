@@ -1,10 +1,10 @@
-package mailserver.backendmailclient.Classes;
+package mailserver.backendmailclient.classes;
 
 import java.io.*;
 import java.nio.file.Files;
 
 import com.google.gson.Gson;
-import mailserver.backendmailclient.Interfaces.IFolder;
+import mailserver.backendmailclient.interfaces.IFolder;
 
 public class Folder implements IFolder {
 
