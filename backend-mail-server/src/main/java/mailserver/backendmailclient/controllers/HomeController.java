@@ -1,7 +1,7 @@
 package mailserver.backendmailclient.controllers;
 
-import mailserver.backendmailclient.Classes.*;
-import mailserver.backendmailclient.JsonReaders.*;
+import mailserver.backendmailclient.classes.*;
+import mailserver.backendmailclient.jsonReaders.*;
 
 import java.io.File;
 import java.util.List;
@@ -26,4 +26,15 @@ public class HomeController {
         return null;
     }
 
+    @PostMapping("/signin/")
+    public Answer signin(@RequestBody DemoUsers user){
+        User user1 = new User();
+        return user1.signin(user);
+    }
+
+    @PostMapping("/signup/")
+    public Answer signup(@RequestBody DemoUsers user){
+        User user1 = new User();
+        return user1.signup(user);
+    }
 }

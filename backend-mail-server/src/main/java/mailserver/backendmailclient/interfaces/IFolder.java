@@ -1,4 +1,4 @@
-package mailserver.backendmailclient.Interfaces;
+package mailserver.backendmailclient.interfaces;
 
 public interface IFolder {
     public boolean deleteFolder(String path);

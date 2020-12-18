@@ -1,4 +1,4 @@
-package mailserver.backendmailclient.Interfaces;
+package mailserver.backendmailclient.interfaces;
 
 import java.util.List;
 

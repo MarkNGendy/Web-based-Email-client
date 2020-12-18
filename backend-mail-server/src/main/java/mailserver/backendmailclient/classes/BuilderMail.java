@@ -1,11 +1,11 @@
-package mailserver.backendmailclient.Classes;
+package mailserver.backendmailclient.classes;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.util.*;
 
-import mailserver.backendmailclient.Interfaces.IFolder;
-import mailserver.backendmailclient.JsonReaders.*;
+import mailserver.backendmailclient.interfaces.IFolder;
+import mailserver.backendmailclient.jsonReaders.*;
 
 public class BuilderMail {
     public boolean buildMail(Mail mail) {

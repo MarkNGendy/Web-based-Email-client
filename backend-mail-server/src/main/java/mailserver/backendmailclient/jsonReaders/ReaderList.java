@@ -1,4 +1,4 @@
-package mailserver.backendmailclient.JsonReaders;
+package mailserver.backendmailclient.jsonReaders;
 
 import java.util.List;
 

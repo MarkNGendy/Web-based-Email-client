@@ -1,9 +1,9 @@
-package mailserver.backendmailclient.Classes;
+package mailserver.backendmailclient.classes;
 
 import java.util.*;
 
-import mailserver.backendmailclient.Interfaces.*;
-import mailserver.backendmailclient.JsonReaders.*;
+import mailserver.backendmailclient.interfaces.*;
+import mailserver.backendmailclient.jsonReaders.*;
 
 public class User extends DemoUsers implements IUser {
 

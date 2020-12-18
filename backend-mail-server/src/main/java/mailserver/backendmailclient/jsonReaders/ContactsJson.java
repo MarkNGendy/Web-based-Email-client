@@ -1,13 +1,13 @@
-package mailserver.backendmailclient.JsonReaders;
+package mailserver.backendmailclient.jsonReaders;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.Gson;
 
-import mailserver.backendmailclient.Classes.Contact;
-import mailserver.backendmailclient.Classes.Folder;
-import mailserver.backendmailclient.Interfaces.IFolder;
+import mailserver.backendmailclient.classes.Contact;
+import mailserver.backendmailclient.classes.Folder;
+import mailserver.backendmailclient.interfaces.IFolder;
 
 public class ContactsJson extends ReaderList<Contact> {
 

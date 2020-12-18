@@ -1,4 +1,4 @@
-package mailserver.backendmailclient.Classes;
+package mailserver.backendmailclient.classes;
 
 public class Answer {
     private boolean success;

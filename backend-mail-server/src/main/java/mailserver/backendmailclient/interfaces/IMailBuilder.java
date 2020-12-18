@@ -1,6 +1,6 @@
-package mailserver.backendmailclient.Interfaces;
+package mailserver.backendmailclient.interfaces;
 
-import mailserver.backendmailclient.Classes.Mail;
+import mailserver.backendmailclient.classes.Mail;
 
 import java.io.File;
 import java.util.Date;
