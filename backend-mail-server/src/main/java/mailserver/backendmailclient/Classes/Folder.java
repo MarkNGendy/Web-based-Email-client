@@ -2,7 +2,6 @@ package mailserver.backendmailclient.Classes;
 
 import java.io.*;
 import java.nio.file.Files;
-import java.util.*;
 
 import com.google.gson.Gson;
 import mailserver.backendmailclient.Interfaces.IFolder;

@@ -1,8 +1,5 @@
 package mailserver.backendmailclient.controllers;
 
-import mailserver.backendmailclient.Classes.Contact;
-import mailserver.backendmailclient.Classes.DemoMail;
-import mailserver.backendmailclient.Classes.Mail;
 import mailserver.backendmailclient.Classes.*;
 import mailserver.backendmailclient.JsonReaders.*;
 
@@ -21,8 +18,7 @@ public class HomeController {
                 "server/" + listRequest.getuser() + "/folders/" + listRequest.getListname() + "/mails.json");
         ReaderList<DemoMail> readlist = new MailsJson();
         readlist.toList(file.getPath());
-        List<DemoMail> mails = readlist.getList();
-        return mails;
+        return readlist.getList();
     }
 
     @PostMapping("/compose/")

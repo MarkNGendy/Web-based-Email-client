@@ -1,7 +1,5 @@
 package mailserver.backendmailclient.controllers;
 
-import mailserver.backendmailclient.Classes.User;
-
 public class ListRequest {
 
     private String listname;

@@ -3,9 +3,8 @@ package mailserver.backendmailclient.Classes;
 import java.io.File;
 import java.util.List;
 
-import org.apache.tomcat.util.bcel.Const;
-
 import mailserver.backendmailclient.Interfaces.IFolder;
+import mailserver.backendmailclient.JsonReaders.*;
 import mailserver.backendmailclient.controllers.MailBody;
 
 public class Mail extends DemoMail {
@@ -70,5 +69,95 @@ public class Mail extends DemoMail {
             builderMail.addToMailsFile(inbox, demoMail);
         }
         return new Answer(true, "Mail sent successfully.");
+    }
+
+    public Answer moveMail(String source, String destination, String mailID) {
+        Answer bad = new Answer(false, wrong);
+        File src = new File(source);
+        File dest = new File(destination);
+        File destmailfolder = new File(dest, mailID);
+        File srcmailfolder = new File(src, mailID);
+        IFolder folder = new Folder();
+        if (!folder.copyFolder(destmailfolder.getPath(), srcmailfolder.getPath()))
+            return bad;
+
+        Index x = new Index();
+        DemoMail target = x.getCopyThenDelete(src, mailID);
+        if (target == null)
+            return bad;
+
+        BuilderMail builderMail = new BuilderMail();
+        builderMail.addToMailsFile(dest, target);
+        return new Answer(true, "Mail moved successfully.");
+    }
+
+    public Answer sendToTrash(String source, String mailID) {
+        IFolder folder = new Folder();
+        File src = new File(source);
+        File dest = new File(src.getParent(), "Trash");
+        Answer ans = moveMail(source, dest.getPath(), mailID);
+        if (!ans.getSuccess())
+            return ans;
+
+        File trashFile = new File(dest, "Trashfile.json");
+        ReaderList<Trash> readlist = new TrashJson();
+        readlist.toList(trashFile.getPath());
+        List<Trash> trashlist = readlist.getList();
+
+        Long time = System.currentTimeMillis();
+        String trashtime = Long.toString(time);
+        Trash item = new Trash(mailID, trashtime);
+
+        trashlist.add(item);
+        readlist.setLsist(trashlist);
+        folder.writeJson(readlist, trashFile.getPath());
+
+        return new Answer(true, "Mail sent to trash successfully.");
+    }
+
+    public Answer restoreMail(String current, String mailID) {
+        Answer bad = new Answer(false, wrong);
+        Index x = new Index();
+        File currFolder = new File(current);
+        x.getfromfile(currFolder, mailID);
+        String source = x.getDemoList().get(x.getIndex()).getSrcFolder();
+        File srcFolder = new File(currFolder.getParent(), source);
+        Answer ans = moveMail(current, srcFolder.getPath(), mailID);
+        if (ans.getSuccess())
+            return new Answer(true, "Mail restored successfully.");
+        else
+            return bad;
+    }
+
+    public Answer deleteFromServer(String current, String mailID) {
+        Answer bad = new Answer(false, wrong);
+        File currfolder = new File(current);
+        File targetfolder = new File(current, mailID);
+        IFolder folder = new Folder();
+        if (!folder.deleteFolder(targetfolder.getPath()))
+            return bad;
+        Index x = new Index();
+        x.removefromfile(currfolder, mailID);
+        ReaderList<DemoMail> readerList = new MailsJson(x.getDemoList());
+        File mailsFile = new File(current, "mails.json");
+        folder.writeJson(readerList, mailsFile.getPath());
+        if (currfolder.getName().equals("Trash")) {
+            File trashFile = new File(currfolder, "Trashfile.json");
+            ReaderList<Trash> readTrash = new TrashJson();
+            readTrash.toList(trashFile.getPath());
+            List<Trash> trashlist = readTrash.getList();
+
+            int index = 0;
+            for (Trash demo : trashlist) {
+                if (demo.getID().equals(mailID)) {
+                    trashlist.remove(index);
+                    break;
+                }
+                index++;
+            }
+            readTrash.setLsist(trashlist);
+            folder.writeJson(readTrash, trashFile.getPath());
+        }
+        return new Answer(true, "Mail deleted successfully.");
     }
 }
