@@ -1,10 +1,12 @@
 <template>
   <section class="container h-100">
-  <router-link to="/">Login</router-link> |
-  <router-link to="/register">Register</router-link>
-    <div class="row h-100 justify-content-center align-items-center"
-    align="center"
-    justify="center">
+    <router-link to="/">Login</router-link> |
+    <router-link to="/register">Register</router-link>
+    <div
+      class="row h-100 justify-content-center align-items-center"
+      align="center"
+      justify="center"
+    >
       <div class="col wrapper-box">
         <img
           class="mx-auto d-block"
@@ -181,26 +183,7 @@ export default {
       if (!this.minLength)
         this.error.password = "Password does not contain 6 characters";
 
-        return this.error.password !== ''
-      },
-      username_check() {
-        this.error.username = ''
-        if (!this.validEmail(this.input.username)) this.error.username = 'Enter a valid e-mail address'
-        if (this.input.username === '') this.error.username = 'Enter an e-mail'
-        return this.error.username !== ''
-      },
-      newUser() {
-        this.$router.push({name:"user", params: {username: "Test"}});
-        if (this.username_check()) return
-        if (this.password_check()) return
-        if (this.match_check()) return
-        this.$router.push({ path: "/login" });
-        return this.error === ''
-      },
-      validEmail(email) {
-        var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@(([[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return re.test(email);
-      },
+      return this.error.password !== "";
     },
     username_check() {
       this.error.username = "";
@@ -210,19 +193,39 @@ export default {
       return this.error.username !== "";
     },
     newUser() {
-      this.$router.push("/user");
+      this.$router.push({ name: "user", params: { username: "Test" } });
       if (this.username_check()) return;
       if (this.password_check()) return;
       if (this.match_check()) return;
-      // TODO: cadastrar e redirecionar
-      this.$router.replace({ name: "login" });
+      this.$router.push({ path: "/login" });
       return this.error === "";
     },
     validEmail(email) {
       var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@(([[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(email);
-    },
-    computed: {
+    }
+  },
+  username_check() {
+    this.error.username = "";
+    if (!this.validEmail(this.input.username))
+      this.error.username = "Enter a valid e-mail address";
+    if (this.input.username === "") this.error.username = "Enter an e-mail";
+    return this.error.username !== "";
+  },
+  newUser() {
+    this.$router.push("/user");
+    if (this.username_check()) return;
+    if (this.password_check()) return;
+    if (this.match_check()) return;
+    // TODO: cadastrar e redirecionar
+    this.$router.replace({ name: "login" });
+    return this.error === "";
+  },
+  validEmail(email) {
+    var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@(([[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+  },
+  computed: {
     hasNumber() {
       return /\d/.test(this.input.password);
     },
@@ -251,6 +254,4 @@ export default {
 @import "./styles/scss/variables.scss";
 @import "./styles/scss/main.scss";
 @import "./styles/scss/form.scss";
-
-
 </style>

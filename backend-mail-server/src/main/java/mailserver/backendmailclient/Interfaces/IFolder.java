@@ -1,9 +1,5 @@
 package mailserver.backendmailclient.Interfaces;
 
-import java.util.List;
-
-import mailserver.backendmailclient.Classes.DemoUsers;
-
 public interface IFolder {
     public boolean deleteFolder(String path);
 
