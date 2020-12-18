@@ -20,32 +20,43 @@ const routes = [
     name: "user",
     path: '/user',
     component: dashboard,
-    props:{ username:true },
+    props: true,
     children: [
+      {
+        path: "/compose-email",
+        name: "compose-email",
+        component: () => import("../views/ComposeEmail.vue"),
+        props: true
+      },
       {
         path: "/inbox",
         name: "inbox",
-        component: () => import("../views/Inbox.vue")
+        component: () => import("../views/Inbox.vue"),
+        props: true
       },
       {
         path: "/draft",
         name: "draft",
-        component: () => import("../views/Draft.vue")
+        component: () => import("../views/Draft.vue"),
+        props: true
       },
       {
         path: "/trash",
         name: "trash",
-        component: () => import("../views/Trash.vue")
+        component: () => import("../views/Trash.vue"),
+        props: true
       },
       {
         path: "/sent",
         name:"sent",
-        component: () => import("../views/Sent.vue")
+        component: () => import("../views/Sent.vue"),
+        props: true
       },
       {
         path: "/user-folders",
         name:"user-folders",
-        component: () => import("../views/UserFolders.vue")
+        component: () => import("../views/UserFolders.vue"),
+        props: true
       }
     ]
   }

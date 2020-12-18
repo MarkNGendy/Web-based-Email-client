@@ -11,9 +11,18 @@
 import Sidebar from '../components/Sidebar'
 export default {
     name: 'home',
-
     components: {
         Sidebar
+    },
+    data() {
+      return {
+        title: ""
+      }
+    },
+    methods: {
+      created() {
+        this.title = this.$route.params.username;
+      }
     }
 }
 </script>

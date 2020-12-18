@@ -1,13 +1,12 @@
 <template>
-  <button class="tablink" onclick="openCity('Paris', this, 'green')">Compose New Email</button>
+  <button class="tablink" onclick="openCity('Oslo', this, 'orange')">Previous Page</button>
   <button class="tablink" onclick="openCity('Paris', this, 'green')">Delete</button>
   <button class="tablink" onclick="openCity('Tokyo', this, 'blue')">Next Page</button>
-  <button class="tablink" onclick="openCity('Oslo', this, 'orange')">Previous Page</button>
   <div class="user-folders">
     <table class="content-table">
       <thead>
         <tr>
-          <th>Number</th>
+          <th>ID</th>
           <th>Subject</th>
           <th>Sender</th>
           <th>Reciever</th>
@@ -64,7 +63,7 @@ export default {
   cursor: pointer;
   padding: 14px 16px;
   font-size: 17px;
-  width: 25%;
+  width: 33.3333%;
 }
 .tablink:hover {
   background-color: #777;

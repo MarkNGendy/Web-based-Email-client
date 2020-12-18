@@ -1,9 +1,14 @@
 <template>
     <div class="sidebar">
         <div class="title">
-            {{ $route.params.username }}
+            {{ username }}
         </div>
         <div class="menu-items">
+            <router-link :to="{name: 'compose-email', params: {username :$route.params.username}}" active-class="active" tag="button" exact class="side-btn">
+                <div class="link-container">
+                    Compose Email
+                </div>
+            </router-link>
             <router-link :to="{name: 'inbox', params: {username :$route.params.username}}" active-class="active" tag="button" exact class="side-btn">
                 <div class="link-container">
                     Inbox
@@ -43,11 +48,12 @@ export default {
   name:"Sidebar",
   data() {
     return {
-
+      username: ""
     }
   },
-  methods: {
-  }
+  created: function() {
+    this.username = this.$route.params.username;
+  },
 }
 </script>
 <style scoped>
@@ -68,7 +74,7 @@ export default {
 }
 
 .menu-items > * {
-    margin-top: 60px;
+    margin-top: 50px;
 }
 
 .side-btn {
