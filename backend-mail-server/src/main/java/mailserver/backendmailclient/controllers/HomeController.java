@@ -37,4 +37,19 @@ public class HomeController {
         User user1 = new User();
         return user1.signup(user);
     }
+
+    @PostMapping("/filter/")
+    public List<Mail> filter(@RequestBody FilterSortBody filterBody){
+        Filter myFilter = new Filter();
+        String field = filterBody.getField();
+        if (field.equalsIgnoreCase("SUBJECT")){
+            return myFilter.subjectFilter(filterBody.getList(),filterBody.getCriteria());
+        }
+        else if (field.equalsIgnoreCase("SENDER")){
+            return myFilter.senderFilter(filterBody.getList(),filterBody.getCriteria());
+        }
+        else {
+            return filterBody.getList();
+        }
+    }
 }
