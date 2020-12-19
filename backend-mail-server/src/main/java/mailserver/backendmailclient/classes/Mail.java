@@ -2,6 +2,7 @@ package mailserver.backendmailclient.classes;
 
 import java.io.File;
 import java.util.List;
+import java.util.Comparator;
 
 import mailserver.backendmailclient.interfaces.IFolder;
 import mailserver.backendmailclient.jsonReaders.*;
@@ -160,4 +161,23 @@ public class Mail extends DemoMail {
         }
         return new Answer(true, "Mail deleted successfully.");
     }
+    @Override
+    public String toString(){
+        return "[ subject = " + this.subject + ", sender = " + this.sender + "]";
+    }
+
+    /*Comparator for sorting the list by Mail subject*/
+    public static Comparator<Mail> MailSubjectComparator = new Comparator<Mail>() {
+
+        public int compare(Mail m1, Mail m2) {
+            String MailSubject2 = m1.getSubject().toUpperCase();
+            String MailSubject1 = m2.getSubject().toUpperCase();
+
+            //ascending order
+            return MailSubject1.compareTo(MailSubject2);
+
+            //descending order
+            //return StudentName2.compareTo(StudentName1);
+        }
+    };
 }
