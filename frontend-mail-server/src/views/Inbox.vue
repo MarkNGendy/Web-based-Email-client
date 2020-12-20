@@ -1,7 +1,7 @@
 <template>
-  <button class="tablink" onclick="openCity('Oslo', this, 'orange')">Previous Page</button>
+  <button class="tablink" @click="prevPage()">Previous Page</button>
   <button class="tablink" onclick="openCity('Paris', this, 'green')">Delete</button>
-  <button class="tablink" onclick="openCity('Tokyo', this, 'blue')">Next Page</button>
+  <button class="tablink" @click="nextPage()">Next Page</button>
   <input type="text" class="filterbox" placeholder="Enter filter value..">
   <select class="filterbox" name="sort-type" id="sort">
     <option value="Filter by subject">Filter by subject</option>
@@ -28,17 +28,23 @@
           <th>ID</th>
           <th>Subject</th>
           <th>Sender</th>
-          <th>Reciever</th>
+          <th>Recievers</th>
           <th>Date</th>
+          <th>Importance</th>
         </tr>
       </thead>
       <tbody v-for="item in emails" :key="item.subject">
         <tr>
           <td><input type="checkbox" id="1"></td>
-          <td>{{item.subject}}</td>
+          <td><router-link :to="{name: 'view-email', params: {username :$route.params.username}}">
+          {{item.subject}}</router-link></td>
           <td>{{item.sender}}</td>
-          <td>{{item.reciever}}</td>
+          <td>
+            <ul>{{item.receivers}}
+            </ul>
+          </td>
           <td>{{item.date}}</td>
+          <td>Priority</td>
         </tr>
       </tbody>
     </table>
@@ -46,15 +52,44 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   data() {
     return {
       username:"",
       emailAdd: "",
-      emails: []
+      emails: [],
+      allMails: [],
+      currIndex: 1,
     };
   },
   methods: {
+    async nextPage() {
+      if(this.currIndex < (this.allMails.length / 4)) {
+        this.currIndex++; 
+      }
+      await this.paginate();
+    },
+    async prevPage() {
+      if(this.currIndex != 1) {
+        this.currIndex--; 
+      }
+      await this.paginate();
+    },
+    paginate() {
+      var counter = 0;
+      console.log(this.currIndex)
+      var left = ((this.currIndex - 1) * (this.allMails.length-1));
+      var right = ((this.currIndex - 1) * (this.allMails.length-1) + 3);
+      var i = left;
+      var list = [];
+      while(i <= right && i< this.allMails.length) {
+        list[counter] = this.allMails[i];
+        counter++;
+        i++;
+      }
+      this.emails = list;
+    }
   },
   created: async function() {
     this.username = this.$route.params.username;
@@ -63,7 +98,9 @@ export default {
         listname: "Inbox",
         user: this.emailAdd,
     });
-    this.emails = response.data;
+    this.allMails = response.data;
+    this.currIndex = 1;
+    this.paginate();
   }
 };
 </script>
@@ -140,24 +177,24 @@ export default {
 .content-table {
   border-collapse: collapse;
   margin: 0px 0;
-  font-size: 0.9em;
+  font-size: 13px;
   min-width: 40px;
   border-radius: 5px 5px 0 0;
   overflow: hidden;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-  width: 1050px;
+  width: 1300px;
 }
 
 .content-table thead tr {
   background-color: #009879;
   color: #ffffff;
-  text-align: left;
+  text-align: center;
   font-weight: bold;
 }
 
 .content-table th,
 .content-table td {
-  padding: 5px 50px;
+  padding: 1px 45px;
 }
 
 .content-table tbody tr {

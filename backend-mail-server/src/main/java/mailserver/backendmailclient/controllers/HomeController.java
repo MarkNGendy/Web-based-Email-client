@@ -14,8 +14,9 @@ public class HomeController {
 
     @PostMapping("/mails/")
     public List<DemoMail> getUserMails(@RequestBody ListRequest listRequest) {
+        System.out.println(listRequest.getListname() + " " + listRequest.getuser());
         File file = new File(
-                "server/" + listRequest.getuser() + "/folders/" + listRequest.getListname() + "/mails.json");
+                "Server/" + listRequest.getuser() + "/folders/" + listRequest.getListname() + "/mails.json");
         ReaderList<DemoMail> readlist = new MailsJson();
         readlist.toList(file.getPath());
         return readlist.getList();
