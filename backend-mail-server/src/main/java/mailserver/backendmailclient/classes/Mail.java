@@ -39,7 +39,7 @@ public class Mail extends DemoMail {
         this.body = body;
     }
 
-    private String wrong = "Something wrong!";
+    private String wrong = "Something wrong!\nerror code: ";
 
     public Answer saveDraft(MailBody mailBody) {
         Mail mail = mailBody.toMail();
@@ -56,7 +56,7 @@ public class Mail extends DemoMail {
         mail.setSrcFolder("Sent");
         BuilderMail builderMail = new BuilderMail();
         if (!builderMail.buildMail(mail)) {
-            return new Answer(false, wrong);
+            return new Answer(false, wrong + "Mail.Send.0001");
         }
         IFolder folder = new Folder();
         File source = new File("server/" + mail.getSender() + "/folders/Sent/" + mail.getID());
@@ -64,8 +64,8 @@ public class Mail extends DemoMail {
         for (String reciever : mail.getReceivers()) {
             File inbox = new File("server/" + reciever + "/folders/Inbox");
             File dest = new File(inbox, mail.getID());
-            if (!folder.copyFolder(dest.getPath(), source.getPath()))
-                return new Answer(false, wrong);
+            if (!folder.copyFolder(source, dest))
+                return new Answer(false, wrong + "Mail.Send.0002");
             DemoMail demoMail = mail;
             builderMail.addToMailsFile(inbox, demoMail);
         }
@@ -73,17 +73,19 @@ public class Mail extends DemoMail {
     }
 
     public Answer moveMail(String source, String destination, String mailID) {
-        Answer bad = new Answer(false, wrong);
+        Answer bad = new Answer(false, wrong + "Mail.move.0005");
         File src = new File(source);
         File dest = new File(destination);
         File destmailfolder = new File(dest, mailID);
         File srcmailfolder = new File(src, mailID);
         IFolder folder = new Folder();
-        if (!folder.copyFolder(destmailfolder.getPath(), srcmailfolder.getPath()))
+        if (!folder.moveFolder(srcmailfolder, destmailfolder))
             return bad;
 
         Index x = new Index();
         DemoMail target = x.getCopyThenDelete(src, mailID);
+        ReaderList<DemoMail> readerList = new MailsJson(x.getDemoList());
+        folder.writeJson(readerList, src.getPath() + "/mails.json");
         if (target == null)
             return bad;
 
@@ -123,6 +125,10 @@ public class Mail extends DemoMail {
         x.getfromfile(currFolder, mailID);
         String source = x.getDemoList().get(x.getIndex()).getSrcFolder();
         File srcFolder = new File(currFolder.getParent(), source);
+        if (currFolder.getName().equalsIgnoreCase("Trash")) {
+            Trash t = new Trash();
+            t.deleteFromTrashFile(currFolder.getPath(), mailID);
+        }
         Answer ans = moveMail(current, srcFolder.getPath(), mailID);
         if (ans.getSuccess())
             return new Answer(true, "Mail restored successfully.");
@@ -135,49 +141,37 @@ public class Mail extends DemoMail {
         File currfolder = new File(current);
         File targetfolder = new File(current, mailID);
         IFolder folder = new Folder();
-        if (!folder.deleteFolder(targetfolder.getPath()))
+        if (!folder.deleteFolder(targetfolder))
             return bad;
         Index x = new Index();
         x.removefromfile(currfolder, mailID);
         ReaderList<DemoMail> readerList = new MailsJson(x.getDemoList());
         File mailsFile = new File(current, "mails.json");
         folder.writeJson(readerList, mailsFile.getPath());
-        if (currfolder.getName().equals("Trash")) {
-            File trashFile = new File(currfolder, "Trashfile.json");
-            ReaderList<Trash> readTrash = new TrashJson();
-            readTrash.toList(trashFile.getPath());
-            List<Trash> trashlist = readTrash.getList();
-
-            int index = 0;
-            for (Trash demo : trashlist) {
-                if (demo.getID().equals(mailID)) {
-                    trashlist.remove(index);
-                    break;
-                }
-                index++;
-            }
-            readTrash.setLsist(trashlist);
-            folder.writeJson(readTrash, trashFile.getPath());
+        if (currfolder.getName().equalsIgnoreCase("Trash")) {
+            Trash t = new Trash();
+            t.deleteFromTrashFile(currfolder.getPath(), mailID);
         }
         return new Answer(true, "Mail deleted successfully.");
     }
+
     @Override
-    public String toString(){
+    public String toString() {
         return "[ subject = " + this.subject + ", sender = " + this.sender + "]";
     }
 
-    /*Comparators for sorting the list by Mail subject*/
+    /* Comparators for sorting the list by Mail subject */
     public static Comparator<Mail> AMailSubjectComparator = new Comparator<Mail>() {
 
         public int compare(Mail m1, Mail m2) {
             String MailSubject1 = m1.getSubject().toUpperCase();
             String MailSubject2 = m2.getSubject().toUpperCase();
 
-            //ascending order
+            // ascending order
             return MailSubject1.compareTo(MailSubject2);
 
-            //descending order
-            //return MailSubject2.compareTo(MailSubject1);
+            // descending order
+            // return MailSubject2.compareTo(MailSubject1);
         }
     };
     public static Comparator<Mail> DMailSubjectComparator = new Comparator<Mail>() {
@@ -186,26 +180,26 @@ public class Mail extends DemoMail {
             String MailSubject1 = m1.getSubject().toUpperCase();
             String MailSubject2 = m2.getSubject().toUpperCase();
 
-            //descending order
-            //return MailSubject1.compareTo(MailSubject2);
+            // descending order
+            // return MailSubject1.compareTo(MailSubject2);
 
-            //ascending order
+            // ascending order
             return MailSubject2.compareTo(MailSubject1);
         }
     };
 
-    /*Comparators for sorting the list by Mail sender*/
+    /* Comparators for sorting the list by Mail sender */
     public static Comparator<Mail> AMailSenderComparator = new Comparator<Mail>() {
 
         public int compare(Mail m1, Mail m2) {
             String MailSender1 = m1.getSender().toUpperCase();
             String MailSender2 = m2.getSender().toUpperCase();
 
-            //ascending order
+            // ascending order
             return MailSender1.compareTo(MailSender2);
 
-            //descending order
-            //return MailSender2.compareTo(MailSender1);
+            // descending order
+            // return MailSender2.compareTo(MailSender1);
         }
     };
     public static Comparator<Mail> DMailSenderComparator = new Comparator<Mail>() {
@@ -214,26 +208,26 @@ public class Mail extends DemoMail {
             String MailSender1 = m1.getSender().toUpperCase();
             String MailSender2 = m2.getSender().toUpperCase();
 
-            //ascending order
-            //return MailSender1.compareTo(MailSender2);
+            // ascending order
+            // return MailSender1.compareTo(MailSender2);
 
-            //descending order
+            // descending order
             return MailSender2.compareTo(MailSender1);
         }
     };
 
-    /*Comparators for sorting the list by Mail receivers*/
+    /* Comparators for sorting the list by Mail receivers */
     public static Comparator<Mail> AMailReceiversComparator = new Comparator<Mail>() {
 
         public int compare(Mail m1, Mail m2) {
             int MailReceivers1 = m1.getReceivers().size();
             int MailReceivers2 = m2.getReceivers().size();
 
-            //ascending order
+            // ascending order
             return MailReceivers1 - MailReceivers2;
 
-            //descending order
-            //return MailReceivers2 - MailReceivers1;
+            // descending order
+            // return MailReceivers2 - MailReceivers1;
         }
     };
     public static Comparator<Mail> DMailReceiversComparator = new Comparator<Mail>() {
@@ -242,26 +236,26 @@ public class Mail extends DemoMail {
             int MailReceivers1 = m1.getReceivers().size();
             int MailReceivers2 = m2.getReceivers().size();
 
-            //ascending order
-            //return MailReceivers1 - MailReceivers2;
+            // ascending order
+            // return MailReceivers1 - MailReceivers2;
 
-            //descending order
+            // descending order
             return MailReceivers2 - MailReceivers1;
         }
     };
 
-    /*Comparators for sorting the list by Mail importance*/
+    /* Comparators for sorting the list by Mail importance */
     public static Comparator<Mail> AMailImportanceComparator = new Comparator<Mail>() {
 
         public int compare(Mail m1, Mail m2) {
             int MailImp1 = m1.getImportance();
             int MailImp2 = m2.getImportance();
 
-            //ascending order
+            // ascending order
             return MailImp1 - MailImp2;
 
-            //descending order
-            //return MailImp2 - MailImp1;
+            // descending order
+            // return MailImp2 - MailImp1;
         }
     };
     public static Comparator<Mail> DMailImportanceComparator = new Comparator<Mail>() {
@@ -270,26 +264,26 @@ public class Mail extends DemoMail {
             int MailImp1 = m1.getImportance();
             int MailImp2 = m2.getImportance();
 
-            //ascending order
-            //return MailImp1 - MailImp2;
+            // ascending order
+            // return MailImp1 - MailImp2;
 
-            //descending order
+            // descending order
             return MailImp2 - MailImp1;
         }
     };
 
-    /*Comparators for sorting the list by Mail time*/
+    /* Comparators for sorting the list by Mail time */
     public static Comparator<Mail> AMailDateComparator = new Comparator<Mail>() {
 
         public int compare(Mail m1, Mail m2) {
             long MailTime1 = Long.valueOf(m1.getID());
             long MailTime2 = Long.valueOf(m2.getID());
 
-            //ascending order
-            return (int)(MailTime1 - MailTime2);
+            // ascending order
+            return (int) (MailTime1 - MailTime2);
 
-            //descending order
-            //return (int)(MailTime2 - MailTime1);
+            // descending order
+            // return (int)(MailTime2 - MailTime1);
         }
     };
     public static Comparator<Mail> DMailDateComparator = new Comparator<Mail>() {
@@ -298,26 +292,26 @@ public class Mail extends DemoMail {
             long MailTime1 = Long.valueOf(m1.getID());
             long MailTime2 = Long.valueOf(m2.getID());
 
-            //ascending order
-            //return (int)(MailTime1 - MailTime2);
+            // ascending order
+            // return (int)(MailTime1 - MailTime2);
 
-            //descending order
-            return (int)(MailTime2 - MailTime1);
+            // descending order
+            return (int) (MailTime2 - MailTime1);
         }
     };
 
-    /*Comparators for sorting the list by Mail attachments*/
+    /* Comparators for sorting the list by Mail attachments */
     public static Comparator<Mail> AMailAttachmentsComparator = new Comparator<Mail>() {
 
         public int compare(Mail m1, Mail m2) {
             int MailAttachments1 = m1.getAttachments().size();
             int MailAttachments2 = m2.getAttachments().size();
 
-            //ascending order
+            // ascending order
             return MailAttachments1 - MailAttachments2;
 
-            //descending order
-            //return MailAttachments2 - MailAttachments1;
+            // descending order
+            // return MailAttachments2 - MailAttachments1;
         }
     };
     public static Comparator<Mail> DMailAttachmentsComparator = new Comparator<Mail>() {
@@ -326,26 +320,26 @@ public class Mail extends DemoMail {
             int MailAttachments1 = m1.getAttachments().size();
             int MailAttachments2 = m2.getAttachments().size();
 
-            //ascending order
-            //return MailAttachments1 - MailAttachments2;
+            // ascending order
+            // return MailAttachments1 - MailAttachments2;
 
-            //descending order
+            // descending order
             return MailAttachments2 - MailAttachments1;
         }
     };
 
-    /*Comparators for sorting the list by Mail body*/
+    /* Comparators for sorting the list by Mail body */
     public static Comparator<Mail> AMailBodyComparator = new Comparator<Mail>() {
 
         public int compare(Mail m1, Mail m2) {
             int MailBody1 = m1.getBody().length();
             int MailBody2 = m2.getBody().length();
 
-            //ascending order
+            // ascending order
             return MailBody1 - MailBody2;
 
-            //descending order
-            //return MailBody2 - MailBody1;
+            // descending order
+            // return MailBody2 - MailBody1;
         }
     };
     public static Comparator<Mail> DMailBodyComparator = new Comparator<Mail>() {
@@ -354,17 +348,12 @@ public class Mail extends DemoMail {
             int MailBody1 = m1.getBody().length();
             int MailBody2 = m2.getBody().length();
 
-            //ascending order
-            //return MailBody1 - MailBody2;
+            // ascending order
+            // return MailBody1 - MailBody2;
 
-            //descending order
+            // descending order
             return MailBody2 - MailBody1;
         }
     };
-
-
-
-
-
 
 }
