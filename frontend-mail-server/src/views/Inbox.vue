@@ -38,7 +38,7 @@
           <th>ID</th>
           <th>Subject</th>
           <th>Sender</th>
-          <th>Recievers</th>
+          <th>Receivers</th>
           <th>Date</th>
           <th>Importance</th>
         </tr>
@@ -47,7 +47,7 @@
         <tr>
           <td><input type="checkbox" id="1"></td>
           <td><router-link :to="{name: 'view-email', params: {username: username,
-           emailAdd: emailAdd, id:item.id}, query: {emails: JSON.stringify(allMails)}}">
+          emailAdd: emailAdd, id:item.id, emails: JSON.stringify(allMails)}}">
           {{item.subject}}</router-link></td>
           <td>{{item.sender}}</td>
           <td>
@@ -72,6 +72,7 @@ export default {
       emails: [],
       allMails: [],
       currIndex: 1,
+      filteredList: [],
     };
   },
   methods: {
@@ -79,22 +80,22 @@ export default {
       if(this.currIndex < (this.allMails.length / 4)) {
         this.currIndex++; 
       }
-      await this.paginate();
+      await this.paginate(this.allMails);
     },
     async prevPage() {
       if(this.currIndex != 1) {
         this.currIndex--; 
       }
-      await this.paginate();
+      await this.paginate(this.allMails);
     },
-    paginate() {
+    paginate(mailsList) {
       var counter = 0;
-      var left = ((this.currIndex - 1) * (this.allMails.length-1));
-      var right = ((this.currIndex - 1) * (this.allMails.length-1) + 3);
+      var left = ((this.currIndex - 1) * (mailsList.length-1));
+      var right = ((this.currIndex - 1) * (mailsList.length-1) + 3);
       var i = left;
       var list = [];
-      while(i <= right && i< this.allMails.length) {
-        list[counter] = this.allMails[i];
+      while(i <= right && i< mailsList.length) {
+        list[counter] = mailsList[i];
         counter++;
         i++;
       }
@@ -105,15 +106,14 @@ export default {
       var field = sel.value;
       var value = document.getElementById('filter-val');
       var criteria = value.value;
-      console.log(this.allMails);
       const response = await axios.post("http://localhost:8095/filter/", {
         list: this.allMails,
         field: field,
         criteria: criteria
     });
-    this.allMails = response.data;
+    this.filteredList = response.data;
     this.currIndex = 1;
-    this.paginate();
+    this.paginate(this.filteredList);
     },
     reload() {
       this.$router.push({ name: "user", params: { username: this.username, emailAdd:this.email} });
@@ -128,7 +128,7 @@ export default {
     });
     this.allMails = response.data;
     this.currIndex = 1;
-    this.paginate();
+    this.paginate(this.allMails);
   }
 }
 </script>
