@@ -2,12 +2,12 @@
   <button class="tablink" @click="prevPage()">Previous Page</button>
   <button class="tablink" onclick="openCity('Paris', this, 'green')">Delete</button>
   <button class="tablink" @click="nextPage()">Next Page</button>
-  <input type="text" class="filterbox" placeholder="Enter filter value..">
-  <select class="filterbox" name="sort-type" id="sort">
-    <option value="Filter by subject">Filter by subject</option>
-    <option value="Filter by sender">Filter by sender</option>
+  <input type="text" class="filterbox" placeholder="Enter filter value.." id="filter-val">
+  <select class="filterbox" name="sort-type" id="filter">
+    <option value="SUBJECT">Filter by subject</option>
+    <option value="SENDER">Filter by sender</option>
   </select>
-  <button class="filter" onclick="openCity('Paris', this, 'green')">Filter</button>
+  <button class="filter" @click="filter()">Filter</button>
   <select class="filterbox" name="sort-type" id="sort">
     <option value="sort by subject ascendingly">Sort by subject ascendingly</option>
     <option value="sort by subject descendingly">Sort by subject descendingly</option>
@@ -21,6 +21,16 @@
     <option value="sort by sender descendingly">Sort by attachments descendingly</option>
   </select>
   <button class="filter" onclick="openCity('Tokyo', this, 'blue')">Sort</button>
+  <input type="text" class="filterbox" placeholder="Enter search value..">
+  <select class="filterbox" name="sort-type" id="sort">
+    <option value="Filter by subject">Search in subjects</option>
+    <option value="Filter by subject">Search in senders</option>
+    <option value="Filter by subject">Search in recievers</option>
+    <option value="Filter by subject">Search in body</option>
+    <option value="Filter by subject">Whole search</option>
+  </select>
+  <button class="filter" onclick="openCity('Paris', this, 'green')">Search</button>
+  <button class="filter" @click="reload()">Home</button>
   <div class="inbox">
     <table class="content-table">
       <thead>
@@ -41,7 +51,7 @@
           {{item.subject}}</router-link></td>
           <td>{{item.sender}}</td>
           <td>
-            <ul>{{item.receivers}}
+            <ul>{{item.receiver}}
             </ul>
           </td>
           <td>{{item.date}}</td>
@@ -89,8 +99,25 @@ export default {
         i++;
       }
       this.emails = list;
-      console.log(this.emails)
-    }
+    },
+    async filter() {
+      var sel = document.getElementById('filter');
+      var field = sel.value;
+      var value = document.getElementById('filter-val');
+      var criteria = value.value;
+      console.log(this.allMails);
+      const response = await axios.post("http://localhost:8095/filter/", {
+        list: this.allMails,
+        field: field,
+        criteria: criteria
+    });
+    this.allMails = response.data;
+    this.currIndex = 1;
+    this.paginate();
+    },
+    reload() {
+      this.$router.push({ name: "user", params: { username: this.username, emailAdd:this.email} });
+    },
   },
   created: async function() {
     this.username = this.$route.params.username;
@@ -103,7 +130,7 @@ export default {
     this.currIndex = 1;
     this.paginate();
   }
-};
+}
 </script>
 
 <style scoped>
@@ -113,7 +140,7 @@ export default {
   cursor: pointer;
   padding: 14px 16px;
   font-size: 12px;
-  width: 17%;
+  width: 14%;
   margin-right: 2px;
   margin-left: 2px;
   margin-top: 2px;
@@ -135,7 +162,7 @@ export default {
   cursor: pointer;
   padding: 14px 16px;
   font-size: 17px;
-  width: 20%;
+  width: 7%;
   margin-right: 2px;
   margin-left: 2px;
   margin-top: 2px;

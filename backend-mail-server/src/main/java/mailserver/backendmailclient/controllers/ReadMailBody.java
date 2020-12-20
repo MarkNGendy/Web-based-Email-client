@@ -15,7 +15,7 @@ public class ReadMailBody {
         this.ID = ID;
     }
 
-    public List<Mail> getList() { return list; }
+    public List<Mail> getList() { return list;}
 
     public String getID() {return  ID;}
 

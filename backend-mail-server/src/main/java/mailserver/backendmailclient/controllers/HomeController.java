@@ -41,9 +41,8 @@ public class HomeController {
 
     @PostMapping("/read/")
     public Mail read(@RequestBody ReadMailBody ReadBody){
-        System.out.println(ReadBody.getID());
         System.out.println(ReadBody.getList());
-        for(Mail m : ReadBody.getList()){
+        for(Mail m : (ReadBody.getList())){
             if(ReadBody.getID().equalsIgnoreCase(m.getID())){
                 return m;
             }

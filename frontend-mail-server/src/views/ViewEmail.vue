@@ -50,7 +50,7 @@ export default {
     return {
       emails:[],
       id: "",
-      recievers: [],
+      receiver: [],
       subject: "",
       body: ""
     }
@@ -63,10 +63,10 @@ export default {
     console.log(this.emails)
     const response = await axios.post("http://localhost:8095/read/", {
         list: this.emails,
-        ID: this.id,
+        ID: this.id
     });
     console.log(response);
-    this.recievers = response.data.recievers;
+    this.recievers = response.data.receivers;
     this.subject = response.data.subject;
     this.body = response.data.body;
   }

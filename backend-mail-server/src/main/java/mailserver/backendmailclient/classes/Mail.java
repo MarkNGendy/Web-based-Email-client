@@ -15,9 +15,9 @@ public class Mail extends DemoMail {
     public Mail() {
     }
 
-    public Mail(String sender, List<String> receivers, String subject, String body, List<File> attachments) {
+    public Mail(String sender, List<String> receiver, String subject, String body, List<File> attachments) {
         this.sender = sender;
-        this.receiver = receivers;
+        this.receiver = receiver;
         this.subject = subject;
         this.body = body;
         this.attachments = attachments;
