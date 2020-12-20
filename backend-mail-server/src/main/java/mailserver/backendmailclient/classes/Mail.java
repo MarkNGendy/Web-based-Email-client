@@ -15,9 +15,9 @@ public class Mail extends DemoMail {
     public Mail() {
     }
 
-    public Mail(String sender, List<String> receiver, String subject, String body, List<File> attachments) {
+    public Mail(String sender, List<String> receivers, String subject, String body, List<File> attachments) {
         this.sender = sender;
-        this.receiver = receiver;
+        this.receivers = receivers;
         this.subject = subject;
         this.body = body;
         this.attachments = attachments;
@@ -61,7 +61,7 @@ public class Mail extends DemoMail {
         IFolder folder = new Folder();
         File source = new File("server/" + mail.getSender() + "/folders/Sent/" + mail.getID());
         mail.setSrcFolder("Inbox");
-        for (String reciever : mail.getReceiver()) {
+        for (String reciever : mail.getReceivers()) {
             File inbox = new File("server/" + reciever + "/folders/Inbox");
             File dest = new File(inbox, mail.getID());
             if (!folder.copyFolder(source, dest))
@@ -220,8 +220,8 @@ public class Mail extends DemoMail {
     public static Comparator<Mail> AMailReceiversComparator = new Comparator<Mail>() {
 
         public int compare(Mail m1, Mail m2) {
-            int MailReceivers1 = m1.getReceiver().size();
-            int MailReceivers2 = m2.getReceiver().size();
+            int MailReceivers1 = m1.getReceivers().size();
+            int MailReceivers2 = m2.getReceivers().size();
 
             // ascending order
             return MailReceivers1 - MailReceivers2;
@@ -233,8 +233,8 @@ public class Mail extends DemoMail {
     public static Comparator<Mail> DMailReceiversComparator = new Comparator<Mail>() {
 
         public int compare(Mail m1, Mail m2) {
-            int MailReceivers1 = m1.getReceiver().size();
-            int MailReceivers2 = m2.getReceiver().size();
+            int MailReceivers1 = m1.getReceivers().size();
+            int MailReceivers2 = m2.getReceivers().size();
 
             // ascending order
             // return MailReceivers1 - MailReceivers2;
