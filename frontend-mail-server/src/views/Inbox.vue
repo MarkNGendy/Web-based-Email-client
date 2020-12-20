@@ -2,6 +2,25 @@
   <button class="tablink" onclick="openCity('Oslo', this, 'orange')">Previous Page</button>
   <button class="tablink" onclick="openCity('Paris', this, 'green')">Delete</button>
   <button class="tablink" onclick="openCity('Tokyo', this, 'blue')">Next Page</button>
+  <input type="text" class="filterbox" placeholder="Enter filter value..">
+  <select class="filterbox" name="sort-type" id="sort">
+    <option value="Filter by subject">Filter by subject</option>
+    <option value="Filter by sender">Filter by sender</option>
+  </select>
+  <button class="filter" onclick="openCity('Paris', this, 'green')">Filter</button>
+  <select class="filterbox" name="sort-type" id="sort">
+    <option value="sort by subject ascendingly">Sort by subject ascendingly</option>
+    <option value="sort by subject descendingly">Sort by subject descendingly</option>
+    <option value="sort by sender ascendingly">Sort by sender ascendingly</option>
+    <option value="sort by sender descendingly">Sort by sender descendingly</option>
+    <option value="sort by sender ascendingly">Sort by recievers ascendingly</option>
+    <option value="sort by sender descendingly">Sort by recievers descendingly</option>
+    <option value="sort by sender ascendingly">Sort by body ascendingly</option>
+    <option value="sort by sender descendingly">Sort by body descendingly</option>
+    <option value="sort by sender ascendingly">Sort by attachments ascendingly</option>
+    <option value="sort by sender descendingly">Sort by attachments descendingly</option>
+  </select>
+  <button class="filter" onclick="openCity('Tokyo', this, 'blue')">Sort</button>
   <div class="inbox">
     <table class="content-table">
       <thead>
@@ -30,30 +49,60 @@
 export default {
   data() {
     return {
-      emails: [{
-        subject: "sub",
-        sender: "can",
-        reciever: "ssss"
-      }, {
-        subject: "lomdsad",
-        sender: "aheads",
-        reciever: "ssss"
-      }, {
-        subject: "smarkub",
-        sender: "caabdooon",
-        reciever: "ssminaaass"
-      }]
+      username:"",
+      emailAdd: "",
+      emails: []
     };
   },
   methods: {
-    testHello() {
-      this.Hello = "not me";
-    }
+  },
+  created: async function() {
+    this.username = this.$route.params.username;
+    this.emailAdd = this.$route.params.emailAdd;
+    const response = await axios.post("http://localhost:8095/mails/", {
+        listname: "Inbox",
+        user: this.emailAdd,
+    });
+    this.emails = response.data;
   }
 };
 </script>
 
 <style scoped>
+.filterbox {
+  border-width: 3px;
+  float: left;
+  cursor: pointer;
+  padding: 14px 16px;
+  font-size: 12px;
+  width: 17%;
+  margin-right: 2px;
+  margin-left: 2px;
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+.filterboxcontent {
+  color: white;
+  display: none;
+  text-align: center;
+}
+.filter {
+  background-color: rgb(49, 167, 112);
+  border-radius: 4px;
+  border-width: 3px;
+  color: white;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  font-size: 17px;
+  width: 20%;
+  margin-right: 2px;
+  margin-left: 2px;
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
 .tablink {
   background-color: #555;
   color: white;

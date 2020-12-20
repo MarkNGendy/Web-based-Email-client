@@ -230,7 +230,7 @@ export default {
       if(response.data.success == true) {
         this.$router.push({ name: "user", params: { username: this.username } });
       } else {
-        prompt("This email already exists");
+        alert("This email already exists");
       }
       return this.error === "";
     },

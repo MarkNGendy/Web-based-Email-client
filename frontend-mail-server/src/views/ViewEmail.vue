@@ -6,17 +6,13 @@
         <label for="fname">To</label>
       </div>
       <div class="col-75">
-        <select id="reciever" name="emails" multiple>
-          <option value="australia">7amada@gmail</option>
-          <option value="canada">Ahmed@gmail.com</option>
-          <option value="usa">Abdo@gmail.com</option>
-          <option value="australia">7amada@gmail</option>
-          <option value="canada">Ahmed@gmail.com</option>
-          <option value="usa">Abdo@gmail.com</option>
-          <option value="australia">7amada@gmail</option>
-          <option value="canada">Ahmed@gmail.com</option>
-          <option value="usa">Abdo@gmail.com</option>
-        </select>
+        <ul id="reciever" name="emails" multiple>
+          <dt value="australia">7amada@gmail</dt>
+          <dt value="canada">Ahmed@gmail.com</dt>
+          <dt value="usa">Abdo@gmail.com</dt>
+          <dt value="australia">7amada@gmail</dt>
+          <dt value="canada">Ahmed@gmail.com</dt>
+        </ul>
       </div>
     </div>
     <div class="row">
@@ -24,7 +20,7 @@
         <label for="lname">Subject</label>
       </div>
       <div class="col-75">
-        <input type="text" id="lname" name="lastname" placeholder="Write subject of your email..">
+        <label id="subject" name="subject">{{subject}}</label>
       </div>
     </div>
     <div class="row">
@@ -32,7 +28,7 @@
         <label for="subject">Body</label>
       </div>
       <div class="col-75">
-        <textarea id="subject" name="subject" placeholder="Write something.." style="height:200px"></textarea>
+        <p id="body" name="body">{{ body }}</p>
       </div>
     </div>
     <div class="row">
@@ -44,8 +40,7 @@
       </div>
     </div>
     <div class="row">
-      <button class="submit">Send</button>
-      <button class="submit">Save to drafts</button>
+      <button class="submit">Back</button>
     </div>
   </form>
 </div>
@@ -53,7 +48,14 @@
 
 <script>
 export default {
-  
+  name: "view-email",
+  data() {
+    return {
+      recievers: [],
+      subject: "Test",
+      body: "sdadadasdasdadasd"
+    }
+  }
 }
 </script>
 

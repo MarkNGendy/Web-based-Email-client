@@ -101,9 +101,9 @@ export default {
       });
       if(response.data.success == true) {
         this.username = response.data.ans;
-        this.$router.push({ name: "user", params: { username: this.username } });
+        this.$router.push({ name: "user", params: { username: this.username, emailAdd:this.email} });
       } else {
-        prompt("You entered wrong email or password");
+        alert("You entered wrong email or password");
         return this.error === "";
       }
     },

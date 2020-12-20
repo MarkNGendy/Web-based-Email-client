@@ -29,6 +29,12 @@ const routes = [
         props: true
       },
       {
+        path: "/contacts",
+        name: "contacts",
+        component: () => import("../views/Contacts.vue"),
+        props: true
+      },
+      {
         path: "/inbox",
         name: "inbox",
         component: () => import("../views/Inbox.vue"),
@@ -56,6 +62,12 @@ const routes = [
         path: "/user-folders",
         name:"user-folders",
         component: () => import("../views/UserFolders.vue"),
+        props: true
+      },
+      {
+        path: "/view-email",
+        name:"view-email",
+        component: () => import("../views/ViewEmail.vue"),
         props: true
       }
     ]

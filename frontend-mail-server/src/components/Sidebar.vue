@@ -4,12 +4,19 @@
             {{ username }}
         </div>
         <div class="menu-items">
-            <router-link :to="{name: 'compose-email', params: {username :$route.params.username}}" active-class="active" tag="button" exact class="side-btn">
+            <router-link :to="{ name: 'compose-email', params: {username : username, 
+            emailAdd: emailAdd}}" active-class="active" tag="button" exact class="side-btn">
                 <div class="link-container">
                     Compose Email
                 </div>
             </router-link>
-            <router-link :to="{name: 'inbox', params: {username :$route.params.username}}" active-class="active" tag="button" exact class="side-btn">
+            <router-link :to="{name: 'contacts', params: {username :$route.params.username}}" active-class="active" tag="button" exact class="side-btn">
+                <div class="link-container">
+                    Contacts
+                </div>
+            </router-link>
+            <router-link :to="{name: 'inbox', params: {username : username, 
+            emailAdd: emailAdd}}" active-class="active" tag="button" exact class="side-btn">
                 <div class="link-container">
                     Inbox
                 </div>
@@ -34,6 +41,11 @@
                     UserFolders
                 </div>
             </router-link>
+            <router-link :to="{name: 'view-email', params: {username :$route.params.username}}" active-class="active" tag="button" exact class="side-btn">
+                <div class="link-container">
+                    View Email
+                </div>
+            </router-link>
             <router-link to="/" active-class="active" tag="button" exact class="side-btn">
                 <div class="link-container">
                     Logout
@@ -48,11 +60,13 @@ export default {
   name:"Sidebar",
   data() {
     return {
-      username: ""
+      username: "",
+      emailAdd: ""
     }
   },
   created: function() {
     this.username = this.$route.params.username;
+    this.emailAdd = this.$route.params.emailAdd;
   },
 }
 </script>
@@ -74,7 +88,7 @@ export default {
 }
 
 .menu-items > * {
-    margin-top: 50px;
+    margin-top: 30px;
 }
 
 .side-btn {
