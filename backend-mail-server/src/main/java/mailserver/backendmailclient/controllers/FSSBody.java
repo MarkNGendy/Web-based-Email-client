@@ -4,13 +4,13 @@ import mailserver.backendmailclient.classes.Mail;
 
 import java.util.List;
 
-public class FilterSortBody {
+public class FSSBody {
     private List<Mail> list;
     private String field;
     private String criteria;
 
 
-    public FilterSortBody(List<Mail> list, String field, String criteria) {
+    public FSSBody(List<Mail> list, String field, String criteria) {
         this.list = list;
         this.field = field;
         this.criteria = criteria;
