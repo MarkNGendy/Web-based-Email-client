@@ -38,8 +38,18 @@ public class HomeController {
         return user1.signup(user);
     }
 
+    @PostMapping("/read/")
+    public Mail read(@RequestBody ReadMailBody ReadBody){
+        for(Mail m : ReadBody.getList()){
+            if(ReadBody.getID().equalsIgnoreCase(m.getID())){
+                return m;
+            }
+        }
+        return ReadBody.getList().get(0);
+    }
+
     @PostMapping("/filter/")
-    public List<Mail> filter(@RequestBody FilterSortBody filterBody){
+    public List<Mail> filter(@RequestBody FSSBody filterBody){
         Filter myFilter = new Filter();
         String field = filterBody.getField();
         if (field.equalsIgnoreCase("SUBJECT")){
@@ -54,7 +64,7 @@ public class HomeController {
     }
 
     @PostMapping("/sort/")
-    public List<Mail> sort(@RequestBody FilterSortBody sortBody){
+    public List<Mail> sort(@RequestBody FSSBody sortBody){
         Sort mySorter = new Sort();
         String field = sortBody.getField();
         if (field.equalsIgnoreCase("SUBJECT")){
@@ -82,4 +92,31 @@ public class HomeController {
             return sortBody.getList();
         }
     }
+
+    @PostMapping("/search/")
+    public List<Mail> search(@RequestBody FSSBody searchBody){
+        Search mySearcher = new Search();
+        String field = searchBody.getField();
+        if (field.equalsIgnoreCase("SUBJECT")){
+            return mySearcher.subjectSearch(searchBody.getList(),searchBody.getCriteria());
+        }
+        else if (field.equalsIgnoreCase("BODY")){
+            return mySearcher.bodySearch(searchBody.getList(),searchBody.getCriteria());
+        }
+        else if (field.equalsIgnoreCase("SENDER")){
+            return mySearcher.senderSearch(searchBody.getList(),searchBody.getCriteria());
+        }
+        else if (field.equalsIgnoreCase("RECEIVERS")){
+            return mySearcher.receiversSearch(searchBody.getList(),searchBody.getCriteria());
+        }
+        else if (field.equalsIgnoreCase("WHOLE")){
+            return mySearcher.wholeSearch(searchBody.getList(),searchBody.getCriteria());
+        }
+        else {
+            return searchBody.getList();
+        }
+
+    }
+
+
 }
