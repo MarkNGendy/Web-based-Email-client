@@ -14,7 +14,6 @@ public class HomeController {
 
     @PostMapping("/mails/")
     public List<DemoMail> getUserMails(@RequestBody ListRequest listRequest) {
-        System.out.println(listRequest.getListname() + " " + listRequest.getuser());
         File file = new File(
                 "Server/" + listRequest.getuser() + "/folders/" + listRequest.getListname() + "/mails.json");
         ReaderList<DemoMail> readlist = new MailsJson();
@@ -41,7 +40,6 @@ public class HomeController {
 
     @PostMapping("/read/")
     public Mail read(@RequestBody ReadMailBody ReadBody){
-        System.out.println(ReadBody.getList());
         for(Mail m : (ReadBody.getList())){
             if(ReadBody.getID().equalsIgnoreCase(m.getID())){
                 return m;

@@ -3,6 +3,16 @@
   <form action="action_page.php">
     <div class="row">
       <div class="col-25">
+        <label for="fname">From</label>
+      </div>
+      <div class="col-75">
+        <ul id="sender">
+          <dt>{{ sender }}</dt>
+        </ul>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-25">
         <label for="fname">To</label>
       </div>
       <div class="col-75">
@@ -36,7 +46,7 @@
       </div>
     </div>
     <div class="row">
-      <button class="submit">Back</button>
+      <button class="submit" @click="gotoHome()">Home</button>
     </div>
   </form>
 </div>
@@ -52,14 +62,20 @@ export default {
       id: "",
       receiver: [],
       subject: "",
-      body: ""
+      body: "",
+      sender: "",
+    }
+  },
+  methods: {
+    gotoHome() {
+      this.$router.push({ name: "user", params: { username: this.username, emailAdd:this.email} });
     }
   },
   created: async function() {
     this.username = this.$route.params.username;
     this.emailAdd = this.$route.params.emailAdd;
     this.id = this.$route.params.id;
-    this.emails = JSON.parse(this.$route.query.emails);
+    this.emails = JSON.parse(this.$route.params.emails);
     console.log(this.emails)
     const response = await axios.post("http://localhost:8095/read/", {
         list: this.emails,
@@ -69,6 +85,7 @@ export default {
     this.recievers = response.data.receivers;
     this.subject = response.data.subject;
     this.body = response.data.body;
+    this.sender = response.data.sender;
   }
 }
 </script>
