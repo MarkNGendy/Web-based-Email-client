@@ -9,8 +9,7 @@ import mailserver.backendmailclient.interfaces.IFolder;
 public class Folder implements IFolder {
 
     @Override
-    public boolean deleteFolder(String source) {
-        File src = new File(source);
+    public boolean deleteFolder(File src) {
         if (src.isDirectory()) {
             String[] files = src.list();
             if (files.length == 0) {
@@ -18,7 +17,7 @@ public class Folder implements IFolder {
             } else {
                 for (String filename : files) {
                     File newfile = new File(src, filename);
-                    deleteFolder(newfile.getPath());
+                    deleteFolder(newfile);
                     if (src.exists())
                         src.delete();
                 }
@@ -30,9 +29,7 @@ public class Folder implements IFolder {
     }
 
     @Override
-    public boolean copyFolder(String destination, String source) {
-        File dest = new File(destination);
-        File src = new File(source);
+    public boolean copyFolder(File src, File dest) {
         if (src.isDirectory()) {
             if (!dest.exists()) {
                 dest.mkdir();
@@ -41,13 +38,16 @@ public class Folder implements IFolder {
             for (String filename : files) {
                 File srcFile = new File(src, filename);
                 File destFile = new File(dest, filename);
-                if (!copyFolder(srcFile.getPath(), destFile.getPath()))
+                if (!copyFolder(srcFile, destFile)) {
+                    System.out.println("folder.copy.0003");
                     return false;
+                }
             }
         } else {
             try {
                 Files.copy(src.toPath(), dest.toPath());
             } catch (IOException e) {
+                System.out.println("folder.copy.0004");
                 return false;
             }
         }
@@ -55,10 +55,8 @@ public class Folder implements IFolder {
     }
 
     @Override
-    public boolean moveFolder(String destination, String source) {
-        if (copyFolder(destination, source) && deleteFolder(source))
-            return true;
-        return false;
+    public boolean moveFolder(File source, File destination) {
+        return copyFolder(source, destination) && deleteFolder(source);
     }
 
     @Override

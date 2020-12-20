@@ -8,7 +8,8 @@ public class DemoMail {
     protected String subject;
     protected Date date;
     protected String sender;
-    protected List<String> reciever;
+    protected List<String> receiver;
+    protected int importance;
 
     public String getID() {
         return id;
@@ -50,12 +51,15 @@ public class DemoMail {
         this.sender = sender;
     }
 
-    public List<String> getRecievers() {
-        return reciever;
+    public List<String> getReceivers() {
+        return receiver;
     }
 
-    public void setReciever(List<String> reciever) {
-        this.reciever = reciever;
+    public void setReceiver(List<String> receiver) {
+        this.receiver = this.receiver;
     }
 
+    public int getImportance() { return importance; }
+
+    public void setImportance(int importance) { this.importance = importance; }
 }

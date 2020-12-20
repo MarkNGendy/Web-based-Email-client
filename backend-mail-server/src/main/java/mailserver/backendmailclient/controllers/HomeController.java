@@ -52,4 +52,34 @@ public class HomeController {
             return filterBody.getList();
         }
     }
+
+    @PostMapping("/sort/")
+    public List<Mail> sort(@RequestBody FilterSortBody sortBody){
+        Sort mySorter = new Sort();
+        String field = sortBody.getField();
+        if (field.equalsIgnoreCase("SUBJECT")){
+            return mySorter.subjectSorter(sortBody.getList(),sortBody.getCriteria());
+        }
+        else if (field.equalsIgnoreCase("SENDER")){
+            return mySorter.senderSorter(sortBody.getList(),sortBody.getCriteria());
+        }
+        else if (field.equalsIgnoreCase("RECEIVERS")){
+            return mySorter.receiversSorter(sortBody.getList(),sortBody.getCriteria());
+        }
+        else if (field.equalsIgnoreCase("IMPORTANCE")){
+            return mySorter.importanceSorter(sortBody.getList(),sortBody.getCriteria());
+        }
+        else if (field.equalsIgnoreCase("TIME")){
+            return mySorter.dateSorter(sortBody.getList(),sortBody.getCriteria());
+        }
+        else if (field.equalsIgnoreCase("BODY")){
+            return mySorter.bodySorter(sortBody.getList(),sortBody.getCriteria());
+        }
+        else if (field.equalsIgnoreCase("ATTACHMENTS")){
+            return mySorter.attachmentSorter(sortBody.getList(),sortBody.getCriteria());
+        }
+        else {
+            return sortBody.getList();
+        }
+    }
 }

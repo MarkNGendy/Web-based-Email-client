@@ -12,7 +12,7 @@ public interface ISort {
 
     public List<Mail> senderSorter(List<Mail> mails, String criteria);
 
-    public List<Mail> receiverSorter(List<Mail> mails, String criteria);
+    public List<Mail> receiversSorter(List<Mail> mails, String criteria);
 
     public List<Mail> importanceSorter(List<Mail> mails, String criteria);
 

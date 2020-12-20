@@ -13,7 +13,7 @@ public class main {
         test.add(new Mail("s2",null,"Ali",null,null));
         test.add(new Mail("s3",null,"yousef",null,null));
         test.add(new Mail("s4",null,"mark",null,null));
-        Collections.sort(test,Mail.MailSubjectComparator);
+        Collections.sort(test,Mail.DMailSubjectComparator);
         for (Mail m : test){
             System.out.println(m);
         }
