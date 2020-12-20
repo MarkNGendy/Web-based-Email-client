@@ -51,7 +51,7 @@ public class DemoMail {
         this.sender = sender;
     }
 
-    public List<String> getReceivers() {
+    public List<String> getReceiver() {
         return receiver;
     }
 

@@ -6,12 +6,8 @@
         <label for="fname">To</label>
       </div>
       <div class="col-75">
-        <ul id="reciever" name="emails" multiple>
-          <dt value="australia">7amada@gmail</dt>
-          <dt value="canada">Ahmed@gmail.com</dt>
-          <dt value="usa">Abdo@gmail.com</dt>
-          <dt value="australia">7amada@gmail</dt>
-          <dt value="canada">Ahmed@gmail.com</dt>
+        <ul id="recievers" v-for="item in recievers" :key="item">
+          <dt>{{ item }}</dt>
         </ul>
       </div>
     </div>
@@ -47,14 +43,32 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "view-email",
   data() {
     return {
+      emails:[],
+      id: "",
       recievers: [],
-      subject: "Test",
-      body: "sdadadasdasdadasd"
+      subject: "",
+      body: ""
     }
+  },
+  created: async function() {
+    this.username = this.$route.params.username;
+    this.emailAdd = this.$route.params.emailAdd;
+    this.id = this.$route.params.id;
+    this.emails = JSON.parse(this.$route.query.emails);
+    console.log(this.emails)
+    const response = await axios.post("http://localhost:8095/read/", {
+        list: this.emails,
+        ID: this.id,
+    });
+    console.log(response);
+    this.recievers = response.data.recievers;
+    this.subject = response.data.subject;
+    this.body = response.data.body;
   }
 }
 </script>

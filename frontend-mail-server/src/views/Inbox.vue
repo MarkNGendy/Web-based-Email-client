@@ -36,7 +36,8 @@
       <tbody v-for="item in emails" :key="item.subject">
         <tr>
           <td><input type="checkbox" id="1"></td>
-          <td><router-link :to="{name: 'view-email', params: {username :$route.params.username}}">
+          <td><router-link :to="{name: 'view-email', params: {username: username,
+           emailAdd: emailAdd, id:item.id}, query: {emails: JSON.stringify(allMails)}}">
           {{item.subject}}</router-link></td>
           <td>{{item.sender}}</td>
           <td>
@@ -78,7 +79,6 @@ export default {
     },
     paginate() {
       var counter = 0;
-      console.log(this.currIndex)
       var left = ((this.currIndex - 1) * (this.allMails.length-1));
       var right = ((this.currIndex - 1) * (this.allMails.length-1) + 3);
       var i = left;
@@ -89,6 +89,7 @@ export default {
         i++;
       }
       this.emails = list;
+      console.log(this.emails)
     }
   },
   created: async function() {
