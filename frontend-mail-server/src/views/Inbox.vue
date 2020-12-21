@@ -1,6 +1,6 @@
 <template>
   <button class="tablink" @click="prevPage()">Previous Page</button>
-  <button class="tablink" onclick="openCity('Paris', this, 'green')">Delete</button>
+  <button class="tablink" @click="delete()">Delete</button>
   <button class="tablink" @click="nextPage()">Next Page</button>
   <input type="text" class="filterbox" placeholder="Enter filter value.." id="filter-val">
   <select class="filterbox" name="sort-type" id="filter">
@@ -44,7 +44,7 @@
       </thead>
       <tbody v-for="item in emails" :key="item.subject">
         <tr>
-          <td><input type="checkbox" id="1"></td>
+          <td><input v-bind:value="JSON.parse(JSON.stringify(item))" id="check" type="checkbox" >{{item.id}}</td>
           <td><router-link :to="{name: 'view-email', params: {username: username,
           emailAdd: emailAdd, id:item.id, emails: JSON.stringify(allMails)}}">
           {{item.subject}}</router-link></td>
@@ -76,6 +76,9 @@ export default {
     };
   },
   methods: {
+    delete() {
+      
+    },
     async nextPage() {
       if(this.currIndex < (this.allMails.length / 4)) {
         this.currIndex++; 
@@ -161,6 +164,8 @@ export default {
     this.paginate(this.filteredList);
     },
     gotoHome() {
+      var sel = document.getElementById('check');
+      console.log(sel.value);
       this.$router.push({ name: "user", params: { username: this.username, emailAdd:this.email} });
     },
   },

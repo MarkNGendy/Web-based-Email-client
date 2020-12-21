@@ -81,8 +81,8 @@ export default {
 }
 .title {
     color: white;
-    font-size: 24px;
-    margin-top: 10px;
+    font-size: 23px;
+    margin-top: 14px;
 }
 
 .menu-items {
