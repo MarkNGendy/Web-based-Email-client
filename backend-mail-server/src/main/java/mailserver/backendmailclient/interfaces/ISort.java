@@ -1,5 +1,6 @@
 package mailserver.backendmailclient.interfaces;
 
+import mailserver.backendmailclient.classes.Contact;
 import mailserver.backendmailclient.classes.Mail;
 
 import java.util.List;
@@ -20,4 +21,5 @@ public interface ISort {
 
     public List<Mail> attachmentSorter(List<Mail> mails, String criteria);
 
+    public List<Contact> contactsSorter(List<Contact> contacts, String criteria);
 }

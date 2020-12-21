@@ -103,5 +103,19 @@ public class Sort implements ISort {
             return mails;
         }
     }
+
+    @Override
+    public List<Contact> contactsSorter(List<Contact> contacts, String criteria) {
+        if (criteria.equalsIgnoreCase("DESCENDING")) {
+            Collections.sort(contacts, Contact.DContactsComparator);
+            return contacts;
+        } else if (criteria.equalsIgnoreCase("ASCENDING")){
+            Collections.sort(contacts, Contact.AContactsComparator);
+            return contacts;
+        }
+        else {
+            return contacts;
+        }
+    }
 }
 

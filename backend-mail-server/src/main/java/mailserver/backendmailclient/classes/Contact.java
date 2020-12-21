@@ -32,4 +32,32 @@ public class Contact implements IContact {
     @Override
     public void addMail(String email) { mails.add(email); }
 
+    /* Comparators for sorting the contacts by contact name */
+    public static Comparator<Contact> AContactsComparator = new Comparator<Contact>() {
+
+        public int compare(Contact c1, Contact c22) {
+            String name1 = c1.getUserName().toUpperCase();
+            String name2 = c22.getUserName().toUpperCase();
+
+            // ascending order
+            return name1.compareTo(name2);
+
+            // descending order
+            // return name2.compareTo(name1);
+        }
+    };
+    public static Comparator<Contact> DContactsComparator = new Comparator<Contact>() {
+
+        public int compare(Contact c1, Contact c22) {
+            String name1 = c1.getUserName().toUpperCase();
+            String name2 = c22.getUserName().toUpperCase();
+
+            // ascending order
+            //return name1.compareTo(name2);
+
+            // descending order
+            return name2.compareTo(name1);
+        }
+    };
+
 }
