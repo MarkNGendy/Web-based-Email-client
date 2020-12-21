@@ -19,4 +19,5 @@ public interface ISort {
     public List<Mail> bodySorter(List<Mail> mails, String criteria);
 
     public List<Mail> attachmentSorter(List<Mail> mails, String criteria);
+
 }
