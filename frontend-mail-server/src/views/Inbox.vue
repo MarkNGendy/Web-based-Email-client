@@ -9,28 +9,27 @@
   </select>
   <button class="filter" @click="filter()">Filter</button>
   <select class="filterbox" name="sort-type" id="sort">
-    <option value="sort by subject ascendingly">Sort by subject ascendingly</option>
-    <option value="sort by subject descendingly">Sort by subject descendingly</option>
-    <option value="sort by sender ascendingly">Sort by sender ascendingly</option>
-    <option value="sort by sender descendingly">Sort by sender descendingly</option>
-    <option value="sort by sender ascendingly">Sort by recievers ascendingly</option>
-    <option value="sort by sender descendingly">Sort by recievers descendingly</option>
-    <option value="sort by sender ascendingly">Sort by body ascendingly</option>
-    <option value="sort by sender descendingly">Sort by body descendingly</option>
-    <option value="sort by sender ascendingly">Sort by attachments ascendingly</option>
-    <option value="sort by sender descendingly">Sort by attachments descendingly</option>
+    <option  value="SUBJECT">Sort by subject</option>
+    <option  value="SENDER">Sort by sender</option>
+    <option  value="RECEIVERS">Sort by recievers</option>
+    <option  value="BODY">Sort by body</option>
+    <option  value="ATTACHMENTS">Sort by attachments</option>
   </select>
-  <button class="filter" onclick="openCity('Tokyo', this, 'blue')">Sort</button>
-  <input type="text" class="filterbox" placeholder="Enter search value..">
-  <select class="filterbox" name="sort-type" id="sort">
-    <option value="Filter by subject">Search in subjects</option>
-    <option value="Filter by subject">Search in senders</option>
-    <option value="Filter by subject">Search in recievers</option>
-    <option value="Filter by subject">Search in body</option>
-    <option value="Filter by subject">Whole search</option>
+  <select class="filterbox" name="sort-type" id="sort-type">
+    <option  value="ASCENDING">Ascending</option>
+    <option  value="DESCENDING">Descending</option>
   </select>
-  <button class="filter" onclick="openCity('Paris', this, 'green')">Search</button>
-  <button class="filter" @click="reload()">Home</button>
+  <button class="filter" @click="sort()">Sort</button>
+  <input id="search-val" type="text" class="filterbox" placeholder="Enter search value..">
+  <select id="search-cat" class="filterbox" name="sort-type">
+    <option value="SUBJECT">Search in subjects</option>
+    <option value="SENDER">Search in senders</option>
+    <option value="RECEIVERS">Search in receivers</option>
+    <option value="BODY">Search in body</option>
+    <option value="WHOLE">Whole search</option>
+  </select>
+  <button class="filter" @click="search()">Search</button>
+  <button class="filter" @click="gotoHome()">Home</button>
   <div class="inbox">
     <table class="content-table">
       <thead>
@@ -73,6 +72,7 @@ export default {
       allMails: [],
       currIndex: 1,
       filteredList: [],
+      isFiltered: false,
     };
   },
   methods: {
@@ -80,13 +80,21 @@ export default {
       if(this.currIndex < (this.allMails.length / 4)) {
         this.currIndex++; 
       }
-      await this.paginate(this.allMails);
+      if (this.isFiltered == true) {
+        await this.paginate(this.filteredList);
+      } else {
+        await this.paginate(this.allMails);
+      }
     },
     async prevPage() {
       if(this.currIndex != 1) {
         this.currIndex--; 
       }
-      await this.paginate(this.allMails);
+      if (this.isFiltered == true) {
+        await this.paginate(this.filteredList);
+      } else {
+        await this.paginate(this.allMails);
+      }
     },
     paginate(mailsList) {
       var counter = 0;
@@ -113,9 +121,46 @@ export default {
     });
     this.filteredList = response.data;
     this.currIndex = 1;
+    this.isFiltered = true;
     this.paginate(this.filteredList);
     },
-    reload() {
+    async sort() {
+      var requestList;
+      if(this.isFiltered == true){
+        requestList = this.filteredList;
+      } else {
+        requestList = this.allMails;
+      }
+      var sel = document.getElementById('sort');
+      var field = sel.value;
+      var value = document.getElementById('sort-type');
+      var criteria = value.value;
+      const response = await axios.post("http://localhost:8095/sort/", {
+        list: requestList,
+        field: field,
+        criteria: criteria
+    });
+    this.filteredList = response.data;
+    this.currIndex = 1;
+    this.isFiltered = true;
+    this.paginate(this.filteredList);
+    },
+    async search() {
+      var sel = document.getElementById('search-cat');
+      var field = sel.value;
+      var value = document.getElementById('search-val');
+      var criteria = value.value;
+      const response = await axios.post("http://localhost:8095/search/", {
+        list: this.allMails,
+        field: field,
+        criteria: criteria
+    });
+    this.filteredList = response.data;
+    this.currIndex = 1;
+    this.isFiltered = true;
+    this.paginate(this.filteredList);
+    },
+    gotoHome() {
       this.$router.push({ name: "user", params: { username: this.username, emailAdd:this.email} });
     },
   },
@@ -126,8 +171,8 @@ export default {
         listname: "Inbox",
         user: this.emailAdd,
     });
-    console.log(response.data);
     this.allMails = response.data;
+    this.isFiltered = false;
     this.currIndex = 1;
     this.paginate(this.allMails);
   }
@@ -137,11 +182,11 @@ export default {
 <style scoped>
 .filterbox {
   border-width: 3px;
-  float: left;
+  float: center;
   cursor: pointer;
   padding: 14px 16px;
   font-size: 12px;
-  width: 14%;
+  width: 16%;
   margin-right: 2px;
   margin-left: 2px;
   margin-top: 2px;
@@ -157,13 +202,13 @@ export default {
   border-radius: 4px;
   border-width: 3px;
   color: white;
-  float: left;
+  float: center;
   border: none;
   outline: none;
   cursor: pointer;
   padding: 14px 16px;
   font-size: 17px;
-  width: 7%;
+  width: 10%;
   margin-right: 2px;
   margin-left: 2px;
   margin-top: 2px;

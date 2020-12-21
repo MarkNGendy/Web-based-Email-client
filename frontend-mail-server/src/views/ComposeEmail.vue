@@ -3,7 +3,7 @@
   <form action="action_page.php">
     <div class="row">
       <div class="col-25">
-        <label for="fname">To</label>
+        <label for="fname">Choose receivers</label>
       </div>
       <div class="col-75">
         <select id="reciever" name="emails" multiple>
@@ -17,6 +17,47 @@
           <option value="canada">Ahmed@gmail.com</option>
           <option value="usa">Abdo@gmail.com</option>
         </select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-25">
+        <label for="fname">To</label>
+      </div>
+      <div class="col-75">
+      <button class="left-col">Add to receivers</button>
+      <select id="reciever" name="emails" multiple>
+          <option value="australia">7amada@gmail</option>
+          <option value="canada">Ahmed@gmail.com</option>
+          <option value="usa">Abdo@gmail.com</option>
+          <option value="australia">7amada@gmail</option>
+          <option value="canada">Ahmed@gmail.com</option>
+          <option value="usa">Abdo@gmail.com</option>
+          <option value="australia">7amada@gmail</option>
+          <option value="canada">Ahmed@gmail.com</option>
+          <option value="usa">Abdo@gmail.com</option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-25">
+        <label for="fname">Choose Importance</label>
+      </div>
+      <div class="col-75">
+      <select class="right-col" id="reciever" name="emails">
+          <option value="australia">1</option>
+          <option value="canada">2</option>
+          <option value="usa">3</option>
+          <option value="australia">4</option>
+          <option value="canada">5</option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-25">
+        <label for="fname">Date</label>
+      </div>
+      <div class="col-75">
+        <input type="text" id="lname" name="lastname" placeholder="Write email date..">
       </div>
     </div>
     <div class="row">
@@ -100,6 +141,23 @@ label {
   margin-top: 6px;
 }
 
+.left-col {
+  float: center;
+  
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 20px;
+  margin-right: 5px;
+  border: none;
+  border-radius: 4px;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+
+.right-col {
+  align-items: center;
+  font-size: 16px;
+}
 /* Floating column for inputs: 75% width */
 .col-75 {
   float: left;
