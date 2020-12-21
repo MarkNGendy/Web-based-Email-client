@@ -71,4 +71,15 @@ public class Search implements ISearch {
         }
         return result;
     }
+
+    @Override
+    public List<Contact> contactsSearch(List<Contact> contacts, String search) {
+        List<Contact> result = new ArrayList<Contact>();
+        for(Contact c : contacts){
+            if(c.getUserName().contains(search)){
+                result.add(c);
+            }
+        }
+        return result;
+    }
 }

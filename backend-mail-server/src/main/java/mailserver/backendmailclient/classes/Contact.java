@@ -1,29 +1,63 @@
 package mailserver.backendmailclient.classes;
 
+import mailserver.backendmailclient.interfaces.IContact;
+
 import java.util.*;
 
-public class Contact {
-    private String username;
-    private List<String> email;
+public class Contact implements IContact {
+    private String userName;
+    private List<String> mails;
 
-    public Contact(String username, List<String> email) {
-        this.username = username;
-        this.email = email;
+    public Contact(String userName, List<String> mails) {
+        this.userName = userName;
+        this.mails = mails;
+    }
+    @Override
+    public String getUserName() {
+        return userName;
     }
 
-    public String getUsername() {
-        return username;
-    }
+    @Override
+    public void setUserName(String userName) { this.userName = userName; }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+    @Override
+    public void setMails(List<String> mails) { this.mails = mails; }
 
-    public List<String> getEmail() {
-        return email;
-    }
+    @Override
+    public List<String> getMails() { return mails; }
 
-    public void setEmail(List<String> email) {
-        this.email = email;
-    }
+    @Override
+    public void removeMail(int index) { mails.remove(index); }
+
+    @Override
+    public void addMail(String email) { mails.add(email); }
+
+    /* Comparators for sorting the contacts by contact name */
+    public static Comparator<Contact> AContactsComparator = new Comparator<Contact>() {
+
+        public int compare(Contact c1, Contact c22) {
+            String name1 = c1.getUserName().toUpperCase();
+            String name2 = c22.getUserName().toUpperCase();
+
+            // ascending order
+            return name1.compareTo(name2);
+
+            // descending order
+            // return name2.compareTo(name1);
+        }
+    };
+    public static Comparator<Contact> DContactsComparator = new Comparator<Contact>() {
+
+        public int compare(Contact c1, Contact c22) {
+            String name1 = c1.getUserName().toUpperCase();
+            String name2 = c22.getUserName().toUpperCase();
+
+            // ascending order
+            //return name1.compareTo(name2);
+
+            // descending order
+            return name2.compareTo(name1);
+        }
+    };
+
 }

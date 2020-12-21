@@ -3,6 +3,7 @@ package mailserver.backendmailclient.interfaces;
 import java.util.List;
 
 import mailserver.backendmailclient.classes.Answer;
+import mailserver.backendmailclient.classes.Contact;
 import mailserver.backendmailclient.classes.DemoUsers;
 
 public interface IUser {
@@ -18,9 +19,11 @@ public interface IUser {
 
     public boolean removeFolder(int index);
 
-    public boolean addContact(IContact contact);
+    public void addContact(Contact contact);
 
-    public boolean removeContact(int index);
+    public void removeContact(int index);
+
+    public void editContactMails(int contactInd, int operation, int removedMailInd, String newMail);
 
     public List<IMail> listmails(String folder);
 
