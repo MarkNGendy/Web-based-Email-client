@@ -11,18 +11,18 @@ public class MailBody {
     private String body;
     private List<File> attachments;
     private String sender;
-    private List<String> receiver;
+    private List<String> receivers;
 
-    public MailBody(String sender, List<String> receiver, String subject, String body, List<File> attachments) {
+    public MailBody(String sender, List<String> receivers, String subject, String body, List<File> attachments) {
         this.sender = sender;
-        this.receiver = receiver;
+        this.receivers = receivers;
         this.subject = subject;
         this.body = body;
         this.attachments = attachments;
     }
 
     public Mail toMail() {
-        Mail ans = new Mail(sender, receiver, subject, body, attachments);
+        Mail ans = new Mail(sender, receivers, subject, body, attachments);
         Long time = System.currentTimeMillis();
         String mailname = Long.toString(time);
         ans.setID(mailname);

@@ -17,7 +17,7 @@ public interface IMailBuilder {
 
     public void buildSender(String sender);
 
-    public void buildReciever(List<String> reciever);
+    public void buildReceivers(List<String> receiver);
 
     public Mail getMail();
 }
