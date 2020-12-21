@@ -51,7 +51,7 @@
           {{item.subject}}</router-link></td>
           <td>{{item.sender}}</td>
           <td>
-            <ul>{{item.receiver}}
+            <ul>{{item.receivers}}
             </ul>
           </td>
           <td>{{item.date}}</td>
@@ -126,6 +126,7 @@ export default {
         listname: "Inbox",
         user: this.emailAdd,
     });
+    console.log(response.data);
     this.allMails = response.data;
     this.currIndex = 1;
     this.paginate(this.allMails);

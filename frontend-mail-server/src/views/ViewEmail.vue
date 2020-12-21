@@ -16,7 +16,7 @@
         <label for="fname">To</label>
       </div>
       <div class="col-75">
-        <ul id="recievers" v-for="item in recievers" :key="item">
+        <ul id="recievers" v-for="item in receivers" :key="item">
           <dt>{{ item }}</dt>
         </ul>
       </div>
@@ -60,7 +60,7 @@ export default {
     return {
       emails:[],
       id: "",
-      receiver: [],
+      receivers: [],
       subject: "",
       body: "",
       sender: "",
@@ -82,7 +82,7 @@ export default {
         ID: this.id
     });
     console.log(response);
-    this.recievers = response.data.receivers;
+    this.receivers = response.data.receivers;
     this.subject = response.data.subject;
     this.body = response.data.body;
     this.sender = response.data.sender;
