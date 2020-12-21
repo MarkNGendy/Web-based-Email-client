@@ -124,6 +124,7 @@ public class User extends DemoUsers implements IUser {
             default:
         }
         friends.add(temp);
+        Collections.sort(friends, Contact.AContactsComparator);
     }
 
     @Override
