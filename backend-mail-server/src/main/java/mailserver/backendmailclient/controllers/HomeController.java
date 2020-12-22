@@ -21,7 +21,7 @@ public class HomeController {
         return readlist.getList();
     }
 
-    @PostMapping("/savedraft/")
+    @PostMapping("/saveDraft/")
     public Answer saveDraft (@RequestBody MailBody mailBody){
         Mail mail = new Mail();
         return mail.saveDraft(mailBody);
@@ -124,6 +124,25 @@ public class HomeController {
         }
 
     }
+
+    @PostMapping("/contact/")
+    public List<Contact> ViewContact(@RequestBody String user){
+        Contact c = new Contact();
+        return c.readContacts(user);
+    }
+
+    @PostMapping("/addContact")
+    public List<Contact> addContact(@RequestBody ContactBody contactBody){
+        User u = new User();
+        return u.addContact(contactBody.getContact(),contactBody.getUser());
+    }
+
+    @PostMapping("/removeContact")
+    public List<Contact> removeContact(@RequestBody ContactBody contactBody){
+        User u = new User();
+        return u.removeContact(contactBody.getInd(),contactBody.getUser());
+    }
+
 
 
 }

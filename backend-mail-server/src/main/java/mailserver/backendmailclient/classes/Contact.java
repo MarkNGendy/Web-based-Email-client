@@ -1,12 +1,17 @@
 package mailserver.backendmailclient.classes;
 
 import mailserver.backendmailclient.interfaces.IContact;
+import mailserver.backendmailclient.interfaces.IFolder;
+import mailserver.backendmailclient.jsonReaders.ContactsJson;
+import mailserver.backendmailclient.jsonReaders.ReaderList;
 
 import java.util.*;
 
 public class Contact implements IContact {
     private String userName;
     private List<String> mails;
+
+    public Contact() {}
 
     public Contact(String userName, List<String> mails) {
         this.userName = userName;
@@ -31,6 +36,18 @@ public class Contact implements IContact {
 
     @Override
     public void addMail(String email) { mails.add(email); }
+
+    public void writeContacts(List<Contact> contacts,String user){
+        ReaderList<Contact> readerList = new ContactsJson(contacts);
+        IFolder folder = new Folder();
+        folder.writeJson(readerList,"Server/"+user+"/contacts.json");
+    }
+
+    public List<Contact> readContacts(String user){
+        ReaderList<Contact> readlist = new ContactsJson();
+        readlist.toList("Server/"+user+"/contacts.json");
+        return readlist.getList();
+    }
 
     /* Comparators for sorting the contacts by contact name */
     public static Comparator<Contact> AContactsComparator = new Comparator<Contact>() {
