@@ -133,10 +133,4 @@ public class User extends DemoUsers implements IUser {
         return null;
     }
 
-    @Override
-    public List<IMail> sort(String criteria) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
 }

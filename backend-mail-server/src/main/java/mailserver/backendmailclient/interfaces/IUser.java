@@ -27,6 +27,4 @@ public interface IUser {
 
     public List<IMail> listmails(String folder);
 
-    public List<IMail> sort(String criteria);
-
 }
