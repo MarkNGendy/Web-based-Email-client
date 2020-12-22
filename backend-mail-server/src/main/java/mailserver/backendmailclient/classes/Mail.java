@@ -15,12 +15,13 @@ public class Mail extends DemoMail {
     public Mail() {
     }
 
-    public Mail(String sender, List<String> receivers, String subject, String body, List<File> attachments) {
+    public Mail(String sender, List<String> receivers, String subject, String body, List<File> attachments, int importance) {
         this.sender = sender;
         this.receivers = receivers;
         this.subject = subject;
         this.body = body;
         this.attachments = attachments;
+        this.importance = importance;
     }
 
     public List<File> getAttachments() {
