@@ -59,10 +59,10 @@ public class Mail extends DemoMail {
             return new Answer(false, wrong + "Mail.Send.0001");
         }
         IFolder folder = new Folder();
-        File source = new File("server/" + mail.getSender() + "/folders/Sent/" + mail.getID());
+        File source = new File("Server/" + mail.getSender() + "/folders/Sent/" + mail.getID());
         mail.setSrcFolder("Inbox");
         for (String receiver : mail.getReceivers()) {
-            File inbox = new File("server/" + receiver + "/folders/Inbox");
+            File inbox = new File("Server/" + receiver + "/folders/Inbox");
             File dest = new File(inbox, mail.getID());
             if (!folder.copyFolder(source, dest))
                 return new Answer(false, wrong + "Mail.Send.0002");

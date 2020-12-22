@@ -4,6 +4,7 @@ import mailserver.backendmailclient.classes.*;
 import mailserver.backendmailclient.jsonReaders.*;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.*;
@@ -13,12 +14,13 @@ import org.springframework.web.bind.annotation.*;
 public class HomeController {
 
     @PostMapping("/mails/")
-    public List<DemoMail> getUserMails(@RequestBody ListRequest listRequest) {
+    public List<Mail> getUserMails(@RequestBody ListRequest listRequest) {
         File file = new File(
                 "Server/" + listRequest.getuser() + "/folders/" + listRequest.getListname() + "/mails.json");
         ReaderList<DemoMail> readlist = new MailsJson();
         readlist.toList(file.getPath());
-        return readlist.getList();
+        MailsJson reader = new MailsJson();
+        return reader.readMailsFromFolders(readlist.getList(), listRequest);
     }
 
     @PostMapping("/saveDraft/")
@@ -43,6 +45,22 @@ public class HomeController {
     public Answer signup(@RequestBody DemoUsers user){
         User user1 = new User();
         return user1.signup(user);
+    }
+
+    @PostMapping("/read/users/")
+    public List<DemoUsers> readUsers(DemoUsers user){
+        File file = new File("Server/Users.json");
+        ReaderList<DemoUsers> readlist = new UsersJson();
+        readlist.toList("Server/Users.json");
+        List<DemoUsers> userslist = readlist.getList();
+        List<DemoUsers> retList = new ArrayList<>();
+        for (int i = 0; i < userslist.size(); i++) {
+            if (user.getemail().equalsIgnoreCase(userslist.get(i).getemail())) {
+                continue;
+            }
+            retList.add(userslist.get(i));
+        }
+        return userslist;
     }
 
     @PostMapping("/read/")
