@@ -19,14 +19,12 @@ public interface IUser {
 
     public boolean removeFolder(int index);
 
-    public void addContact(Contact contact);
+    public List<Contact> addContact(Contact contact, String user);
 
-    public void removeContact(int index);
+    public List<Contact> removeContact(int index,String user);
 
     public void editContactMails(int contactInd, int operation, int removedMailInd, String newMail);
 
     public List<IMail> listmails(String folder);
-
-    public List<IMail> sort(String criteria);
 
 }

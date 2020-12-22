@@ -103,10 +103,24 @@ public class User extends DemoUsers implements IUser {
     }
 
     @Override
-    public void addContact(Contact contact) { friends.add(contact); }
+    public List<Contact> addContact(Contact contact,String user) {
+        Contact c = new Contact();
+        Sort s = new Sort();
+        friends = c.readContacts(user);
+        friends.add(contact);
+        s.contactsSorter(friends,"ASCENDING");
+        c.writeContacts(friends,user);
+        return friends;
+    }
 
     @Override
-    public void removeContact(int index) { friends.remove(index); }
+    public List<Contact> removeContact(int index,String user) {
+        Contact c = new Contact();
+        friends = c.readContacts(user);
+        friends.remove(index);
+        c.writeContacts(friends,user);
+        return friends;
+    }
 
     @Override
     public void editContactMails(int contactInd, int operation, int removedMailInd, String newMail) {
@@ -129,12 +143,6 @@ public class User extends DemoUsers implements IUser {
 
     @Override
     public List<IMail> listmails(String folder) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public List<IMail> sort(String criteria) {
         // TODO Auto-generated method stub
         return null;
     }

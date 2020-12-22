@@ -61,8 +61,8 @@ public class Mail extends DemoMail {
         IFolder folder = new Folder();
         File source = new File("server/" + mail.getSender() + "/folders/Sent/" + mail.getID());
         mail.setSrcFolder("Inbox");
-        for (String reciever : mail.getReceivers()) {
-            File inbox = new File("server/" + reciever + "/folders/Inbox");
+        for (String receiver : mail.getReceivers()) {
+            File inbox = new File("server/" + receiver + "/folders/Inbox");
             File dest = new File(inbox, mail.getID());
             if (!folder.copyFolder(source, dest))
                 return new Answer(false, wrong + "Mail.Send.0002");
