@@ -21,9 +21,16 @@ public class HomeController {
         return readlist.getList();
     }
 
+    @PostMapping("/savedraft/")
+    public Answer saveDraft (@RequestBody MailBody mailBody){
+        Mail mail = new Mail();
+        return mail.saveDraft(mailBody);
+    }
+
     @PostMapping("/compose/")
-    public Mail composedMail(@RequestBody MailBody mailbody) {
-        return null;
+    public Answer composedMail(@RequestBody MailBody mailbody) {
+        Mail mail = new Mail();
+        return mail.sendMail(mailbody);
     }
 
     @PostMapping("/signin/")
