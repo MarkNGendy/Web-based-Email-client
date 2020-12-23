@@ -2,7 +2,7 @@ package mailserver.backendmailclient.jsonReaders;
 
 import java.util.List;
 
-public abstract class ReaderList<T> extends Json {
+public abstract class ReaderList<T> {
     protected List<T> list;
 
     public List<T> getList() {

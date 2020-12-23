@@ -48,8 +48,7 @@ public class User extends DemoUsers implements IUser {
         if (!server.buildServe())
             return new Answer(false, wrong);
 
-        Factory f = new Factory();
-        ReaderList<DemoUsers> readlist = f.factory("user");
+        ReaderList<DemoUsers> readlist = new UsersJson();
         List<DemoUsers> userslist = readlist.toList(usersPath);
 
         for (DemoUsers demoUsers : userslist) {
@@ -70,8 +69,7 @@ public class User extends DemoUsers implements IUser {
             return new Answer(false, wrong);
 
         IFolder folder = new Folder();
-        Factory f = new Factory();
-        Json readlist = f.factory("user");
+        ReaderList<DemoUsers> readlist = new UsersJson();
         List<DemoUsers> userslist = readlist.toList(usersPath);
         for (DemoUsers demoUsers : userslist) {
             if (input.getemail().equalsIgnoreCase(demoUsers.getemail())) {
@@ -103,22 +101,22 @@ public class User extends DemoUsers implements IUser {
     }
 
     @Override
-    public List<Contact> addContact(Contact contact,String user) {
+    public List<Contact> addContact(Contact contact, String user) {
         Contact c = new Contact();
         Sort s = new Sort();
         friends = c.readContacts(user);
         friends.add(contact);
-        s.contactsSorter(friends,"ASCENDING");
-        c.writeContacts(friends,user);
+        s.contactsSorter(friends, "ASCENDING");
+        c.writeContacts(friends, user);
         return friends;
     }
 
     @Override
-    public List<Contact> removeContact(int index,String user) {
+    public List<Contact> removeContact(int index, String user) {
         Contact c = new Contact();
         friends = c.readContacts(user);
         friends.remove(index);
-        c.writeContacts(friends,user);
+        c.writeContacts(friends, user);
         return friends;
     }
 
