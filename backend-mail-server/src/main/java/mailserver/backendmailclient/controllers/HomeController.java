@@ -138,9 +138,9 @@ public class HomeController {
     }
 
     @PostMapping("/contact/")
-    public List<Contact> ViewContact(@RequestBody String user) {
+    public List<Contact> ViewContact(@RequestBody DemoUsers user) {
         Contact c = new Contact();
-        return c.readContacts(user);
+        return c.readContacts(user.getemail());
     }
 
     @PostMapping("/addContact/")
