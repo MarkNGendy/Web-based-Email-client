@@ -107,12 +107,17 @@ public class HomeController {
         }
     }
 
-    @PostMapping("/delete/mails")
+    @PostMapping("/deleteMails/")
     public void deleteMails(@RequestBody DeleteBody deleteBody) {
         Mail mail = new Mail();
+<<<<<<< Updated upstream
         for (int i = 0; i < deleteBody.getMails().size(); i++) {
             Answer ans = mail.sendToTrash(deleteBody.getSource(), ((deleteBody.getMails()).get(i)).getID());
             System.out.println(ans.getAns());
+=======
+        for(Mail m :deleteBody.getMails()){
+            mail.sendToTrash(deleteBody.getSource(),m.getID());
+>>>>>>> Stashed changes
         }
     }
 
@@ -153,6 +158,17 @@ public class HomeController {
     public List<Contact> removeContact(@RequestBody ContactBody contactBody) {
         User u = new User();
         return u.removeContact(contactBody.getInd(), contactBody.getUser());
+    }
+
+    @PostMapping("/editContact/removeMail")
+    public List<Contact> removeMail(@RequestBody ContactBody contactBody){
+        User u = new User();
+        return u.editContactMails(contactBody.getUser(),contactBody.getInd(),2,contactBody.getEditingMail());
+    }
+    @PostMapping("/editContact/addMail")
+    public List<Contact> addMail(@RequestBody ContactBody contactBody){
+        User u = new User();
+        return u.editContactMails(contactBody.getUser(),contactBody.getInd(),1,contactBody.getEditingMail());
     }
 
 }

@@ -8,11 +8,13 @@ public class ContactBody {
     private Contact contact;
     private String user;
     private int ind;
+    String editingMail;
 
-    public ContactBody(String user,Contact contact, int ind){
+    public ContactBody(String user,Contact contact, int ind, String editingMail){
         this.contact = contact;
         this.user = user;
         this.ind = ind;
+        this.editingMail = editingMail;
     }
 
     public Contact getContact() {
@@ -25,5 +27,9 @@ public class ContactBody {
 
     public int getInd() {
         return ind;
+    }
+
+    public String getEditingMail() {
+        return editingMail;
     }
 }

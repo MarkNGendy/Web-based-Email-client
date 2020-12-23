@@ -23,7 +23,7 @@ public interface IUser {
 
     public List<Contact> removeContact(int index,String user);
 
-    public void editContactMails(int contactInd, int operation, int removedMailInd, String newMail);
+    public List<Contact> editContactMails(String user,int contactInd, int operation, String theMail);
 
     public List<IMail> listmails(String folder);
 

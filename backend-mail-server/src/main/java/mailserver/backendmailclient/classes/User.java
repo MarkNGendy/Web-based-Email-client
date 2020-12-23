@@ -122,22 +122,26 @@ public class User extends DemoUsers implements IUser {
     }
 
     @Override
-    public void editContactMails(int contactInd, int operation, int removedMailInd, String newMail) {
+    public List<Contact> editContactMails(String user,int contactInd, int operation, String theMail) {
+        Contact c = new Contact();
+        friends = c.readContacts(user);
         // operation 1 add another email
         // operation 2 remove an email
         Contact temp = friends.get(contactInd);
         friends.remove(contactInd);
         switch (operation) {
             case 1:
-                temp.addMail(newMail);
+                temp.addMail(theMail);
                 break;
             case 2:
-                temp.removeMail(removedMailInd);
+                temp.removeMail(temp.getMails().indexOf(theMail));
                 break;
             default:
         }
         friends.add(temp);
         Collections.sort(friends, Contact.AContactsComparator);
+        c.writeContacts(friends, user);
+        return friends;
     }
 
     @Override
