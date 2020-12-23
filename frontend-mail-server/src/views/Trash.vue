@@ -113,7 +113,7 @@ export default {
     },
     async nextPage() {
       if(this.currIndex < (this.allMails.length / 5)) {
-        this.currIndex++; 
+        this.currIndex++;
       }
       if (this.isFiltered == true) {
         await this.paginate(this.filteredList);
@@ -132,17 +132,20 @@ export default {
       }
     },
     paginate(mailsList) {
+      console.log(this.currIndex)
       var counter = 0;
       var left = ((this.currIndex - 1) * (mailsList.length - 1));
       var right = ((this.currIndex - 1) * (mailsList.length-1) + 4);
       var i = left;
       var list = [];
       while(i <= right && i < mailsList.length) {
+        console.log(i);
         list[counter] = mailsList[i];
         counter++;
         i++;
       }
       this.emails = list;
+
     },
     async filter() {
       var sel = document.getElementById('filter');
@@ -209,6 +212,7 @@ export default {
         listname: "Trash",
         user: this.emailAdd,
     });
+    console.log(response.data);
     this.allMails = response.data;
     this.isFiltered = false;
     this.currIndex = 1;
