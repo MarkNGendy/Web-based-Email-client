@@ -133,10 +133,5 @@ public class User extends DemoUsers implements IUser {
         return friends;
     }
 
-    @Override
-    public List<IMail> listmails(String folder) {
-        // TODO Auto-generated method stub
-        return null;
-    }
 
 }
