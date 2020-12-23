@@ -101,6 +101,7 @@ export default {
       var response = await axios.post("http://localhost:8095/deleteMails/", {
         mails: this.deletedMails,
         source: "Inbox",
+        userEmail: this.emailAdd
       });
       response = await axios.post("http://localhost:8095/mails/", {
         listname: "Inbox",
