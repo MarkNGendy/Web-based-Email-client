@@ -1,6 +1,6 @@
 <template>
   <button class="tablink" @click="prevPage()">Previous Page</button>
-  <button class="tablink" @click="delete()">Delete</button>
+  <button class="tablink" @click="deleteMails()">Delete</button>
   <button class="tablink" @click="nextPage()">Next Page</button>
   <input type="text" class="filterbox" placeholder="Enter filter value.." id="filter-val">
   <select class="filterbox" name="sort-type" id="filter">
