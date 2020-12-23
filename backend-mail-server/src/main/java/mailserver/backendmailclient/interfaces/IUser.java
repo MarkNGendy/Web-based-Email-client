@@ -26,6 +26,5 @@ public interface IUser {
 
     public List<Contact> editContactMails(String user,int contactInd, Contact newContact);
 
-    public List<IMail> listmails(String folder);
 
 }
