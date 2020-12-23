@@ -46,7 +46,7 @@
       </thead>
       <tbody v-for="item in emails" :key="item.subject">
         <tr>
-          <td><input v-bind:id="item.id" v-bind:value="JSON.stringify(item)" @click="addMail(this.id)" type="checkbox" >{{item.id}}</td>
+          <td><input v-bind:id="item.id" v-bind:value="JSON.stringify(item)" v-on:click="addMail($event)" type="checkbox" >{{item.id}}</td>
           <td><router-link :to="{name: 'view-email', params: {username: username,
           emailAdd: emailAdd, id:item.id, emails: JSON.stringify(allMails)}}">
           {{item.subject}}</router-link></td>
@@ -79,8 +79,8 @@ export default {
     };
   },
   methods: {
-    addMail(id) {
-      alert(id)
+    addMail: function(event) {
+      var id = event.currentTarget.id;
       var checkbox = document.getElementById(id);
       var value = checkbox.value;
       if (checkbox.checked == true) {
@@ -89,16 +89,27 @@ export default {
         var i = 0;
         var tempArr = [];
         for(i = 0; i < this.deletedMails.length; i++) {
-          if(this.deletedMails[i] != JSON.parse(value)) {
+          if(this.deletedMails[i].id !== JSON.parse(value).id) {
             tempArr.push(this.deletedMails[i]);
           }
         }
         this.deletedMails = tempArr;
       }
-
     },
-    deleteMails() {
-      
+    async deleteMails() {
+      var response = await axios.post("http://localhost:8095/delete/mails/", {
+        mails: this.deletedMails,
+        source: "Inbox",
+      });
+      response = await axios.post("http://localhost:8095/mails/", {
+        listname: "Inbox",
+        user: this.emailAdd,
+      });
+      console.log(response);
+      this.allMails = response.data;
+      this.isFiltered = false;
+      this.currIndex = 1;
+      this.paginate(this.allMails);
     },
     async nextPage() {
       if(this.currIndex < (this.allMails.length / 5)) {

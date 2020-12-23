@@ -111,7 +111,8 @@ public class HomeController {
     public void deleteMails(@RequestBody DeleteBody deleteBody) {
         Mail mail = new Mail();
         for (int i = 0; i < deleteBody.getMails().size(); i++) {
-            mail.sendToTrash(deleteBody.getSource(), ((deleteBody.getMails()).get(i)).getID());
+            Answer ans = mail.sendToTrash(deleteBody.getSource(), ((deleteBody.getMails()).get(i)).getID());
+            System.out.println(ans.getAns());
         }
     }
 

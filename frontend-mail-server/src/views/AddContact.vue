@@ -19,6 +19,9 @@
   </div>
   <div>
     <button class="addemail" @click="addemail()">add another email</button>
+    <ul id="emails" name="emails">
+      <option v-for="item in Contact.emails" :key="item">{{item}}</option>
+    </ul>
   </div>
   <div>
     <button class="addcontact" @click="addcontact()">Add To My Contact</button>
@@ -30,57 +33,43 @@ import Axios from "axios";
 export default {
   data() {
     return {
-      /*name: "",
-      emails: [{}],*/
       username: "",
       emailAdd: "",
-      Contact: { name: "", emails: [{}] }
+      Contact: { name: "", emails: [] }
     };
   },
 
   created: async function() {
     this.username = this.$route.params.username;
     this.emailAdd = this.$route.params.emailAdd;
-    console.log(this.emailAdd)
   },
 
   methods: {
-    addemail() {
-      var txt = document.getElementById("email").value;
-      this.Contact.emails.push(txt);
-      /*  var iterator = this.emails.values(); 
-    console.log(iterator.next().value); 
-    console.log(iterator.next().value); 
-    console.log(iterator.next().value); 
-    console.log(iterator.next().value);*/
 
+    addemail() {
+      console.log(this.Contact.emails);
+      var txt = document.getElementById("email").value;
+      this.Contact.emails.push(txt); 
+      console.log(this.Contact)
       document.getElementById("email").value = "";
+      console.log(this.Contact.emails);
     },
 
-    addcontact() {
+    async addcontact() {
       var txtname = document.getElementById("name").value;
       this.Contact.name = txtname;
       var txtemail = document.getElementById("email").value;
       this.Contact.emails.push(txtemail);
 
-      const response = Axios.post("http://localhost:8095/addContact/", {
+      await Axios.post("http://localhost:8095/addContact/", {
         contact: { userName: this.Contact.name, mails: this.Contact.emails },
         user: this.emailAdd,
         ind: 0
       });
-      console.log(response);
-      console.log(this.Contact.name);
-      console.log(this.Contact.emails);
-
+      
       document.getElementById("email").value = "";
       document.getElementById("name").value = "";
       this.Contact.emails = [];
-      /*    var iterator = this.emails.values(); 
-    console.log(iterator.next().value); 
-    console.log(iterator.next().value); 
-    console.log(iterator.next().value); 
-    console.log(iterator.next().value);
-    console.log(this.name);*/
     }
   }
 };
