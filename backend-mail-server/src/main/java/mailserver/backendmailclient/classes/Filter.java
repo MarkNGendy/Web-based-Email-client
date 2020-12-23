@@ -1,7 +1,6 @@
 package mailserver.backendmailclient.classes;
 
 import mailserver.backendmailclient.interfaces.IFilter;
-import mailserver.backendmailclient.interfaces.IMail;
 
 import java.util.ArrayList;
 import java.util.List;
