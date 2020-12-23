@@ -8,6 +8,15 @@ import java.util.*;
 public class Contact implements IContact {
     private String userName;
     private List<String> mails;
+    private long id;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public Contact() {
     }
@@ -15,6 +24,7 @@ public class Contact implements IContact {
     public Contact(String userName, List<String> mails) {
         this.userName = userName;
         this.mails = mails;
+        id = System.currentTimeMillis();
     }
 
     @Override

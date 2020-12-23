@@ -5,6 +5,7 @@ import mailserver.backendmailclient.jsonReaders.*;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.*;
@@ -145,7 +146,8 @@ public class HomeController {
     @PostMapping("/addContact/")
     public Answer addContact(@RequestBody ContactBody contactBody) {
         User u = new User();
-        return u.addContact(contactBody.getContact(), contactBody.getUser());
+        Contact c = new Contact(contactBody.getUserName(), contactBody.getMails());
+        return u.addContact(c, contactBody.getUser());
     }
 
     @PostMapping("/removeContact/")
@@ -158,7 +160,8 @@ public class HomeController {
     @PostMapping("/editContact/")
     public List<Contact> removeMail(@RequestBody ContactBody contactBody) {
         User u = new User();
-        return u.editContactMails(contactBody.getUser(), contactBody.getInd(), contactBody.getContact());
+        Contact c = new Contact(contactBody.getUserName(), contactBody.getMails());
+        return u.editContactMails(contactBody.getUser(), contactBody.getInd(), c);
     }
 
 }
