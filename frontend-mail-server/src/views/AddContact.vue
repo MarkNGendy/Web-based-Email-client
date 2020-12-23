@@ -26,17 +26,27 @@
 </template>
 
 <script>
+import Axios from "axios";
 export default {
   data() {
     return {
-      name: "",
-      emails: [{}]
+      /*name: "",
+      emails: [{}],*/
+      username: "",
+      emailAdd: "",
+      Contact: { name: "", emails: [{}] }
     };
   },
+
+  created: async function() {
+    this.username = this.$route.params.username;
+    this.emailAdd = this.$route.params.emailAdd;
+  },
+
   methods: {
     addemail() {
       var txt = document.getElementById("email").value;
-      this.emails.push(txt);
+      this.Contact.emails.push(txt);
       /*  var iterator = this.emails.values(); 
     console.log(iterator.next().value); 
     console.log(iterator.next().value); 
@@ -48,11 +58,22 @@ export default {
 
     addcontact() {
       var txtname = document.getElementById("name").value;
-      this.name = txtname;
+      this.Contact.name = txtname;
       var txtemail = document.getElementById("email").value;
-      this.emails.push(txtemail);
+      this.Contact.emails.push(txtemail);
+
+      const response = Axios.post("http://localhost:8095/addContact/", {
+        contact: { userName: this.Contact.name, mails: this.Contact.emails },
+        user: this.emailAdd,
+        ind: 0
+      });
+      console.log(response);
+      console.log(this.Contact.name);
+      console.log(this.Contact.emails);
+
       document.getElementById("email").value = "";
       document.getElementById("name").value = "";
+      this.Contact.emails = [];
       /*    var iterator = this.emails.values(); 
     console.log(iterator.next().value); 
     console.log(iterator.next().value); 
