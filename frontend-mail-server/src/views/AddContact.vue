@@ -41,6 +41,7 @@ export default {
   created: async function() {
     this.username = this.$route.params.username;
     this.emailAdd = this.$route.params.emailAdd;
+    console.log(this.emailAdd)
   },
 
   methods: {

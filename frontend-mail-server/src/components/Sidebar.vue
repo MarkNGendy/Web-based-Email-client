@@ -10,7 +10,8 @@
                     Compose Email
                 </div>
             </router-link>
-            <router-link :to="{name: 'add-contact', params: {username :$route.params.username}}" active-class="active" tag="button" exact class="side-btn">
+            <router-link :to="{name: 'add-contact', params: {username : username, 
+            emailAdd: emailAdd}}" active-class="active" tag="button" exact class="side-btn">
                 <div class="link-container">
                     Add Contact
                 </div>
