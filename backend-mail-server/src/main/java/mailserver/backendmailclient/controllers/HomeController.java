@@ -151,18 +151,13 @@ public class HomeController {
     @PostMapping("/removeContact/")
     public List<Contact> removeContact(@RequestBody ContactBody contactBody) {
         User u = new User();
-        return u.removeContact(contactBody.getInd(), contactBody.getUser());
+        return u.removeContact(contactBody.getRContacts(), contactBody.getUser());
     }
 
-    @PostMapping("/editContact/removeMail")
-    public List<Contact> removeMail(@RequestBody ContactBody contactBody){
+    @PostMapping("/editContact/")
+    public List<Contact> removeMail(@RequestBody ContactBody contactBody) {
         User u = new User();
-        return u.editContactMails(contactBody.getUser(),contactBody.getInd(),2,contactBody.getEditingMail());
-    }
-    @PostMapping("/editContact/addMail")
-    public List<Contact> addMail(@RequestBody ContactBody contactBody){
-        User u = new User();
-        return u.editContactMails(contactBody.getUser(),contactBody.getInd(),1,contactBody.getEditingMail());
+        return u.editContactMails(contactBody.getUser(), contactBody.getInd(), contactBody.getContact());
     }
 
 }

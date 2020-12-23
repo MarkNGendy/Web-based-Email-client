@@ -7,6 +7,7 @@ import mailserver.backendmailclient.classes.Contact;
 import mailserver.backendmailclient.classes.DemoUsers;
 
 public interface IUser {
+
     public Answer signin(DemoUsers input);
 
     public Answer signup(DemoUsers input);
@@ -21,9 +22,9 @@ public interface IUser {
 
     public List<Contact> addContact(Contact contact, String user);
 
-    public List<Contact> removeContact(int index,String user);
+    public List<Contact> removeContact(List<Contact> RContacts, String user);
 
-    public List<Contact> editContactMails(String user,int contactInd, int operation, String theMail);
+    public List<Contact> editContactMails(String user,int contactInd, Contact newContact);
 
     public List<IMail> listmails(String folder);
 

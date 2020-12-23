@@ -113,33 +113,22 @@ public class User extends DemoUsers implements IUser {
     }
 
     @Override
-    public List<Contact> removeContact(int index, String user) {
+    public List<Contact> removeContact(List<Contact> RContacts, String user) {
         Contact c = new Contact();
         friends = c.readContacts(user);
-        friends.remove(index);
+        for(Contact con: RContacts){
+            friends.remove(friends.indexOf(con));
+        }
         c.writeContacts(friends, user);
         return friends;
     }
 
     @Override
-    public List<Contact> editContactMails(String user,int contactInd, int operation, String theMail) {
+    public List<Contact> editContactMails(String user, int contactInd, Contact newContact) {
         Contact c = new Contact();
         friends = c.readContacts(user);
-        // operation 1 add another email
-        // operation 2 remove an email
-        Contact temp = friends.get(contactInd);
         friends.remove(contactInd);
-        switch (operation) {
-            case 1:
-                temp.addMail(theMail);
-                break;
-            case 2:
-                temp.removeMail(temp.getMails().indexOf(theMail));
-                break;
-            default:
-        }
-        friends.add(temp);
-        Collections.sort(friends, Contact.AContactsComparator);
+        friends.add(contactInd,newContact);
         c.writeContacts(friends, user);
         return friends;
     }
