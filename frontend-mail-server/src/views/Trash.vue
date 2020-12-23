@@ -1,6 +1,5 @@
 <template>
   <button class="tablink" @click="prevPage()">Previous Page</button>
-  <button class="tablink" @click="deleteMails()">Delete</button>
   <button class="tablink" @click="nextPage()">Next Page</button>
   <input type="text" class="filterbox" placeholder="Enter filter value.." id="filter-val">
   <select class="filterbox" name="sort-type" id="filter">
@@ -134,8 +133,8 @@ export default {
     paginate(mailsList) {
       console.log(this.currIndex)
       var counter = 0;
-      var left = ((this.currIndex - 1) * (mailsList.length - 1));
-      var right = ((this.currIndex - 1) * (mailsList.length-1) + 4);
+      var left = ((this.currIndex - 1) * 5);
+      var right = (((this.currIndex - 1) * 5) + 4);
       var i = left;
       var list = [];
       while(i <= right && i < mailsList.length) {
@@ -265,7 +264,7 @@ export default {
   cursor: pointer;
   padding: 14px 16px;
   font-size: 17px;
-  width: 33.3333%;
+  width: 50%;
 }
 .tablink:hover {
   background-color: #777;

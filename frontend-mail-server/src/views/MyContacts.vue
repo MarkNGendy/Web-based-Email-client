@@ -133,8 +133,8 @@ export default {
     },
     paginate(mailsList) {
       var counter = 0;
-      var left = ((this.currIndex - 1) * (mailsList.length - 1));
-      var right = ((this.currIndex - 1) * (mailsList.length-1) + 9);
+      var left = ((this.currIndex - 1) * 10);
+      var right = (((this.currIndex - 1) * 10) + 9);
       var i = left;
       var list = [];
       while(i <= right && i < mailsList.length) {
