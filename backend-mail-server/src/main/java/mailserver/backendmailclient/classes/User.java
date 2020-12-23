@@ -117,7 +117,7 @@ public class User extends DemoUsers implements IUser {
         Contact c = new Contact();
         friends = c.readContacts(user);
         for(Contact con: RContacts){
-            friends.remove(friends.indexOf(con));
+            friends.remove(con);
         }
         c.writeContacts(friends, user);
         return friends;
