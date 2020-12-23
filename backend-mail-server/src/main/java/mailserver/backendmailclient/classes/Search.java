@@ -45,7 +45,7 @@ public class Search implements ISearch {
     public List<Mail> receiversSearch(List<Mail> list, String search) {
         List<Mail> result = new ArrayList<Mail>();
         for(Mail m : list){
-            if(m.getReceiver().toString().contains(search)){
+            if(m.getReceivers().toString().contains(search)){
                 result.add(m);
             }
         }
@@ -65,8 +65,19 @@ public class Search implements ISearch {
             else if(m.getSender().contains(search)){
                 result.add(m);
             }
-            else if(m.getReceiver().toString().contains(search)){
+            else if(m.getReceivers().toString().contains(search)){
                 result.add(m);
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public List<Contact> contactsSearch(List<Contact> contacts, String search) {
+        List<Contact> result = new ArrayList<Contact>();
+        for(Contact c : contacts){
+            if(c.getUserName().contains(search)){
+                result.add(c);
             }
         }
         return result;

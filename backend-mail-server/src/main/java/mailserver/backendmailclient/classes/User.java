@@ -10,6 +10,8 @@ public class User extends DemoUsers implements IUser {
     private List<DemoMail> mails;
     private List<Contact> friends;
     private List<IFolder> folders;
+    private String wrong = "Something wrong!";
+    private String usersPath = "Server/Users.json";
 
     public List<DemoMail> getMails() {
         return mails;
@@ -38,9 +40,6 @@ public class User extends DemoUsers implements IUser {
         // TODO Auto-generated method stub
         return null;
     }
-
-    private String wrong = "Something wrong!";
-    private String usersPath = "Server/Users.json";
 
     @Override
     public Answer signin(DemoUsers input) {
@@ -104,25 +103,46 @@ public class User extends DemoUsers implements IUser {
     }
 
     @Override
-    public boolean addContact(IContact contact) {
-        // TODO Auto-generated method stub
-        return false;
+    public List<Contact> addContact(Contact contact,String user) {
+        Contact c = new Contact();
+        Sort s = new Sort();
+        friends = c.readContacts(user);
+        friends.add(contact);
+        s.contactsSorter(friends,"ASCENDING");
+        c.writeContacts(friends,user);
+        return friends;
     }
 
     @Override
-    public boolean removeContact(int index) {
-        // TODO Auto-generated method stub
-        return false;
+    public List<Contact> removeContact(int index,String user) {
+        Contact c = new Contact();
+        friends = c.readContacts(user);
+        friends.remove(index);
+        c.writeContacts(friends,user);
+        return friends;
+    }
+
+    @Override
+    public void editContactMails(int contactInd, int operation, int removedMailInd, String newMail) {
+        // operation 1 add another email
+        // operation 2 remove an email
+        Contact temp = friends.get(contactInd);
+        friends.remove(contactInd);
+        switch (operation) {
+            case 1:
+                temp.addMail(newMail);
+                break;
+            case 2:
+                temp.removeMail(removedMailInd);
+                break;
+            default:
+        }
+        friends.add(temp);
+        Collections.sort(friends, Contact.AContactsComparator);
     }
 
     @Override
     public List<IMail> listmails(String folder) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public List<IMail> sort(String criteria) {
         // TODO Auto-generated method stub
         return null;
     }

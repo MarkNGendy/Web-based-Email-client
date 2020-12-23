@@ -1,22 +1,46 @@
 <template>
   <div class="container">
-  <form action="action_page.php">
+    <div class="row">
+      <div class="col-25">
+        <label for="fname">Choose receivers</label>
+      </div>
+      <div class="col-75">
+        <select id="users" name="users">
+          <option v-bind:value="item" v-for="item in users" :key="item">{{item}}</option>
+        </select>
+      <button @click="updateReceivers()" class="left-col">Add to receivers</button>
+      </div>
+    </div>
     <div class="row">
       <div class="col-25">
         <label for="fname">To</label>
       </div>
       <div class="col-75">
-        <select id="reciever" name="emails" multiple>
-          <option value="australia">7amada@gmail</option>
-          <option value="canada">Ahmed@gmail.com</option>
-          <option value="usa">Abdo@gmail.com</option>
-          <option value="australia">7amada@gmail</option>
-          <option value="canada">Ahmed@gmail.com</option>
-          <option value="usa">Abdo@gmail.com</option>
-          <option value="australia">7amada@gmail</option>
-          <option value="canada">Ahmed@gmail.com</option>
-          <option value="usa">Abdo@gmail.com</option>
+      <ul id="recievers" name="emails">
+          <option v-for="item in receivers" :key="item">{{item}}</option>
+      </ul>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-25">
+        <label for="fname">Choose Importance</label>
+      </div>
+      <div class="col-75">
+      <select class="right-col" id="reciever" name="emails">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
         </select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-25">
+        <label for="fname">Date</label>
+      </div>
+      <div class="col-75">
+        <input type="text" id="lname" name="lastname" placeholder="Write email date..">
       </div>
     </div>
     <div class="row">
@@ -24,7 +48,7 @@
         <label for="lname">Subject</label>
       </div>
       <div class="col-75">
-        <input type="text" id="lname" name="lastname" placeholder="Write subject of your email..">
+        <input type="text" id="subject" name="lastname" placeholder="Write subject of your email..">
       </div>
     </div>
     <div class="row">
@@ -32,7 +56,7 @@
         <label for="subject">Body</label>
       </div>
       <div class="col-75">
-        <textarea id="subject" name="subject" placeholder="Write something.." style="height:200px"></textarea>
+        <textarea id="body" name="body" placeholder="Write something.." style="height:200px"></textarea>
       </div>
     </div>
     <div class="row">
@@ -44,16 +68,70 @@
       </div>
     </div>
     <div class="row">
-      <button class="submit">Send</button>
+      <button class="submit" @click="send()">Send</button>
       <button class="submit">Save to drafts</button>
     </div>
-  </form>
 </div>
 </template>
 
 <script>
+import axios from "axios"
 export default {
-  
+  data() {
+    return {
+      users: [],
+      receivers:[],
+      body:"",
+      importance:0,
+      username:"",
+      emailAdd:"",
+      pass: ""
+    }
+  },
+  methods: {
+    updateReceivers() {
+      var addedItem = document.getElementById("users");
+      this.receivers.push(addedItem.value);
+      var newUsers = [];
+      var i = 0;
+      for(i = 0; i < this.users.length; i++) {
+        if(!this.receivers.includes(this.users[i])) {
+          newUsers.push(this.users[i]);
+        }
+      }
+      this.users = newUsers;
+    },
+    async send() {
+      var sub = document.getElementById("subject");
+      this.subject = sub.value;
+      sub = document.getElementById("body");
+      this.body = sub.value;
+      const response = await axios.post("http://localhost:8095/compose/", {
+        subject: this.subject,
+        body: this.body,
+        sender: this.emailAdd,
+        receivers: this.receivers
+      });
+      console.log(response);
+    }
+  },
+  created: async function() {
+    if(this.$route)
+    this.username = this.$route.params.username;
+    this.emailAdd = this.$route.params.emailAdd;
+    const response = await axios.post("http://localhost:8095/read/users/", {
+        email: this.emailAdd,
+        password: "",
+        username: this.username,
+    });
+    var i = 0;
+    for(i = 0; i < response.data.length; i++) {
+      if(response.data[i].email != this.emailAdd){
+        this.users.push(response.data[i].email);
+      }
+    }
+
+  }
 }
 </script>
 
@@ -100,6 +178,23 @@ label {
   margin-top: 6px;
 }
 
+.left-col {
+  float: center;
+  margin-top: 3px;
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 20px;
+  margin-right: 5px;
+  border: none;
+  border-radius: 4px;
+  margin-bottom: 3px;
+  cursor: pointer;
+}
+
+.right-col {
+  align-items: center;
+  font-size: 16px;
+}
 /* Floating column for inputs: 75% width */
 .col-75 {
   float: left;

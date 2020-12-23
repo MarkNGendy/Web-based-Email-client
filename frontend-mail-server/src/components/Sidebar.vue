@@ -10,9 +10,14 @@
                     Compose Email
                 </div>
             </router-link>
-            <router-link :to="{name: 'contacts', params: {username :$route.params.username}}" active-class="active" tag="button" exact class="side-btn">
+            <router-link :to="{name: 'add-contact', params: {username :$route.params.username}}" active-class="active" tag="button" exact class="side-btn">
                 <div class="link-container">
-                    Contacts
+                    Add Contact
+                </div>
+            </router-link>
+            <router-link :to="{name: 'my-contacts', params: {username :$route.params.username}}" active-class="active" tag="button" exact class="side-btn">
+                <div class="link-container">
+                    My Contacts
                 </div>
             </router-link>
             <router-link :to="{name: 'inbox', params: {username : username, 
@@ -76,19 +81,19 @@ export default {
 }
 .title {
     color: white;
-    font-size: 24px;
-    margin-top: 10px;
+    font-size: 23px;
+    margin-top: 14px;
 }
 
 .menu-items {
     display: flex;
     flex-direction: column;
-    margin-top: 5px;
+    margin-top: 3px;
     margin-left: 6px;
 }
 
 .menu-items > * {
-    margin-top: 30px;
+    margin-top: 15px;
 }
 
 .side-btn {

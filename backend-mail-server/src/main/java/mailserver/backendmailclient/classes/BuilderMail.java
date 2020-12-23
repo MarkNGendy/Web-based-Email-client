@@ -9,7 +9,7 @@ import mailserver.backendmailclient.jsonReaders.*;
 
 public class BuilderMail {
     public boolean buildMail(Mail mail) {
-        File mainfolder = new File("server/" + mail.getSender() + "/folders/" + mail.getSrcFolder());
+        File mainfolder = new File("Server/" + mail.getSender() + "/folders/" + mail.getSrcFolder());
         File mailfolder = new File(mainfolder, mail.getID());
         mailfolder.mkdir();
         File attach = new File(mailfolder, "attachements");

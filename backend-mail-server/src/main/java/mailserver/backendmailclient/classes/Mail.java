@@ -15,12 +15,13 @@ public class Mail extends DemoMail {
     public Mail() {
     }
 
-    public Mail(String sender, List<String> receiver, String subject, String body, List<File> attachments) {
+    public Mail(String sender, List<String> receivers, String subject, String body, List<File> attachments, int importance) {
         this.sender = sender;
-        this.receiver = receiver;
+        this.receivers = receivers;
         this.subject = subject;
         this.body = body;
         this.attachments = attachments;
+        this.importance = importance;
     }
 
     public List<File> getAttachments() {
@@ -59,10 +60,10 @@ public class Mail extends DemoMail {
             return new Answer(false, wrong + "Mail.Send.0001");
         }
         IFolder folder = new Folder();
-        File source = new File("server/" + mail.getSender() + "/folders/Sent/" + mail.getID());
+        File source = new File("Server/" + mail.getSender() + "/folders/Sent/" + mail.getID());
         mail.setSrcFolder("Inbox");
-        for (String reciever : mail.getReceiver()) {
-            File inbox = new File("server/" + reciever + "/folders/Inbox");
+        for (String receiver : mail.getReceivers()) {
+            File inbox = new File("Server/" + receiver + "/folders/Inbox");
             File dest = new File(inbox, mail.getID());
             if (!folder.copyFolder(source, dest))
                 return new Answer(false, wrong + "Mail.Send.0002");
@@ -220,8 +221,8 @@ public class Mail extends DemoMail {
     public static Comparator<Mail> AMailReceiversComparator = new Comparator<Mail>() {
 
         public int compare(Mail m1, Mail m2) {
-            int MailReceivers1 = m1.getReceiver().size();
-            int MailReceivers2 = m2.getReceiver().size();
+            int MailReceivers1 = m1.getReceivers().size();
+            int MailReceivers2 = m2.getReceivers().size();
 
             // ascending order
             return MailReceivers1 - MailReceivers2;
@@ -233,8 +234,8 @@ public class Mail extends DemoMail {
     public static Comparator<Mail> DMailReceiversComparator = new Comparator<Mail>() {
 
         public int compare(Mail m1, Mail m2) {
-            int MailReceivers1 = m1.getReceiver().size();
-            int MailReceivers2 = m2.getReceiver().size();
+            int MailReceivers1 = m1.getReceivers().size();
+            int MailReceivers2 = m2.getReceivers().size();
 
             // ascending order
             // return MailReceivers1 - MailReceivers2;

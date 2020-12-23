@@ -3,13 +3,15 @@ package mailserver.backendmailclient.interfaces;
 import java.util.List;
 
 public interface IContact {
-    public boolean setname(String name);
+    public void setUserName(String UserName);
 
-    public String getname();
+    public String getUserName();
 
-    public boolean removeemail(int index);
+    public void setMails(List<String> mails);
 
-    public boolean addemail(String email);
+    public List<String> getMails();
 
-    public List<String> getemailslist();
+    public void removeMail(int index);
+
+    public void addMail(String email);
 }
