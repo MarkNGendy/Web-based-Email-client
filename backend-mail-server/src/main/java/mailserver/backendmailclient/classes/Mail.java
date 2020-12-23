@@ -15,7 +15,8 @@ public class Mail extends DemoMail {
     public Mail() {
     }
 
-    public Mail(String sender, List<String> receivers, String subject, String body, List<File> attachments, int importance) {
+    public Mail(String sender, List<String> receivers, String subject, String body, List<File> attachments,
+            int importance) {
         this.sender = sender;
         this.receivers = receivers;
         this.subject = subject;
@@ -85,8 +86,9 @@ public class Mail extends DemoMail {
 
         Index x = new Index();
         DemoMail target = x.getCopyThenDelete(src, mailID);
-        ReaderList<DemoMail> readerList = new MailsJson(x.getDemoList());
-        folder.writeJson(readerList, src.getPath() + "/mails.json");
+        JsonFactory factory = new JsonFactory();
+        Json readerList = factory.jsfactory(ReaderType.MAILSLIST, x.getDemoList());
+        readerList.writeJson(readerList, src.getPath() + "/mails.json");
         if (target == null)
             return bad;
 
@@ -96,7 +98,6 @@ public class Mail extends DemoMail {
     }
 
     public Answer sendToTrash(String source, String mailID) {
-        IFolder folder = new Folder();
         File src = new File(source);
         File dest = new File(src.getParent(), "Trash");
         Answer ans = moveMail(source, dest.getPath(), mailID);
@@ -104,17 +105,18 @@ public class Mail extends DemoMail {
             return ans;
 
         File trashFile = new File(dest, "Trashfile.json");
-        ReaderList<Trash> readlist = new TrashJson();
-        readlist.toList(trashFile.getPath());
-        List<Trash> trashlist = readlist.getList();
+
+        JsonFactory factory = new JsonFactory();
+        Json readlist = factory.jsfactory(ReaderType.TRASH, null);
+        List<Trash> trashlist = (List<Trash>) readlist.readJson(trashFile.getPath());
 
         Long time = System.currentTimeMillis();
         String trashtime = Long.toString(time);
         Trash item = new Trash(mailID, trashtime);
 
         trashlist.add(item);
-        readlist.setLsist(trashlist);
-        folder.writeJson(readlist, trashFile.getPath());
+        readlist = factory.jsfactory(ReaderType.TRASH, trashlist);
+        readlist.writeJson(readlist, trashFile.getPath());
 
         return new Answer(true, "Mail sent to trash successfully.");
     }
@@ -146,9 +148,10 @@ public class Mail extends DemoMail {
             return bad;
         Index x = new Index();
         x.removefromfile(currfolder, mailID);
-        ReaderList<DemoMail> readerList = new MailsJson(x.getDemoList());
+        JsonFactory factory = new JsonFactory();
+        Json readerList = factory.jsfactory(ReaderType.MAILSLIST, x.getDemoList());
         File mailsFile = new File(current, "mails.json");
-        folder.writeJson(readerList, mailsFile.getPath());
+        readerList.writeJson(readerList, mailsFile.getPath());
         if (currfolder.getName().equalsIgnoreCase("Trash")) {
             Trash t = new Trash();
             t.deleteFromTrashFile(currfolder.getPath(), mailID);

@@ -5,11 +5,11 @@ import java.util.List;
 
 import com.google.gson.Gson;
 
-import mailserver.backendmailclient.classes.Folder;
 import mailserver.backendmailclient.classes.Trash;
-import mailserver.backendmailclient.interfaces.IFolder;
 
-public class TrashJson extends ReaderList<Trash> {
+public class TrashJson extends Json {
+
+    private List<Trash> list;
 
     public TrashJson() {
     }
@@ -18,11 +18,11 @@ public class TrashJson extends ReaderList<Trash> {
         list = l;
     }
 
-    public List<Trash> toList(String path) {
-        IFolder folder = new Folder();
-        String input = folder.toStringJson(path);
+    @Override
+    public List<Trash> readJson(String path) {
+        String input = toStringJson(path);
         TrashJson temp = new Gson().fromJson(input, TrashJson.class);
-        this.list = (temp == null) ? new ArrayList<>() : temp.getList();
+        this.list = (temp == null) ? new ArrayList<>() : temp.list;
         return this.list;
     }
 }

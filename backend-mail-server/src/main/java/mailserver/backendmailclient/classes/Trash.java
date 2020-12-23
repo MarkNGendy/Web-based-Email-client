@@ -35,11 +35,11 @@ public class Trash {
     }
 
     public void deleteFromTrashFile(String trashFolder, String mailID) {
-        IFolder folder = new Folder();
         File trashFile = new File(trashFolder, "Trashfile.json");
-        ReaderList<Trash> readlist = new TrashJson();
-        readlist.toList(trashFile.getPath());
-        List<Trash> trashlist = readlist.getList();
+
+        JsonFactory factory = new JsonFactory();
+        Json readlist = factory.jsfactory(ReaderType.TRASH, null);
+        List<Trash> trashlist = (List<Trash>) readlist.readJson(trashFile.getPath());
 
         int index = 0;
         for (Trash demo : trashlist) {
@@ -49,7 +49,7 @@ public class Trash {
             index++;
         }
         trashlist.remove(index);
-        readlist.setLsist(trashlist);
-        folder.writeJson(readlist, trashFile.getPath());
+        readlist = factory.jsfactory(ReaderType.TRASH, trashlist);
+        readlist.writeJson(readlist, trashFile.getPath());
     }
 }

@@ -9,7 +9,4 @@ public interface IFolder {
 
     public boolean moveFolder(File source, File destination);
 
-    public String toStringJson(String path);
-
-    public boolean writeJson(Object object, String path);
 }

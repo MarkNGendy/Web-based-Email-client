@@ -1,9 +1,7 @@
 package mailserver.backendmailclient.classes;
 
-import mailserver.backendmailclient.interfaces.IContact;
-import mailserver.backendmailclient.interfaces.IFolder;
-import mailserver.backendmailclient.jsonReaders.ContactsJson;
-import mailserver.backendmailclient.jsonReaders.ReaderList;
+import mailserver.backendmailclient.interfaces.*;
+import mailserver.backendmailclient.jsonReaders.*;
 
 import java.util.*;
 
@@ -11,42 +9,54 @@ public class Contact implements IContact {
     private String userName;
     private List<String> mails;
 
-    public Contact() {}
+    public Contact() {
+    }
 
     public Contact(String userName, List<String> mails) {
         this.userName = userName;
         this.mails = mails;
     }
+
     @Override
     public String getUserName() {
         return userName;
     }
 
     @Override
-    public void setUserName(String userName) { this.userName = userName; }
-
-    @Override
-    public void setMails(List<String> mails) { this.mails = mails; }
-
-    @Override
-    public List<String> getMails() { return mails; }
-
-    @Override
-    public void removeMail(int index) { mails.remove(index); }
-
-    @Override
-    public void addMail(String email) { mails.add(email); }
-
-    public void writeContacts(List<Contact> contacts,String user){
-        ReaderList<Contact> readerList = new ContactsJson(contacts);
-        IFolder folder = new Folder();
-        folder.writeJson(readerList,"Server/"+user+"/contacts.json");
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public List<Contact> readContacts(String user){
-        ReaderList<Contact> readlist = new ContactsJson();
-        readlist.toList("Server/"+user+"/contacts.json");
-        return readlist.getList();
+    @Override
+    public void setMails(List<String> mails) {
+        this.mails = mails;
+    }
+
+    @Override
+    public List<String> getMails() {
+        return mails;
+    }
+
+    @Override
+    public void removeMail(int index) {
+        mails.remove(index);
+    }
+
+    @Override
+    public void addMail(String email) {
+        mails.add(email);
+    }
+
+    public void writeContacts(List<Contact> contacts, String user) {
+        JsonFactory factory = new JsonFactory();
+        Json readList = factory.jsfactory(ReaderType.CONTACTS, contacts);
+        readList.writeJson(readList, "Server/" + user + "/contacts.json");
+    }
+
+    public List<Contact> readContacts(String user) {
+        JsonFactory factory = new JsonFactory();
+        Json readlist = factory.jsfactory(ReaderType.CONTACTS, null);
+        return (List<Contact>) readlist.readJson("Server/" + user + "/contacts.json");
     }
 
     /* Comparators for sorting the contacts by contact name */
@@ -70,7 +80,7 @@ public class Contact implements IContact {
             String name2 = c22.getUserName().toUpperCase();
 
             // ascending order
-            //return name1.compareTo(name2);
+            // return name1.compareTo(name2);
 
             // descending order
             return name2.compareTo(name1);

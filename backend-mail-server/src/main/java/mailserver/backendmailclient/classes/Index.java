@@ -27,9 +27,10 @@ public class Index {
 
     public void getfromfile(File folder, String mailID) {
         File mailsFile = new File(folder, "mails.json");
-        ReaderList<DemoMail> readlist = new MailsJson();
-        readlist.toList(mailsFile.getPath());
-        List<DemoMail> mailslist = readlist.getList();
+
+        JsonFactory factory = new JsonFactory();
+        Json readlist = factory.jsfactory(ReaderType.MAILSLIST, null);
+        List<DemoMail> mailslist = (List<DemoMail>) readlist.readJson(mailsFile.getPath());
 
         int index = 0;
         for (DemoMail demo : mailslist) {
