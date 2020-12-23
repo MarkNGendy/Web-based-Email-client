@@ -43,7 +43,7 @@
       </thead>
       <tbody v-for="item in emails" :key="item.subject">
         <tr>
-          <td><input v-bind:id="item.id" v-bind:value="JSON.stringify(item)" v-on:click="addMail($event)" type="checkbox" >{{item.id}}</td>
+          <td><input v-bind:id="item.userName" v-bind:value="JSON.stringify(item)" v-on:click="addMail($event)" type="checkbox" >{{item.ind}}</td>
           <td><router-link :to="{name: 'view-email', params: {username: username,
           emailAdd: emailAdd, id:item.id, emails: JSON.stringify(allMails)}}">
           {{item.userName}}</router-link></td>
@@ -83,21 +83,27 @@ export default {
         var i = 0;
         var tempArr = [];
         for(i = 0; i < this.deletedMails.length; i++) {
-          if(this.deletedMails[i].id !== JSON.parse(value).id) {
+          if(this.deletedMails[i].userName !== JSON.parse(value).userName) {
             tempArr.push(this.deletedMails[i]);
           }
         }
         this.deletedMails = tempArr;
       }
+      console.log(this.deletedMails);
     },
     async deleteMails() {
-      var response = await axios.post("http://localhost:8095/delete/mails/", {
-        mails: this.deletedMails,
-        source: "Inbox",
-      });
-      response = await axios.post("http://localhost:8095/mails/", {
-        listname: "Inbox",
+      console.log(this.deletedMails);
+      var response = await axios.post("http://localhost:8095/removeContact/", {
+        contact: { userName: "", mails: [] },
         user: this.emailAdd,
+        RContacts:this.deletedMails,
+        ind: 0,
+        editingMail: ""     
+      });
+      response = await axios.post("http://localhost:8095/contact/", {
+        email: this.emailAdd,
+        password: "",
+        username: this.username,
       });
       console.log(response);
       this.allMails = response.data;
@@ -201,6 +207,7 @@ export default {
       password: "",
       username: this.username,
     });
+    console.log(response.data);
     this.allMails = response.data;
     this.isFiltered = false;
     this.currIndex = 1;

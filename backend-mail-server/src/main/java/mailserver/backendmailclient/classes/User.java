@@ -115,8 +115,12 @@ public class User extends DemoUsers implements IUser {
     @Override
     public List<Contact> removeContact(List<Contact> RContacts, String user) {
         Contact c = new Contact();
+
         friends = c.readContacts(user);
         for(Contact con: RContacts){
+
+            System.out.println(con);
+
             friends.remove(friends.indexOf(con));
         }
         c.writeContacts(friends, user);
