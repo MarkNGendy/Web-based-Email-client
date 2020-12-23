@@ -106,7 +106,7 @@ export default {
       this.paginate(this.allMails);
     },
     async nextPage() {
-      if(this.currIndex < (this.allMails.length / 5)) {
+      if(this.currIndex < (this.allMails.length / 10)) {
         this.currIndex++; 
       }
       if (this.isFiltered == true) {
@@ -128,7 +128,7 @@ export default {
     paginate(mailsList) {
       var counter = 0;
       var left = ((this.currIndex - 1) * (mailsList.length - 1));
-      var right = ((this.currIndex - 1) * (mailsList.length-1) + 4);
+      var right = ((this.currIndex - 1) * (mailsList.length-1) + 9);
       var i = left;
       var list = [];
       while(i <= right && i < mailsList.length) {
