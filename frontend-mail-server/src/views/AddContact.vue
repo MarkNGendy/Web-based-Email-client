@@ -64,7 +64,8 @@ export default {
       await Axios.post("http://localhost:8095/addContact/", {
         contact: { userName: this.Contact.name, mails: this.Contact.emails },
         user: this.emailAdd,
-        ind: 0
+        ind: 0,
+        editingMail: ""
       });
       
       document.getElementById("email").value = "";

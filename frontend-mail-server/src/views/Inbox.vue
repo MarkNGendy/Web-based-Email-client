@@ -97,7 +97,8 @@ export default {
       }
     },
     async deleteMails() {
-      var response = await axios.post("http://localhost:8095/delete/mails/", {
+      console.log(this.deletedMails);
+      var response = await axios.post("http://localhost:8095/deleteMails/", {
         mails: this.deletedMails,
         source: "Inbox",
       });

@@ -111,7 +111,7 @@ export default {
       }
       if (this.isFiltered == true) {
         await this.paginate(this.filteredList);
-      } else {
+      } else { 
         await this.paginate(this.allMails);
       }
     },
@@ -201,7 +201,6 @@ export default {
       password: "",
       username: this.username,
     });
-    console.log(response);
     this.allMails = response.data;
     this.isFiltered = false;
     this.currIndex = 1;

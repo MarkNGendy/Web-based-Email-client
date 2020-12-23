@@ -110,14 +110,8 @@ public class HomeController {
     @PostMapping("/deleteMails/")
     public void deleteMails(@RequestBody DeleteBody deleteBody) {
         Mail mail = new Mail();
-<<<<<<< Updated upstream
-        for (int i = 0; i < deleteBody.getMails().size(); i++) {
-            Answer ans = mail.sendToTrash(deleteBody.getSource(), ((deleteBody.getMails()).get(i)).getID());
-            System.out.println(ans.getAns());
-=======
         for(Mail m :deleteBody.getMails()){
             mail.sendToTrash(deleteBody.getSource(),m.getID());
->>>>>>> Stashed changes
         }
     }
 
