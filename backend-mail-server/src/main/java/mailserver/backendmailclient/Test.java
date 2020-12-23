@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mailserver.backendmailclient.classes.Answer;
+import mailserver.backendmailclient.classes.DemoUsers;
 import mailserver.backendmailclient.classes.Mail;
+import mailserver.backendmailclient.classes.User;
 import mailserver.backendmailclient.controllers.MailBody;
 
 public class Test {
@@ -66,5 +68,14 @@ public class Test {
          * Thread.sleep(100); } catch (InterruptedException e) {
          * System.out.println("no"); e.printStackTrace(); } i++; }
          */
+
+        DemoUsers user = new DemoUsers("email@gamil.com", "pass", "name");
+        User t = new User();
+        Answer ans = t.signin(user);
+        System.out.println(ans.getAns());
+        ans = t.signup(user);
+        System.out.println(ans.getAns());
+        ans = t.signin(user);
+        System.out.println(ans.getAns());
     }
 }

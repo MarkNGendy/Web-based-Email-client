@@ -49,9 +49,9 @@ public class User extends DemoUsers implements IUser {
         if (!server.buildServe())
             return new Answer(false, wrong);
 
-        ReaderList<DemoUsers> readlist = new UsersJson();
-        readlist.toList(usersPath);
-        List<DemoUsers> userslist = readlist.getList();
+        Factory f = new Factory();
+        ReaderList<DemoUsers> readlist = f.factory("user");
+        List<DemoUsers> userslist = readlist.toList(usersPath);
 
         for (DemoUsers demoUsers : userslist) {
             if (input.getemail().equalsIgnoreCase(demoUsers.getemail())
@@ -71,9 +71,9 @@ public class User extends DemoUsers implements IUser {
             return new Answer(false, wrong);
 
         IFolder folder = new Folder();
-        ReaderList<DemoUsers> readlist = new UsersJson();
-        readlist.toList(usersPath);
-        List<DemoUsers> userslist = readlist.getList();
+        Factory f = new Factory();
+        Json readlist = f.factory("user");
+        List<DemoUsers> userslist = readlist.toList(usersPath);
         for (DemoUsers demoUsers : userslist) {
             if (input.getemail().equalsIgnoreCase(demoUsers.getemail())) {
                 return new Answer(false, "This email already exists!");

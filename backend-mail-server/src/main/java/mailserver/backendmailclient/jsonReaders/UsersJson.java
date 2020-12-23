@@ -18,10 +18,11 @@ public class UsersJson extends ReaderList<DemoUsers> {
         list = l;
     }
 
-    public void toList(String path) {
+    public List<DemoUsers> toList(String path) {
         IFolder folder = new Folder();
         String input = folder.toStringJson(path);
         UsersJson temp = new Gson().fromJson(input, UsersJson.class);
         this.list = (temp == null) ? new ArrayList<>() : temp.getList();
+        return this.list;
     }
 }

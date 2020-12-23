@@ -18,10 +18,11 @@ public class TrashJson extends ReaderList<Trash> {
         list = l;
     }
 
-    public void toList(String path) {
+    public List<Trash> toList(String path) {
         IFolder folder = new Folder();
         String input = folder.toStringJson(path);
         TrashJson temp = new Gson().fromJson(input, TrashJson.class);
         this.list = (temp == null) ? new ArrayList<>() : temp.getList();
+        return this.list;
     }
 }

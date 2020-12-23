@@ -2,15 +2,8 @@ package mailserver.backendmailclient.jsonReaders;
 
 import java.util.List;
 
-public abstract class ReaderList<T> {
+public abstract class ReaderList<T> extends Json {
     protected List<T> list;
-
-    protected ReaderList() {
-    }
-
-    protected ReaderList(List<T> l) {
-        this.list = l;
-    }
 
     public List<T> getList() {
         return list;
@@ -20,6 +13,6 @@ public abstract class ReaderList<T> {
         this.list = l;
     }
 
-    public abstract void toList(String path);
+    public abstract List<T> toList(String path);
 
 }

@@ -18,10 +18,11 @@ public class MailsJson extends ReaderList<DemoMail> {
         list = l;
     }
 
-    public void toList(String path) {
+    public List<DemoMail> toList(String path) {
         IFolder folder = new Folder();
         String input = folder.toStringJson(path);
         MailsJson temp = new Gson().fromJson(input, MailsJson.class);
         this.list = (temp == null) ? new ArrayList<>() : temp.getList();
+        return this.list;
     }
 }

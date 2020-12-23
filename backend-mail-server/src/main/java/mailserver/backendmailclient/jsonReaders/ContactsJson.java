@@ -18,10 +18,11 @@ public class ContactsJson extends ReaderList<Contact> {
         list = l;
     }
 
-    public void toList(String path) {
+    public List<Contact> toList(String path) {
         IFolder folder = new Folder();
         String input = folder.toStringJson(path);
         ContactsJson temp = new Gson().fromJson(input, ContactsJson.class);
         this.list = (temp == null) ? new ArrayList<>() : temp.getList();
+        return this.list;
     }
 }
