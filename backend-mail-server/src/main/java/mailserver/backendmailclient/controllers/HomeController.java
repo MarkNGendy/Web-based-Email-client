@@ -110,11 +110,11 @@ public class HomeController {
     @PostMapping("/deleteMails/")
     public void deleteMails(@RequestBody DeleteBody deleteBody) {
         Mail mail = new Mail();
-        for(Mail m :deleteBody.getMails()){
-            mail.sendToTrash(deleteBody.getSource(),m.getID());
+        for (Mail m : deleteBody.getMails()) {
+            String fullPath = "Server/" + deleteBody.getUserEmail() + "/folders/" + deleteBody.getSource();
+            mail.sendToTrash(fullPath, m.getID());
         }
     }
-
 
     @PostMapping("/search/")
     public List<Mail> search(@RequestBody FSSBody searchBody) {
