@@ -20,7 +20,7 @@ public interface IUser {
 
     public boolean removeFolder(int index);
 
-    public List<Contact> addContact(Contact contact, String user);
+    public Answer addContact(Contact contact, String user);
 
     public List<Contact> removeContact(List<Contact> RContacts, String user);
 
