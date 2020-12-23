@@ -16,7 +16,8 @@
                     Add Contact
                 </div>
             </router-link>
-            <router-link :to="{name: 'my-contacts', params: {username :$route.params.username}}" active-class="active" tag="button" exact class="side-btn">
+            <router-link :to="{name: 'my-contacts', params: {username : username, 
+            emailAdd: emailAdd}}" active-class="active" tag="button" exact class="side-btn">
                 <div class="link-container">
                     My Contacts
                 </div>
@@ -27,27 +28,32 @@
                     Inbox
                 </div>
             </router-link>
-            <router-link :to="{name: 'trash', params: {username :$route.params.username}}" active-class="active" tag="button" exact class="side-btn">
+            <router-link :to="{name: 'trash', params: {username : username, 
+            emailAdd: emailAdd}}" active-class="active" tag="button" exact class="side-btn">
                 <div class="link-container">
                     Trash
                 </div>
             </router-link>
-            <router-link :to="{name: 'sent', params: {username :$route.params.username}}" active-class="active" tag="button" exact class="side-btn">
+            <router-link :to="{name: 'sent', params: {username : username, 
+            emailAdd: emailAdd}}" active-class="active" tag="button" exact class="side-btn">
                 <div class="link-container">
                     Sent
                 </div>
             </router-link>
-            <router-link :to="{name: 'draft', params: {username :$route.params.username}}" active-class="active" tag="button" exact class="side-btn">
+            <router-link :to="{name: 'draft', params: {username : username, 
+            emailAdd: emailAdd}}" active-class="active" tag="button" exact class="side-btn">
                 <div class="link-container">
                     Draft
                 </div>
             </router-link>
-            <router-link :to="{name: 'user-folders', params: {username :$route.params.username}}" active-class="active" tag="button" exact class="side-btn">
+            <router-link :to="{name: 'user-folders', params: {username : username, 
+            emailAdd: emailAdd}}" active-class="active" tag="button" exact class="side-btn">
                 <div class="link-container">
                     UserFolders
                 </div>
             </router-link>
-            <router-link :to="{name: 'view-email', params: {username :$route.params.username}}" active-class="active" tag="button" exact class="side-btn">
+            <router-link :to="{name: 'view-email', params: {username : username, 
+            emailAdd: emailAdd}}" active-class="active" tag="button" exact class="side-btn">
                 <div class="link-container">
                     View Email
                 </div>

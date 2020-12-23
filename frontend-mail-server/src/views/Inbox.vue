@@ -196,8 +196,6 @@ export default {
     this.paginate(this.filteredList);
     },
     gotoHome() {
-      var sel = document.getElementById('check');
-      console.log(sel.value);
       this.$router.push({ name: "user", params: { username: this.username, emailAdd:this.email} });
     },
   },
