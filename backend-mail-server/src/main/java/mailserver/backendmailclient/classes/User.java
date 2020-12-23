@@ -102,14 +102,18 @@ public class User extends DemoUsers implements IUser {
     }
 
     @Override
-    public List<Contact> addContact(Contact contact, String user) {
+    public Answer addContact(Contact contact, String user) {
         Contact c = new Contact();
         Sort s = new Sort();
         friends = c.readContacts(user);
+        for(Contact con: friends){
+            if(con.getUserName().equalsIgnoreCase(contact.getUserName()))
+                return new Answer(false,"the contact name is already exist !");
+        }
         friends.add(contact);
         s.contactsSorter(friends, "ASCENDING");
         c.writeContacts(friends, user);
-        return friends;
+        return new Answer(true, "Contact has added successfully");
     }
 
     @Override
@@ -117,7 +121,12 @@ public class User extends DemoUsers implements IUser {
         Contact c = new Contact();
         friends = c.readContacts(user);
         for(Contact con: RContacts){
-            friends.remove(con);
+            for(Contact con2: friends){
+                if(con.getUserName().equalsIgnoreCase(con2.getUserName())){
+                    friends.remove(con2);
+                    break;
+                }
+            }
         }
         c.writeContacts(friends, user);
         return friends;

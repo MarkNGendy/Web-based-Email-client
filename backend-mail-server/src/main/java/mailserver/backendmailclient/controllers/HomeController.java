@@ -143,7 +143,7 @@ public class HomeController {
     }
 
     @PostMapping("/addContact/")
-    public List<Contact> addContact(@RequestBody ContactBody contactBody) {
+    public Answer addContact(@RequestBody ContactBody contactBody) {
         User u = new User();
         return u.addContact(contactBody.getContact(), contactBody.getUser());
     }
@@ -151,6 +151,7 @@ public class HomeController {
     @PostMapping("/removeContact/")
     public List<Contact> removeContact(@RequestBody ContactBody contactBody) {
         User u = new User();
+        System.out.println("remove the contacts");
         return u.removeContact(contactBody.getRContacts(), contactBody.getUser());
     }
 
