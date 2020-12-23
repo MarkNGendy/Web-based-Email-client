@@ -6,10 +6,9 @@ import java.util.List;
 import com.google.gson.Gson;
 
 import mailserver.backendmailclient.classes.Contact;
-import mailserver.backendmailclient.classes.Folder;
-import mailserver.backendmailclient.interfaces.IFolder;
 
-public class ContactsJson extends ReaderList<Contact> {
+public class ContactsJson extends Json {
+    private List<Contact> list;
 
     public ContactsJson() {
     }
@@ -18,10 +17,11 @@ public class ContactsJson extends ReaderList<Contact> {
         list = l;
     }
 
-    public void toList(String path) {
-        IFolder folder = new Folder();
-        String input = folder.toStringJson(path);
+    @Override
+    public List<Contact> readJson(String path) {
+        String input = toStringJson(path);
         ContactsJson temp = new Gson().fromJson(input, ContactsJson.class);
-        this.list = (temp == null) ? new ArrayList<>() : temp.getList();
+        this.list = (temp == null) ? new ArrayList<>() : temp.list;
+        return this.list;
     }
 }
