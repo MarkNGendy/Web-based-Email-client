@@ -12,8 +12,10 @@
     <option  value="SUBJECT">Sort by subject</option>
     <option  value="SENDER">Sort by sender</option>
     <option  value="RECEIVERS">Sort by recievers</option>
+    <option  value="TIME">Sort by date</option>
     <option  value="BODY">Sort by body</option>
     <option  value="ATTACHMENTS">Sort by attachments</option>
+    <option  value="IMPORTANCE">Sort by importance</option>
   </select>
   <select class="filterbox" name="sort-type" id="sort-type">
     <option  value="ASCENDING">Ascending</option>
@@ -76,11 +78,11 @@ export default {
     };
   },
   methods: {
-    delete() {
+    deleteMails() {
       
     },
     async nextPage() {
-      if(this.currIndex < (this.allMails.length / 4)) {
+      if(this.currIndex < (this.allMails.length / 5)) {
         this.currIndex++; 
       }
       if (this.isFiltered == true) {
@@ -101,11 +103,11 @@ export default {
     },
     paginate(mailsList) {
       var counter = 0;
-      var left = ((this.currIndex - 1) * (mailsList.length-1));
-      var right = ((this.currIndex - 1) * (mailsList.length-1) + 3);
+      var left = ((this.currIndex - 1) * (mailsList.length - 1));
+      var right = ((this.currIndex - 1) * (mailsList.length-1) + 4);
       var i = left;
       var list = [];
-      while(i <= right && i< mailsList.length) {
+      while(i <= right && i < mailsList.length) {
         list[counter] = mailsList[i];
         counter++;
         i++;
@@ -269,6 +271,7 @@ export default {
   color: #ffffff;
   text-align: center;
   font-weight: bold;
+  font-size: 18px;
 }
 
 .content-table th,
@@ -278,6 +281,7 @@ export default {
 
 .content-table tbody tr {
   border-bottom: 1px solid #dddddd;
+  font-size: 13px;
 }
 
 .content-table tbody tr:nth-of-type(even) {

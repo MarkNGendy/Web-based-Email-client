@@ -48,9 +48,9 @@ public class User extends DemoUsers implements IUser {
         if (!server.buildServe())
             return new Answer(false, wrong);
 
-        ReaderList<DemoUsers> readlist = new UsersJson();
-        readlist.toList(usersPath);
-        List<DemoUsers> userslist = readlist.getList();
+        JsonFactory factory = new JsonFactory();
+        Json readlist = factory.jsfactory(ReaderType.USERS, null);
+        List<DemoUsers> userslist = (List<DemoUsers>) readlist.readJson(usersPath);
 
         for (DemoUsers demoUsers : userslist) {
             if (input.getemail().equalsIgnoreCase(demoUsers.getemail())
@@ -69,10 +69,9 @@ public class User extends DemoUsers implements IUser {
         if (!server.buildServe())
             return new Answer(false, wrong);
 
-        IFolder folder = new Folder();
-        ReaderList<DemoUsers> readlist = new UsersJson();
-        readlist.toList(usersPath);
-        List<DemoUsers> userslist = readlist.getList();
+        JsonFactory factory = new JsonFactory();
+        Json readlist = factory.jsfactory(ReaderType.USERS, null);
+        List<DemoUsers> userslist = (List<DemoUsers>) readlist.readJson(usersPath);
         for (DemoUsers demoUsers : userslist) {
             if (input.getemail().equalsIgnoreCase(demoUsers.getemail())) {
                 return new Answer(false, "This email already exists!");
@@ -80,8 +79,8 @@ public class User extends DemoUsers implements IUser {
         }
 
         userslist.add(input);
-        readlist.setLsist(userslist);
-        folder.writeJson(readlist, usersPath);
+        readlist = factory.jsfactory(ReaderType.USERS, userslist);
+        readlist.writeJson(readlist, usersPath);
 
         UserBuilder builder = new UserBuilder(input);
         if (builder.newUserBuilder())
@@ -103,22 +102,22 @@ public class User extends DemoUsers implements IUser {
     }
 
     @Override
-    public List<Contact> addContact(Contact contact,String user) {
+    public List<Contact> addContact(Contact contact, String user) {
         Contact c = new Contact();
         Sort s = new Sort();
         friends = c.readContacts(user);
         friends.add(contact);
-        s.contactsSorter(friends,"ASCENDING");
-        c.writeContacts(friends,user);
+        s.contactsSorter(friends, "ASCENDING");
+        c.writeContacts(friends, user);
         return friends;
     }
 
     @Override
-    public List<Contact> removeContact(int index,String user) {
+    public List<Contact> removeContact(int index, String user) {
         Contact c = new Contact();
         friends = c.readContacts(user);
         friends.remove(index);
-        c.writeContacts(friends,user);
+        c.writeContacts(friends, user);
         return friends;
     }
 

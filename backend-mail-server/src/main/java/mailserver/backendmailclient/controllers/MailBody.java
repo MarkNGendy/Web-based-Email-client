@@ -12,17 +12,19 @@ public class MailBody {
     private List<File> attachments;
     private String sender;
     private List<String> receivers;
+    private int importance;
 
-    public MailBody(String sender, List<String> receivers, String subject, String body, List<File> attachments) {
+    public MailBody(String sender, List<String> receivers, String subject, String body, List<File> attachments, int importance) {
         this.sender = sender;
         this.receivers = receivers;
         this.subject = subject;
         this.body = body;
         this.attachments = attachments;
+        this.importance = importance;
     }
 
     public Mail toMail() {
-        Mail ans = new Mail(sender, receivers, subject, body, attachments);
+        Mail ans = new Mail(sender, receivers, subject, body, attachments,importance);
         Long time = System.currentTimeMillis();
         String mailname = Long.toString(time);
         ans.setID(mailname);

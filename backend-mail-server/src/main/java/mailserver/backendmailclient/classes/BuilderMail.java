@@ -4,12 +4,11 @@ import java.io.*;
 import java.nio.file.Files;
 import java.util.*;
 
-import mailserver.backendmailclient.interfaces.IFolder;
 import mailserver.backendmailclient.jsonReaders.*;
 
 public class BuilderMail {
     public boolean buildMail(Mail mail) {
-        File mainfolder = new File("server/" + mail.getSender() + "/folders/" + mail.getSrcFolder());
+        File mainfolder = new File("Server/" + mail.getSender() + "/folders/" + mail.getSrcFolder());
         File mailfolder = new File(mainfolder, mail.getID());
         mailfolder.mkdir();
         File attach = new File(mailfolder, "attachements");
@@ -36,18 +35,15 @@ public class BuilderMail {
     }
 
     public void addToMailsFile(File mainfolder, DemoMail temp) {
-        IFolder folder = new Folder();
         File mails = new File(mainfolder, "mails.json");
-        ReaderList<DemoMail> readlist = new MailsJson();
-        readlist.toList(mails.getPath());
-        List<DemoMail> userslist = readlist.getList();
+        Json readlist = new MailsListJson();
+        List<DemoMail> userslist = (List<DemoMail>) readlist.readJson(mails.getPath());
         userslist.add(temp);
-        readlist.setLsist(userslist);
-        folder.writeJson(readlist, mails.getPath());
+        readlist = new MailsListJson(userslist);
+        readlist.writeJson(readlist, mails.getPath());
     }
 
     private boolean createMAilFile(File mailfolder, Mail mail) {
-        IFolder folder = new Folder();
         File mailfile = new File(mailfolder, "mailfile.json");
         try {
             mailfile.createNewFile();
@@ -55,7 +51,8 @@ public class BuilderMail {
             e.printStackTrace();
             return false;
         }
-        folder.writeJson(mail, mailfile.getPath());
+        Json write = new MailJson();
+        write.writeJson(mail, mailfile.getPath());
         return true;
     }
 
