@@ -46,7 +46,7 @@
       </thead>
       <tbody v-for="item in emails" :key="item.subject">
         <tr>
-          <td><input v-bind:value="JSON.parse(JSON.stringify(item))" id="check" type="checkbox" >{{item.id}}</td>
+          <td><input v-bind:id="item.id" v-bind:value="JSON.stringify(item)" @click="addMail(this.id)" type="checkbox" >{{item.id}}</td>
           <td><router-link :to="{name: 'view-email', params: {username: username,
           emailAdd: emailAdd, id:item.id, emails: JSON.stringify(allMails)}}">
           {{item.subject}}</router-link></td>
@@ -56,7 +56,7 @@
             </ul>
           </td>
           <td>{{item.date}}</td>
-          <td>Priority</td>
+          <td>{{item.importance}}</td>
         </tr>
       </tbody>
     </table>
@@ -75,9 +75,28 @@ export default {
       currIndex: 1,
       filteredList: [],
       isFiltered: false,
+      deletedMails:[]
     };
   },
   methods: {
+    addMail(id) {
+      alert(id)
+      var checkbox = document.getElementById(id);
+      var value = checkbox.value;
+      if (checkbox.checked == true) {
+        this.deletedMails.push(JSON.parse(value));
+      } else {
+        var i = 0;
+        var tempArr = [];
+        for(i = 0; i < this.deletedMails.length; i++) {
+          if(this.deletedMails[i] != JSON.parse(value)) {
+            tempArr.push(this.deletedMails[i]);
+          }
+        }
+        this.deletedMails = tempArr;
+      }
+
+    },
     deleteMails() {
       
     },

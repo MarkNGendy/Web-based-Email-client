@@ -26,21 +26,13 @@
         <label for="fname">Choose Importance</label>
       </div>
       <div class="col-75">
-      <select class="right-col" id="reciever" name="emails">
+      <select class="right-col" id="importance" name="emails">
           <option value="1">1</option>
           <option value="2">2</option>
           <option value="3">3</option>
           <option value="4">4</option>
           <option value="5">5</option>
         </select>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-25">
-        <label for="fname">Date</label>
-      </div>
-      <div class="col-75">
-        <input type="text" id="lname" name="lastname" placeholder="Write email date..">
       </div>
     </div>
     <div class="row">
@@ -69,7 +61,7 @@
     </div>
     <div class="row">
       <button class="submit" @click="send()">Send</button>
-      <button class="submit">Save to drafts</button>
+      <button class="submit" @click="saveDraft()">Save to drafts</button>
     </div>
 </div>
 </template>
@@ -106,14 +98,33 @@ export default {
       this.subject = sub.value;
       sub = document.getElementById("body");
       this.body = sub.value;
+      sub = document.getElementById("importance");
+      this.importance = sub.value;
       const response = await axios.post("http://localhost:8095/compose/", {
         subject: this.subject,
         body: this.body,
         sender: this.emailAdd,
-        receivers: this.receivers
+        receivers: this.receivers,
+        importance: this.importance
       });
-      console.log(response);
-    }
+      alert(response.data.ans);
+    },
+    async saveDraft() {
+      var sub = document.getElementById("subject");
+      this.subject = sub.value;
+      sub = document.getElementById("body");
+      this.body = sub.value;
+      sub = document.getElementById("importance");
+      this.importance = sub.value;
+      const response = await axios.post("http://localhost:8095/saveDraft/", {
+        subject: this.subject,
+        body: this.body,
+        sender: this.emailAdd,
+        receivers: this.receivers,
+        importance: this.importance
+      });
+      alert(response.data.ans);
+    },
   },
   created: async function() {
     if(this.$route)

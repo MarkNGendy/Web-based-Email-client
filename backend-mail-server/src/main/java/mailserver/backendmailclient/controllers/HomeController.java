@@ -107,6 +107,15 @@ public class HomeController {
         }
     }
 
+    @PostMapping("/delete/mails")
+    public void deleteMails(@RequestBody DeleteBody deleteBody) {
+        Mail mail = new Mail();
+        for (int i = 0; i < deleteBody.getMails().size(); i++) {
+            mail.sendToTrash(deleteBody.getSource(), ((deleteBody.getMails()).get(i)).getID());
+        }
+    }
+
+
     @PostMapping("/search/")
     public List<Mail> search(@RequestBody FSSBody searchBody) {
         Search mySearcher = new Search();
@@ -133,13 +142,13 @@ public class HomeController {
         return c.readContacts(user);
     }
 
-    @PostMapping("/addContact")
+    @PostMapping("/addContact/")
     public List<Contact> addContact(@RequestBody ContactBody contactBody) {
         User u = new User();
         return u.addContact(contactBody.getContact(), contactBody.getUser());
     }
 
-    @PostMapping("/removeContact")
+    @PostMapping("/removeContact/")
     public List<Contact> removeContact(@RequestBody ContactBody contactBody) {
         User u = new User();
         return u.removeContact(contactBody.getInd(), contactBody.getUser());
