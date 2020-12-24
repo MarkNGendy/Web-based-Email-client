@@ -1,6 +1,6 @@
 <template>
-  <router-link to="/">Login</router-link> |
-  <router-link to="/register">Register</router-link>
+  <router-link to="/" class="hyptxt">Login</router-link> |
+  <router-link to="/register" class="hyptxt">Register</router-link>
   <section class="container h-100">
     <div class="row h-100 justify-content-center align-items-center"
     align="center"
@@ -9,14 +9,14 @@
         <img
           class="mx-auto d-block"
           src="../assets/logo-new-color-site.png"
-          alt="Compacto Records"
-          title="Compacto Records"
+          alt="DemoMail logo"
+          title="DemoMail logo"
         />
-        <p class="wrapper-box__title text-center">Sign in</p>
+        <p class = "sign-in">Sign in</p>
         <div>
           <form class="form form-newaccount" id="loginForm">
             <div class="form-group">
-              <label for="inputUser">E-mail</label>
+              <label for="inputUser" style="margin: 27px">E-mail</label>
               <input
                 v-model="input.email"
                 @focus="clearError()"
@@ -28,7 +28,7 @@
               />
             </div>
             <div class="form-group">
-              <label for="inputPassword">Password</label>
+              <label for="inputPassword" style="margin: 15px">Password</label>
               <input
                 v-model="input.password"
                 @focus="clearError()"
@@ -43,7 +43,7 @@
             <input
               type="button"
               v-on:click="login()"
-              class="btn btn-default"
+              class="s-button"
               id="submitLogin"
               value="Login"
             />
@@ -53,7 +53,7 @@
               }}</span>
             </transition>
             <hr />
-            <router-link to="/register" class="text-link d-block text-right"
+            <router-link to="/register" class="hyptxt"
               >No account yet?</router-link
             >
           </form>
@@ -110,11 +110,47 @@ export default {
 body {
   align-self: center;
 }
+
+.sign-in{
+  text-align: center;
+  font-family: 'Roboto',sans-serif;
+  font-weight:bolder;
+  font-size: 30px;
+  color: #00cc66;  
+}
+.s-button{
+  display:inline-block;
+  width: 300px;
+  height: 50px;
+  background-color: black;
+  padding:0.35em 1.2em;
+  border:0.1em solid #FFFFFF;
+  font-size: 20px;
+  margin:10px;
+  border-radius:0.12em;
+  box-sizing: border-box;
+  text-decoration:none;
+  font-family:'Roboto',sans-serif;
+  font-weight:100;
+  color:#ffffff;
+  text-align:center;
+  transition: all 0.2s;
+}
+.s-button:hover{
+  color:black;
+  background-color:#00cc66;
+}
+
 .fade-enter,
 .fade-leave-active {
   opacity: 0;
 }
-
+.hyptxt{
+  color: #000;
+}
+.hyptxt:hover{
+  color: #00cc66;
+}
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 300ms;

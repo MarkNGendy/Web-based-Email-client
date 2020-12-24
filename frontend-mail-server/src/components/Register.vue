@@ -1,7 +1,7 @@
 <template>
   <section class="container h-100">
-    <router-link to="/">Login</router-link> |
-    <router-link to="/register">Register</router-link>
+    <router-link to="/" class="hyptxt">Login</router-link> |
+    <router-link to="/register" class="hyptxt">Register</router-link>
     <div
       class="row h-100 justify-content-center align-items-center"
       align="center"
@@ -11,14 +11,14 @@
         <img
           class="mx-auto d-block"
           src="../assets/logo-new-color-site.png"
-          alt="Compacto Records"
-          title="Compacto Records"
+          alt="DemoMail loco"
+          title="DemoMail logo"
         />
-        <p class="wrapper-box__title text-center">Welcome</p>
+        <p class="sign-in">Welcome</p>
         <div>
           <form class="form form-newaccount" id="passwordForm">
             <div class="form-group">
-              <label for="">Full Name</label>
+              <label for="" style="margin: 5px">Full Name</label>
               <input
                 type="text"
                 v-model="input.username"
@@ -31,7 +31,7 @@
               />
             </div>
             <div class="form-group">
-              <label for="">E-mail</label>
+              <label for="" style="margin: 18px">E-mail</label>
               <input
                 type="text"
                 v-model="input.email"
@@ -43,12 +43,12 @@
                 id="email"
               />
             </div>
+            
             <div class="form-group">
-              <label for="">Password</label>
+              <label for="" style="margin: 6px">Password</label>
               <input
                 type="password"
                 v-model="input.password"
-                class="input-lg form-control"
                 :class="{
                   green: passValid === 3,
                   yellow: passValid === 2,
@@ -58,63 +58,31 @@
                 id="password"
                 autocomplete="off"
               />
-              <div class="row">
-                <div class="col-sm-12"></div>
-                <div class="col-sm-12">
-                  <span class="d-block bullet-pass-rounded"
-                    ><span
-                      class="fa fa-circle"
-                      :class="{
-                        active: minLength,
-                        orange: !minLength && input.password.length > 0
-                      }"
-                      aria-hidden="true"
-                    ></span>
-                    At least 6 characters</span
-                  >
-                  <span class="d-block bullet-pass-rounded"
-                    ><span
-                      class="fa fa-circle"
-                      :class="{
-                        active: hasNumber,
-                        orange: !hasNumber && input.password.length > 0
-                      }"
-                      aria-hidden="true"
-                    ></span>
-                    At least 1 number</span
-                  >
-                  <span class="d-block bullet-pass-rounded"
-                    ><span
-                      class="fa fa-circle"
-                      :class="{
-                        active: hasUpperCase,
-                        orange: !hasUpperCase && input.password.length > 0
-                      }"
-                      aria-hidden="true"
-                    ></span>
-                    At least 1 uppercase letter</span
-                  >
-                </div>
-              </div>
             </div>
             <div class="form-group">
-              <label for="">Confirm your password</label>
+              <label for="" style="margin: 13px">Confirm</label>
               <input
                 type="password"
                 v-model="input.match_password"
                 @focus="clearError('passwordMatch')"
                 @blur="match_check"
                 @keyup.enter="newUser"
-                class="input-lg form-control"
                 name="password2"
                 id="password2"
                 autocomplete="off"
               />
             </div>
+            <div class="row">
+                <div class="col-sm-12"></div>
+                <div class="col-sm-12">
+                  <span class="d-block bullet-pass-rounded"><span></span>
+                    password must contains at least 6 characters, 1 number and 1 uppercase letter</span>
+                </div>
+              </div>
             <input
               type="button"
               v-on:click="newUser()"
-              class="btn btn-default"
+              class="s-button"
               id="submit"
               data-loading-text="Cadastrando..."
               value="Register"
@@ -129,7 +97,7 @@
               >
             </transition-group>
             <hr />
-            <router-link to="/" class="text-link d-block text-right"
+            <router-link to="/" class="hyptxt"
               >Already have an account?</router-link
             >
           </form>
@@ -283,4 +251,40 @@ export default {
 @import "./styles/scss/variables.scss";
 @import "./styles/scss/main.scss";
 @import "./styles/scss/form.scss";
+.sign-in{
+  text-align: center;
+  font-family: 'Roboto',sans-serif;
+  font-weight:bolder;
+  font-size: 30px;
+  color: #00cc66;  
+}
+.s-button{
+  display:inline-block;
+  width: 300px;
+  height: 50px;
+  background-color: black;
+  padding:0.35em 1.2em;
+  border:0.1em solid #FFFFFF;
+  font-size: 20px;
+  margin:10px;
+  border-radius:0.12em;
+  box-sizing: border-box;
+  text-decoration:none;
+  font-family:'Roboto',sans-serif;
+  font-weight:100;
+  color:#ffffff;
+  text-align:center;
+  transition: all 0.2s;
+}
+.s-button:hover{
+  color:black;
+  background-color:#00cc66;
+}
+.hyptxt{
+  color: #000;
+}
+.hyptxt:hover{
+  color: #00cc66;
+}
+
 </style>
