@@ -52,10 +52,10 @@
                     Draft
                 </div>
             </router-link>
-            <router-link :to="{name: 'user-folders', params: {username : username, 
+            <router-link :to="{name: 'edit-email', params: {username : username, 
             emailAdd: emailAdd}}" active-class="active" tag="button" exact class="side-btn">
                 <div class="link-container">
-                    UserFolders
+                  Edit Email 
                 </div>
             </router-link>
             <router-link :to="{name: 'view-email', params: {username : username, 

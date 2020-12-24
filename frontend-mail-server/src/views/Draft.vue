@@ -47,8 +47,8 @@
       <tbody v-for="item in emails" :key="item.subject">
         <tr>
           <td><input v-bind:id="item.id" v-bind:value="JSON.stringify(item)" v-on:click="addMail($event)" type="checkbox" >{{item.id}}</td>
-          <td><router-link :to="{name: 'view-email', params: {username: username,
-          emailAdd: emailAdd, id:item.id, emails: JSON.stringify(allMails)}}">
+          <td><router-link :to="{name: 'edit-email', params: {username: username,
+          emailAdd: emailAdd, id:item.id, email: JSON.stringify(item),emails: JSON.stringify(allMails)}}">
           {{item.subject}}</router-link></td>
           <td>{{item.sender}}</td>
           <td>

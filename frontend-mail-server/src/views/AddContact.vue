@@ -45,14 +45,16 @@ export default {
   },
 
   methods: {
-
     addemail() {
       console.log(this.Contact.emails);
+      var mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
       var txt = document.getElementById("email").value;
-      this.Contact.emails.push(txt); 
-      console.log(this.Contact)
+      if(!txt.match(mailformat)) {
+        alert("Please enter a valid email");
+      }else {
+      this.Contact.emails.push(txt);         
+      }
       document.getElementById("email").value = "";
-      console.log(this.Contact.emails);
     },
 
     async addcontact() {

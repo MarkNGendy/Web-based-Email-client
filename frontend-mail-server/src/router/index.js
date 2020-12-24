@@ -29,6 +29,12 @@ const routes = [
         props: true
       },
       {
+        path: "/edit-email",
+        name: "edit-email",
+        component: () => import("../views/EditEmail.vue"),
+        props: true
+      },
+      {
         path: "/edit-contact",
         name: "edit-contact",
         component: () => import("../views/EditContact.vue"),
@@ -68,12 +74,6 @@ const routes = [
         path: "/sent",
         name:"sent",
         component: () => import("../views/Sent.vue"),
-        props: true
-      },
-      {
-        path: "/user-folders",
-        name:"user-folders",
-        component: () => import("../views/UserFolders.vue"),
         props: true
       },
       {

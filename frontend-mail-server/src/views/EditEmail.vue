@@ -40,7 +40,7 @@
         <label for="lname">Subject</label>
       </div>
       <div class="col-75">
-        <input type="text" id="subject" name="lastname" placeholder="Write subject of your email..">
+        <input value="" type="text" id="subject" name="lastname" placeholder="Write subject of your email..">
       </div>
     </div>
     <div class="row">
@@ -48,7 +48,7 @@
         <label for="subject">Body</label>
       </div>
       <div class="col-75">
-        <textarea id="body" name="body" placeholder="Write something.." style="height:200px"></textarea>
+        <textarea id="body" value="" cname="body" placeholder="Write something.." style="height:200px"></textarea>
       </div>
     </div>
     <form enctype="multipart/form-data">
@@ -80,7 +80,8 @@ export default {
       username:"",
       emailAdd:"",
       pass: "",
-      files: []
+      files: [],
+      email: ""
     }
   },
   methods: {
@@ -132,8 +133,18 @@ export default {
     },
   },
   created: async function() {
+    document.getElementById("subject").value = "Helllllooooo"
     this.username = this.$route.params.username;
     this.emailAdd = this.$route.params.emailAdd;
+    this.email = JSON.parse(this.$route.params.email);
+    this.id = JSON.parse(this.$route.params.id);
+    console.log(this.email);
+    var sub = document.getElementById("subject");
+    sub.setAttribute("value", this.email.subject)
+    sub = document.getElementById("body");
+    sub.setAttribute("value", this.email.body);
+    sub = document.getElementById("importance");
+    sub.setAttribute("value", this.email.importance);
     const response = await axios.post("http://localhost:8095/read/users/", {
         email: this.emailAdd,
         password: "",
