@@ -51,7 +51,7 @@
         <textarea id="body" name="body" placeholder="Write something.." style="height:200px"></textarea>
       </div>
     </div>
-    <form enctype="multipart/form-data">
+    <form @submit="send()" enctype="multipart/form-data">
     <div class="row">
       <div class="col-25">
         <label for="country">Attachments</label>
@@ -108,9 +108,11 @@ export default {
       const response = await axios.post("http://localhost:8095/compose/", {
         subject: this.subject,
         body: this.body,
+        attachments: this.files,
         sender: this.emailAdd,
         receivers: this.receivers,
-        importance: this.importance
+        importance: this.importance,
+        
       });
       alert(response.data.ans);
     },
