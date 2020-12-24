@@ -51,7 +51,7 @@
         <textarea id="body" name="body" placeholder="Write something.." style="height:200px"></textarea>
       </div>
     </div>
-    <form @submit="send()" enctype="multipart/form-data">
+    <form @submit="sendAttach()" enctype="multipart/form-data">
     <div class="row">
       <div class="col-25">
         <label for="country">Attachments</label>
@@ -98,6 +98,8 @@ export default {
     },
     async send() {
       this.files = this.$refs.files.files;
+      const formData = new FormData();
+      formData.append('files', this.files);
       console.log(this.files);
       var sub = document.getElementById("subject");
       this.subject = sub.value;
@@ -108,11 +110,10 @@ export default {
       const response = await axios.post("http://localhost:8095/compose/", {
         subject: this.subject,
         body: this.body,
-        attachments: this.files,
+        attachments: formData,
         sender: this.emailAdd,
         receivers: this.receivers,
         importance: this.importance,
-        
       });
       alert(response.data.ans);
     },
@@ -148,7 +149,6 @@ export default {
         this.users.push(response.data[i].email);
       }
     }
-
   }
 }
 </script>
