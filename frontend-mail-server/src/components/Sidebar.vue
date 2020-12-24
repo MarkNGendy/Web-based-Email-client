@@ -22,6 +22,12 @@
                     My Contacts
                 </div>
             </router-link>
+            <router-link :to="{name: 'edit-contact', params: {username : username, 
+            emailAdd: emailAdd}}" active-class="active" tag="button" exact class="side-btn">
+                <div class="link-container">
+                    Edit Contact
+                </div>
+            </router-link>
             <router-link :to="{name: 'inbox', params: {username : username, 
             emailAdd: emailAdd}}" active-class="active" tag="button" exact class="side-btn">
                 <div class="link-container">

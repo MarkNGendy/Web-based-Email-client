@@ -153,7 +153,6 @@ public class HomeController {
     @PostMapping("/removeContact/")
     public List<Contact> removeContact(@RequestBody ContactBody contactBody) {
         User u = new User();
-        System.out.println("remove the contacts");
         return u.removeContact(contactBody.getRContacts(), contactBody.getUser());
     }
 
