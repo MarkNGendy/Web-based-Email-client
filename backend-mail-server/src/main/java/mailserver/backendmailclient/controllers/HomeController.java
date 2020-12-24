@@ -1,14 +1,17 @@
 package mailserver.backendmailclient.controllers;
 
+import com.google.gson.Gson;
 import mailserver.backendmailclient.classes.*;
 import mailserver.backendmailclient.jsonReaders.*;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.List;
 
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,10 +35,16 @@ public class HomeController {
         return mail.saveDraft(mailBody);
     }
 
-    @PostMapping("/compose/")
-    public Answer composedMail(@RequestBody MailBody mailbody) throws IOException {
+    @PostMapping(value = "/compose/", consumes = {
+            MediaType.APPLICATION_JSON_VALUE,
+            MediaType.MULTIPART_FORM_DATA_VALUE})
+    public Answer composedMail(@RequestPart("mails") String mails, @RequestPart("files") List<MultipartFile> files) throws IOException {
+        Gson gson = new Gson();
+        MailBody mailBody = gson.fromJson(mails, MailBody.class);
+        mailBody.setAttachments(files);
+        System.out.println(files.get(0).getOriginalFilename());
         Mail mail = new Mail();
-        return mail.sendMail(mailbody);
+        return mail.sendMail(mailBody);
     }
 
     @PostMapping("/signin/")
@@ -165,5 +174,6 @@ public class HomeController {
         Contact c = new Contact(contactBody.getUserName(), contactBody.getMails());
         return u.editContactMails(contactBody.getUser(), contactBody.getInd(), c);
     }
+
 
 }

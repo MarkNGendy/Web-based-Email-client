@@ -24,7 +24,6 @@ public class BuilderMail {
         if (mail.getAttachments() != null){
             for(MultipartFile f:mail.getAttachments()){
                 f.transferTo(new File(mailfolder.getPath()+"/attachments/"+f.getOriginalFilename()));
-
             }
         }
         return true;
