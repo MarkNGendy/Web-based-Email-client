@@ -4,6 +4,7 @@ import mailserver.backendmailclient.classes.*;
 import mailserver.backendmailclient.jsonReaders.*;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.List;
@@ -24,13 +25,13 @@ public class HomeController {
     }
 
     @PostMapping("/saveDraft/")
-    public Answer saveDraft(@RequestBody MailBody mailBody) {
+    public Answer saveDraft(@RequestBody MailBody mailBody) throws IOException {
         Mail mail = new Mail();
         return mail.saveDraft(mailBody);
     }
 
     @PostMapping("/compose/")
-    public Answer composedMail(@RequestBody MailBody mailbody) {
+    public Answer composedMail(@RequestBody MailBody mailbody) throws IOException {
         Mail mail = new Mail();
         return mail.sendMail(mailbody);
     }

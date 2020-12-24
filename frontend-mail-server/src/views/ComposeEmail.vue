@@ -129,6 +129,7 @@ export default {
   created: async function() {
     this.username = this.$route.params.username;
     this.emailAdd = this.$route.params.emailAdd;
+    console.log(this.emailAdd);
     const response = await axios.post("http://localhost:8095/read/users/", {
         email: this.emailAdd,
         password: "",

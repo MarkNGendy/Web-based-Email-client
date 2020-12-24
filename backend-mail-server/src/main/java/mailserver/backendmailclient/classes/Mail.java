@@ -1,21 +1,23 @@
 package mailserver.backendmailclient.classes;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Comparator;
 
 import mailserver.backendmailclient.interfaces.IFolder;
 import mailserver.backendmailclient.jsonReaders.*;
 import mailserver.backendmailclient.controllers.MailBody;
+import org.springframework.web.multipart.MultipartFile;
 
 public class Mail extends DemoMail {
     private String body;
-    private List<File> attachments;
+    private List<MultipartFile> attachments;
 
     public Mail() {
     }
 
-    public Mail(String sender, List<String> receivers, String subject, String body, List<File> attachments,
+    public Mail(String sender, List<String> receivers, String subject, String body, List<MultipartFile> attachments,
             int importance) {
         this.sender = sender;
         this.receivers = receivers;
@@ -25,11 +27,11 @@ public class Mail extends DemoMail {
         this.importance = importance;
     }
 
-    public List<File> getAttachments() {
+    public List<MultipartFile> getAttachments() {
         return attachments;
     }
 
-    public void setAttachments(List<File> attachments) {
+    public void setAttachments(List<MultipartFile> attachments) {
         this.attachments = attachments;
     }
 
@@ -43,7 +45,7 @@ public class Mail extends DemoMail {
 
     private String wrong = "Something wrong!\nerror code: ";
 
-    public Answer saveDraft(MailBody mailBody) {
+    public Answer saveDraft(MailBody mailBody) throws IOException {
         Mail mail = mailBody.toMail();
         mail.setSrcFolder("Draft");
         BuilderMail builderMail = new BuilderMail();
@@ -53,7 +55,7 @@ public class Mail extends DemoMail {
         return new Answer(false, wrong);
     }
 
-    public Answer sendMail(MailBody mailBody) {
+    public Answer sendMail(MailBody mailBody) throws IOException {
         Mail mail = mailBody.toMail();
         mail.setSrcFolder("Sent");
         BuilderMail builderMail = new BuilderMail();

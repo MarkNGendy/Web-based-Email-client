@@ -5,9 +5,10 @@ import java.nio.file.Files;
 import java.util.*;
 
 import mailserver.backendmailclient.jsonReaders.*;
+import org.springframework.web.multipart.MultipartFile;
 
 public class BuilderMail {
-    public boolean buildMail(Mail mail) {
+    public boolean buildMail(Mail mail) throws IOException {
         File mainfolder = new File("Server/" + mail.getSender() + "/folders/" + mail.getSrcFolder());
         File mailfolder = new File(mainfolder, mail.getID());
         mailfolder.mkdir();
@@ -20,15 +21,10 @@ public class BuilderMail {
         if (!createMAilFile(mailfolder, mail))
             return false;
 
-        if (mail.getAttachments() != null) {
-            for (File a : mail.getAttachments()) {
-                File t = new File(attach, a.getName());
-                try {
-                    Files.copy(a.toPath(), t.toPath());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    return false;
-                }
+        if (mail.getAttachments() != null){
+            for(MultipartFile f:mail.getAttachments()){
+                f.transferTo(new File(mailfolder.getPath()+"/attachments/"+f.getOriginalFilename()));
+
             }
         }
         return true;

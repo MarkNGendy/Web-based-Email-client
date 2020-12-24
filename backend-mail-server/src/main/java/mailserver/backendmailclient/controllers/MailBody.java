@@ -5,16 +5,17 @@ import java.util.Date;
 import java.util.List;
 
 import mailserver.backendmailclient.classes.Mail;
+import org.springframework.web.multipart.MultipartFile;
 
 public class MailBody {
     private String subject;
     private String body;
-    private List<File> attachments;
+    private List<MultipartFile> attachments;
     private String sender;
     private List<String> receivers;
     private int importance;
 
-    public MailBody(String sender, List<String> receivers, String subject, String body, List<File> attachments, int importance) {
+    public MailBody(String sender, List<String> receivers, String subject, String body, List<MultipartFile> attachments, int importance) {
         this.sender = sender;
         this.receivers = receivers;
         this.subject = subject;
