@@ -11,7 +11,7 @@ public class BuilderMail {
         File mainfolder = new File("Server/" + mail.getSender() + "/folders/" + mail.getSrcFolder());
         File mailfolder = new File(mainfolder, mail.getID());
         mailfolder.mkdir();
-        File attach = new File(mailfolder, "attachements");
+        File attach = new File(mailfolder, "attachments");
         attach.mkdir();
 
         DemoMail temp = mail;
