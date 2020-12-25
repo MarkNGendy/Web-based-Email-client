@@ -41,7 +41,7 @@
   <button class="filter" @click="gotoHome()">Home</button>
   <div>
     <button class="tablink" @click="prevPage()">Previous Page</button>
-    <button class="tablink" @click="deleteMails()">Restore</button>
+    <button class="tablink" @click="restoreMails()">Restore</button>
     <button class="tablink" @click="deleteMails()">Delete</button>
     <button class="tablink" @click="nextPage()">Next Page</button>
   </div>
@@ -133,15 +133,24 @@ export default {
       }
     },
     async deleteMails() {
-      var response = await axios.post("http://localhost:8095/delete/mails/", {
-        mails: this.deletedMails,
-        source: "Inbox"
-      });
+      var response = await axios.post("http://localhost:8095/delete/Trash/",
+        this.deletedMails);
       response = await axios.post("http://localhost:8095/mails/", {
-        listname: "Inbox",
+        listname: "Trash",
         user: this.emailAdd
       });
-      console.log(response);
+      this.allMails = response.data;
+      this.isFiltered = false;
+      this.currIndex = 1;
+      this.paginate(this.allMails);
+    },
+    async restoreMails() {
+      var response = await axios.post("http://localhost:8095/restore/",
+        this.deletedMails);
+      response = await axios.post("http://localhost:8095/mails/", {
+        listname: "Trash",
+        user: this.emailAdd
+      });
       this.allMails = response.data;
       this.isFiltered = false;
       this.currIndex = 1;
