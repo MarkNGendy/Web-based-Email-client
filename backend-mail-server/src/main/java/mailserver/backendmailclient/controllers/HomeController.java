@@ -7,11 +7,16 @@ import mailserver.backendmailclient.jsonReaders.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.List;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -179,6 +184,22 @@ public class HomeController {
     public List<Contact> removeMail(@RequestBody ContactBody contactBody) {
         User u = new User();
         return u.editContactMails(contactBody.getUser(), contactBody.getID(),contactBody.getUserName(),contactBody.getMails());
+    }
+
+    @PostMapping("/download/")
+    public ResponseEntity<byte[]> download(@RequestBody  attachmentBody attachmentBody){
+        File Cfile = new File("");
+        String path = Cfile.getAbsolutePath();
+        path += "Server/" +attachmentBody.getUser()+"/" +attachmentBody.getSrcFolder() +"/"+attachmentBody.getMailID()+"/attachments/"+attachmentBody.getAttachment();
+        File src = new File(path);
+        byte[] bytes = new byte[0];
+        try {
+            bytes = Files.readAllBytes(src.toPath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return ResponseEntity.ok().contentLength(bytes.length).header(HttpHeaders.CONTENT_DISPOSITION,"attachment: "+attachmentBody.getAttachment()).body(bytes);
+
     }
 
 
