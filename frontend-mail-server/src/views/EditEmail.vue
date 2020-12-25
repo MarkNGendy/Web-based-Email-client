@@ -20,7 +20,7 @@
         <label for="fname">To</label>
       </div>
       <div class="col-75">
-        <ul id="recievers" name="emails">
+        <ul id="receivers" name="emails">
           <option v-for="item in receivers" :key="item">{{ item }}</option>
         </ul>
       </div>
@@ -45,11 +45,10 @@
       </div>
       <div class="col-75">
         <input
-          value=""
+          v-bind:value="email.subject"
           type="text"
           id="subject"
           name="lastname"
-          placeholder="Write subject of your email.."
         />
       </div>
     </div>
@@ -60,14 +59,12 @@
       <div class="col-75">
         <textarea
           id="body"
-          value=""
+          v-bind:value="email.body"
           cname="body"
-          placeholder="Write something.."
           style="height:200px"
         ></textarea>
       </div>
     </div>
-    <form enctype="multipart/form-data">
       <div class="row">
         <div class="col-25">
           <label for="country">Attachments</label>
@@ -76,7 +73,6 @@
           <input ref="files" type="file" multiple />
         </div>
       </div>
-    </form>
     <div class="row">
       <button class="submit" @click="send()">Send</button>
       <button class="submit" @click="saveDraft()">Save to drafts</button>
@@ -97,7 +93,14 @@ export default {
       emailAdd: "",
       pass: "",
       files: [],
-      email: ""
+      email: "",
+      mail: {
+        subject: "",
+        body: "",
+        receivers: [],
+        sender: "",
+        importance: ""
+      }
     };
   },
   methods: {
@@ -113,25 +116,70 @@ export default {
       }
       this.users = newUsers;
     },
-    async send() {
-      this.files = this.$refs.files.files;
-      console.log(this.files);
+    async sendWithAttach() {
+      var formData = new FormData();
+      var sub = document.getElementById("subject");
+      this.mail.subject = sub.value;
+      sub = document.getElementById("body");
+      this.mail.body = sub.value;
+      sub = document.getElementById("importance");
+      this.mail.receivers = this.receivers;
+      this.mail.sender = this.emailAdd;
+      this.mail.importance = sub.value;
+      formData.append("mails", JSON.stringify(this.mail));
+      var i = 0;
+      for(i=0;i<this.files.length;i++){
+        formData.append("files", this.files[i]);
+      }
+      var response;
+      try {
+         response = await axios({
+          method: "post",
+          url: "http://localhost:8095/compose/",
+          data: formData,
+          headers: { "Content-Type": "multipart/form-data" }
+        });
+        alert(response.data.ans);
+      } catch {
+        alert(response.data.ans);
+      }
+    },
+    async sendWithoutAttach() {
       var sub = document.getElementById("subject");
       this.subject = sub.value;
       sub = document.getElementById("body");
       this.body = sub.value;
       sub = document.getElementById("importance");
       this.importance = sub.value;
-      const response = await axios.post("http://localhost:8095/compose/", {
-        subject: this.subject,
-        body: this.body,
-        sender: this.emailAdd,
-        receivers: this.receivers,
-        importance: this.importance
+      var response;
+      try {
+        response = await axios.post("http://localhost:8095/compose-no-attach/", {
+          subject: this.subject,
+          body: this.body,
+          sender: this.emailAdd,
+          receivers: this.receivers,
+          importance: this.importance
       });
-      alert(response.data.ans);
+        alert(response.data.ans);
+      } catch {
+        alert(response.data.ans);
+      }
+    },
+    async send() {
+      await axios.post("http://localhost:8095/delete/draft/",
+      this.email,
+      );
+      this.files = this.$refs.files.files;
+      if(this.files.length == 0) {
+        this.sendWithoutAttach();
+      } else {
+        this.sendWithAttach();
+      }
     },
     async saveDraft() {
+      await axios.post("http://localhost:8095/delete/draft/",
+      this.email,
+      );
       var sub = document.getElementById("subject");
       this.subject = sub.value;
       sub = document.getElementById("body");
@@ -149,18 +197,10 @@ export default {
     }
   },
   created: async function() {
-    document.getElementById("subject").value = "Helllllooooo";
     this.username = this.$route.params.username;
     this.emailAdd = this.$route.params.emailAdd;
     this.email = JSON.parse(this.$route.params.email);
     this.id = JSON.parse(this.$route.params.id);
-    console.log(this.email);
-    var sub = document.getElementById("subject");
-    sub.setAttribute("value", this.email.subject);
-    sub = document.getElementById("body");
-    sub.setAttribute("value", this.email.body);
-    sub = document.getElementById("importance");
-    sub.setAttribute("value", this.email.importance);
     const response = await axios.post("http://localhost:8095/read/users/", {
       email: this.emailAdd,
       password: "",
@@ -172,6 +212,9 @@ export default {
         this.users.push(response.data[i].email);
       }
     }
+    console.log(this.email)
+    
+
   }
 };
 </script>

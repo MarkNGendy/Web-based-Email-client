@@ -133,8 +133,9 @@ export default {
       for(i=0;i<this.files.length;i++){
         formData.append("files", this.files[i]);
       }
+      var response;
       try {
-        const response = await axios({
+         response = await axios({
           method: "post",
           url: "http://localhost:8095/compose/",
           data: formData,

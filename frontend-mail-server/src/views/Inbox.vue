@@ -76,6 +76,7 @@
                   emailAdd: emailAdd,
                   id: item.id,
                   emails: JSON.stringify(allMails),
+                  email: JSON.stringify(item)
                 }
               }"
             >

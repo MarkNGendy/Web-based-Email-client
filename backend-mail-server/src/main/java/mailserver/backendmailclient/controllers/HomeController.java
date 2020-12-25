@@ -205,6 +205,11 @@ public class HomeController {
 
     }
 
+    @PostMapping("/delete/draft/")
+    public void deleteFromDraft (@RequestBody Mail mail) {
+        String current = "Server/" + mail.getSender() + "/folders/" + mail.getSrcFolder();
+        mail.deleteFromServer(current, mail.getID());
+    }
 
     @PostMapping("/sort/contacts/")
     public List<Contact> sortContacts(@RequestBody SSContactBody body) {
