@@ -133,12 +133,14 @@ export default {
       }
     },
     async deleteMails() {
-      var response = await axios.post("http://localhost:8095/delete/mails/", {
+      console.log(this.deletedMails);
+      var response = await axios.post("http://localhost:8095/deleteMails/", {
         mails: this.deletedMails,
-        source: "Inbox"
+        source: "Sent",
+        userEmail: this.emailAdd
       });
       response = await axios.post("http://localhost:8095/mails/", {
-        listname: "Inbox",
+        listname: "Sent",
         user: this.emailAdd
       });
       console.log(response);
@@ -169,8 +171,8 @@ export default {
     },
     paginate(mailsList) {
       var counter = 0;
-      var left = (this.currIndex - 1) * (mailsList.length - 1);
-      var right = (this.currIndex - 1) * (mailsList.length - 1) + 4;
+      var left = (this.currIndex - 1) * 5;
+      var right = (this.currIndex - 1) * 5 + 4;
       var i = left;
       var list = [];
       while (i <= right && i < mailsList.length) {
@@ -232,8 +234,6 @@ export default {
       this.paginate(this.filteredList);
     },
     gotoHome() {
-      var sel = document.getElementById("check");
-      console.log(sel.value);
       this.$router.push({
         name: "user",
         params: { username: this.username, emailAdd: this.email }
@@ -241,13 +241,14 @@ export default {
     }
   },
   created: async function() {
-    console.log("sent tab");
     this.username = this.$route.params.username;
     this.emailAdd = this.$route.params.emailAdd;
+    console.log(this.emailAdd);
     const response = await axios.post("http://localhost:8095/mails/", {
       listname: "Sent",
       user: this.emailAdd
     });
+    console.log(response.data);
     this.allMails = response.data;
     this.isFiltered = false;
     this.currIndex = 1;

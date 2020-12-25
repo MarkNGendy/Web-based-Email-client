@@ -130,9 +130,10 @@ public class HomeController {
             return sortBody.getList();
         }
     }
-
+    @CrossOrigin
     @PostMapping("/deleteMails/")
     public void deleteMails(@RequestBody DeleteBody deleteBody) {
+        System.out.println(deleteBody.getMails());
         Mail mail = new Mail();
         for (Mail m : deleteBody.getMails()) {
             String fullPath = "Server/" + deleteBody.getUserEmail() + "/folders/" + deleteBody.getSource();

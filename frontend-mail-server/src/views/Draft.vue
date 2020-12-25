@@ -41,6 +41,7 @@
   <button class="filter" @click="gotoHome()">Home</button>
   <div>
     <button class="tablink" @click="prevPage()">Previous Page</button>
+    <button class="tablink" @click="deleteMails()">Move</button>
     <button class="tablink" @click="deleteMails()">Delete</button>
     <button class="tablink" @click="nextPage()">Next Page</button>
   </div>
@@ -132,12 +133,14 @@ export default {
       }
     },
     async deleteMails() {
-      var response = await axios.post("http://localhost:8095/delete/mails/", {
+      console.log(this.deletedMails);
+      var response = await axios.post("http://localhost:8095/deleteMails/", {
         mails: this.deletedMails,
-        source: "Inbox"
+        source: "Draft",
+        userEmail: this.emailAdd
       });
       response = await axios.post("http://localhost:8095/mails/", {
-        listname: "Inbox",
+        listname: "Draft",
         user: this.emailAdd
       });
       console.log(response);
@@ -168,8 +171,8 @@ export default {
     },
     paginate(mailsList) {
       var counter = 0;
-      var left = (this.currIndex - 1) * (mailsList.length - 1);
-      var right = (this.currIndex - 1) * (mailsList.length - 1) + 4;
+      var left = (this.currIndex - 1) * 5;
+      var right = (this.currIndex - 1) * 5 + 4;
       var i = left;
       var list = [];
       while (i <= right && i < mailsList.length) {
@@ -238,9 +241,9 @@ export default {
     }
   },
   created: async function() {
-    console.log("draft");
     this.username = this.$route.params.username;
     this.emailAdd = this.$route.params.emailAdd;
+    console.log(this.emailAdd);
     const response = await axios.post("http://localhost:8095/mails/", {
       listname: "Draft",
       user: this.emailAdd
@@ -297,7 +300,7 @@ export default {
   cursor: pointer;
   padding: 14px 16px;
   font-size: 17px;
-  width: 33.3333%;
+  width: 25%;
 }
 .tablink:hover {
   background-color: #777;
