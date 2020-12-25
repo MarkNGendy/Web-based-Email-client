@@ -224,5 +224,19 @@ public class HomeController {
         return searcher.contactsSearch(body.getContacts(), body.getCriteria());
     }
 
+    @PostMapping("/restore/")
+    public void restore(@RequestBody Mail mail){
+        String current = "Server/" + mail.getSender() + "/folders/" + mail.getSrcFolder();
+        mail.restoreMail(current, mail.getID());
+    }
+
+    @PostMapping("/delete/Trash/")
+    public void deleteFromServer(@RequestBody List<Mail> mails) {
+        for(Mail mail:mails){
+            String current = "Server/" + mail.getSender() + "/folders/" + mail.getSrcFolder();
+            mail.deleteFromServer(current, mail.getID());
+        }
+    }
+
 
 }
