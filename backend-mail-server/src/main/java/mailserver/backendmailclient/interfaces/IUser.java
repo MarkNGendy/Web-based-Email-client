@@ -24,7 +24,6 @@ public interface IUser {
 
     public List<Contact> removeContact(List<Contact> RContacts, String user);
 
-    public List<Contact> editContactMails(String user,int contactInd, Contact newContact);
-
+    public List<Contact> editContactMails(String user, Long ID, String username, List<String> mails);
 
 }

@@ -171,8 +171,7 @@ public class HomeController {
     @PostMapping("/editContact/")
     public List<Contact> removeMail(@RequestBody ContactBody contactBody) {
         User u = new User();
-        Contact c = new Contact(contactBody.getUserName(), contactBody.getMails());
-        return u.editContactMails(contactBody.getUser(), contactBody.getInd(), c);
+        return u.editContactMails(contactBody.getUser(), contactBody.getID(),contactBody.getUserName(),contactBody.getMails());
     }
 
 
