@@ -133,11 +133,16 @@ public class User extends DemoUsers implements IUser {
     }
 
     @Override
-    public List<Contact> editContactMails(String user, int contactInd, Contact newContact) {
+    public List<Contact> editContactMails(String user, Long ID, String username, List<String> mails) {
         Contact c = new Contact();
         friends = c.readContacts(user);
-        friends.remove(contactInd);
-        friends.add(contactInd,newContact);
+        for(Contact con : friends){
+            if(con.getId()==ID){
+                con.setMails(mails);
+                con.setUserName(username);
+                break;
+            }
+        }
         c.writeContacts(friends, user);
         return friends;
     }

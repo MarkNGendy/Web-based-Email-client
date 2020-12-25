@@ -10,17 +10,16 @@ public class ContactBody {
     private List<String> mails;
     private List<Contact> RContacts;
     private String user;
-    private int ind;
-    private String editingMail;
+    private long ID;
 
 
-    public ContactBody(String userName, List<String> mails, List<Contact> RContacts, String user, int ind, String editingMail) {
+
+    public ContactBody(String userName, List<String> mails, List<Contact> RContacts, String user,long ID) {
         this.userName = userName;
         this.mails = mails;
         this.RContacts = RContacts;
         this.user = user;
-        this.ind = ind;
-        this.editingMail = editingMail;
+        this.ID = ID;
     }
 
     public String getUserName() {
@@ -47,25 +46,19 @@ public class ContactBody {
         this.user = user;
     }
 
-    public void setInd(int ind) {
-        this.ind = ind;
+    public void setID(long ID) {
+        this.ID = ID;
     }
 
-    public void setEditingMail(String editingMail) {
-        this.editingMail = editingMail;
+    public long getID() {
+        return ID;
     }
 
     public String getUser() {
         return user;
     }
 
-    public int getInd() {
-        return ind;
-    }
 
-    public String getEditingMail() {
-        return editingMail;
-    }
 
     public List<Contact> getRContacts() {
         return RContacts;
