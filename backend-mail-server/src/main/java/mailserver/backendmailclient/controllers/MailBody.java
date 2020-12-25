@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 import mailserver.backendmailclient.classes.Mail;
-import org.springframework.web.multipart.MultipartFile;
 
 public class MailBody {
     private String subject;
@@ -12,7 +11,7 @@ public class MailBody {
     private String sender;
     private List<String> receivers;
     private int importance;
-    private List<MultipartFile> attachments;
+    private List<String> attachments;
 
     public MailBody() {
     }
@@ -33,11 +32,11 @@ public class MailBody {
         this.body = body;
     }
 
-    public List<MultipartFile> getAttachments() {
+    public List<String> getAttachments() {
         return attachments;
     }
 
-    public void setAttachments(List<MultipartFile> attachments) {
+    public void setAttachments(List<String> attachments) {
         this.attachments = attachments;
     }
 
@@ -73,7 +72,7 @@ public class MailBody {
         this.importance = importance;
     }
 
-    public MailBody(String sender, List<String> receivers, String subject, String body, List<MultipartFile> attachments, int importance) {
+    public MailBody(String sender, List<String> receivers, String subject, String body, List<String> attachments, int importance) {
         this.sender = sender;
         this.receivers = receivers;
         this.subject = subject;

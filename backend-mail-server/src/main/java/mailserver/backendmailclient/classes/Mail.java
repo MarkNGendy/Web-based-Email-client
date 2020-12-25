@@ -12,13 +12,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class Mail extends DemoMail {
     private String body;
-    private List<MultipartFile> attachments;
+    private List<String> attachments;
 
     public Mail() {
     }
 
-    public Mail(String sender, List<String> receivers, String subject, String body, List<MultipartFile> attachments,
-            int importance) {
+    public Mail(String sender, List<String> receivers, String subject, String body, List<String> attachments,
+                int importance) {
         this.sender = sender;
         this.receivers = receivers;
         this.subject = subject;
@@ -27,11 +27,11 @@ public class Mail extends DemoMail {
         this.importance = importance;
     }
 
-    public List<MultipartFile> getAttachments() {
+    public List<String> getAttachments() {
         return attachments;
     }
 
-    public void setAttachments(List<MultipartFile> attachments) {
+    public void setAttachments(List<String> attachments) {
         this.attachments = attachments;
     }
 
@@ -55,7 +55,7 @@ public class Mail extends DemoMail {
         return new Answer(false, wrong);
     }
 
-    public Answer sendMail(MailBody mailBody) throws IOException {
+    public Answer sendMail(MailBody mailBody, List<MultipartFile> files) throws IOException {
         Mail mail = mailBody.toMail();
         mail.setSrcFolder("Sent");
         BuilderMail builderMail = new BuilderMail();
@@ -64,6 +64,7 @@ public class Mail extends DemoMail {
         }
         IFolder folder = new Folder();
         File source = new File("Server/" + mail.getSender() + "/folders/Sent/" + mail.getID());
+        builderMail.sendFilesToMailFolder(mail, source, files);
         mail.setSrcFolder("Inbox");
         for (String receiver : mail.getReceivers()) {
             File inbox = new File("Server/" + receiver + "/folders/Inbox");

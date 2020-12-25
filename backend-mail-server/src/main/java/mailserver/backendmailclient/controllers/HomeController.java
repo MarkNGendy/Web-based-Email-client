@@ -42,17 +42,20 @@ public class HomeController {
     public Answer composedMail(@RequestPart("mails") String mails, @RequestPart("files") List<MultipartFile> files) throws IOException {
         Gson gson = new Gson();
         MailBody mailBody = gson.fromJson(mails, MailBody.class);
-        mailBody.setAttachments(files);
-        System.out.println(files.get(0).getOriginalFilename());
+        List<String> names = new ArrayList<>();
+        for (int i = 0; i < files.size(); i++) {
+            names.add((files.get(i)).getOriginalFilename());
+        }
+        mailBody.setAttachments(names);
         Mail mail = new Mail();
-        return mail.sendMail(mailBody);
+        return mail.sendMail(mailBody, files);
     }
 
     @PostMapping("/compose-no-attach/")
     public Answer composedMail(@RequestBody MailBody mailbody) throws IOException {
         Mail mail = new Mail();
-        mailbody.setAttachments(null);
-        return mail.sendMail(mailbody);
+        mailbody.setAttachments(new ArrayList<>());
+        return mail.sendMail(mailbody,new ArrayList<>());
     }
 
     @PostMapping("/signin/")

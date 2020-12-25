@@ -22,15 +22,17 @@ public class BuilderMail {
         if (!createMAilFile(mailfolder, mail))
             return false;
 
+        return true;
+    }
+
+    void sendFilesToMailFolder(Mail mail, File mailfolder, List<MultipartFile> files) throws IOException {
         if (mail.getAttachments() != null) {
-            for (MultipartFile f : mail.getAttachments()) {
+            for (MultipartFile f : files) {
                 byte[] bytes = f.getBytes();
                 Path p = Path.of(mailfolder.getPath() + "/attachments/" + f.getOriginalFilename());
-                System.out.println(p);
                 Files.write(p,bytes);
             }
         }
-        return true;
     }
 
     public void addToMailsFile(File mainfolder, DemoMail temp) {
