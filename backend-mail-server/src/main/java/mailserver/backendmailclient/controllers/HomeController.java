@@ -225,9 +225,12 @@ public class HomeController {
     }
 
     @PostMapping("/restore/")
-    public void restore(@RequestBody Mail mail){
-        String current = "Server/" + mail.getSender() + "/folders/" + mail.getSrcFolder();
-        mail.restoreMail(current, mail.getID());
+    public void restore(@RequestBody List<Mail> mail){
+        for (int i = 0; i < mail.size(); i++) {
+            Mail m = mail.get(i);
+            String current = "Server/" + m.getSender() + "/folders/" + m.getSrcFolder();
+            m.restoreMail(current, m.getID());
+        }
     }
 
     @PostMapping("/delete/Trash/")
