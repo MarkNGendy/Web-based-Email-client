@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    <form action="action_page.php">
       <div class="row">
         <div class="col-25">
           <label for="fname">From</label>
@@ -42,13 +41,16 @@
           <label for="country">Attachments</label>
         </div>
         <div class="col-75">
-          <input type="file" multiple />
+          <ul id="attachments" v-for="item in attachments" :key="item">
+            <a :href="'http://localhost:8095/download/?user=' + emailAdd + '&srcFolder=' + email.srcFolder + '&mailID=' + id + '&attachment=' + item">
+            <dt><button v-bind:id="item" v-bind:value="item">{{ item }}</button></dt>
+            </a>
+          </ul>
         </div>
       </div>
       <div class="row">
         <button class="submit" @click="gotoHome()">Home</button>
       </div>
-    </form>
   </div>
 </template>
 
@@ -59,11 +61,15 @@ export default {
   data() {
     return {
       emails: [],
+      email: "",
       id: "",
       receivers: [],
       subject: "",
       body: "",
-      sender: ""
+      sender: "",
+      attachments:[],
+      emailAdd: "",
+      username: ""
     };
   },
   methods: {
@@ -72,23 +78,25 @@ export default {
         name: "user",
         params: { username: this.username, emailAdd: this.email }
       });
-    }
+    },
   },
   created: async function() {
     this.username = this.$route.params.username;
     this.emailAdd = this.$route.params.emailAdd;
     this.id = this.$route.params.id;
+    this.email = JSON.parse(this.$route.params.email);
     this.emails = JSON.parse(this.$route.params.emails);
-    console.log(this.emails);
+    console.log(this.email)
     const response = await axios.post("http://localhost:8095/read/", {
       list: this.emails,
       ID: this.id
     });
-    console.log(response);
     this.receivers = response.data.receivers;
     this.subject = response.data.subject;
     this.body = response.data.body;
     this.sender = response.data.sender;
+    this.attachments = response.data.attachments;
+    console.log(this.attachments);
   }
 };
 </script>

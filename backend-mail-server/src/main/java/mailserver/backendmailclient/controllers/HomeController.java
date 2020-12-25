@@ -184,12 +184,14 @@ public class HomeController {
         User u = new User();
         return u.editContactMails(contactBody.getUser(), contactBody.getID(),contactBody.getUserName(),contactBody.getMails());
     }
-
-    @PostMapping("/download/")
-    public ResponseEntity<byte[]> download(@RequestBody AttachmentBody attachmentBody){
+    
+    @GetMapping("/download/")
+    public ResponseEntity<byte[]> download(@RequestParam String user, @RequestParam String srcFolder,
+                                           @RequestParam String mailID, @RequestParam String attachment){
+        AttachmentBody attachmentBody = new AttachmentBody(user, mailID, srcFolder, attachment);
         File Cfile = new File("");
         String path = Cfile.getAbsolutePath();
-        path += "Server/" +attachmentBody.getUser()+"/" +attachmentBody.getSrcFolder() +"/"+attachmentBody.getMailID()+"/attachments/"+attachmentBody.getAttachment();
+        path += "/Server/" +attachmentBody.getUser()+"/folders/" +attachmentBody.getSrcFolder() +"/"+attachmentBody.getMailID()+"/attachments/"+attachmentBody.getAttachment();
         File src = new File(path);
         byte[] bytes = new byte[0];
         try {
@@ -197,7 +199,9 @@ public class HomeController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return ResponseEntity.ok().contentLength(bytes.length).header(HttpHeaders.CONTENT_DISPOSITION,"attachment: "+attachmentBody.getAttachment()).body(bytes);
+        return ResponseEntity.ok().contentLength(bytes.length)
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .body(bytes);
 
     }
 
