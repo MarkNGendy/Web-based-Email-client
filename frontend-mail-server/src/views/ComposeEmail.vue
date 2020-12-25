@@ -65,7 +65,6 @@
         ></textarea>
       </div>
     </div>
-    <form @submit="send()" enctype="multipart/form-data">
       <div class="row">
         <div class="col-25">
           <label for="country">Attachments</label>
@@ -78,7 +77,6 @@
         <button class="submit" @click="send()">Send</button>
         <button class="submit" @click="saveDraft()">Save to drafts</button>
       </div>
-    </form>
   </div>
 </template>
 
@@ -132,12 +130,14 @@ export default {
       this.mail.sender = this.emailAdd;
       this.mail.importance = this.importance;
       formData.append("mails", JSON.stringify(this.mail));
-      formData.append("files", this.files[0]);
-
+      var i = 0;
+      for(i=0;i<this.files.length;i++){
+        formData.append("files", this.files[i]);
+      }
       try {
         const response = await axios({
           method: "post",
-          url: "http://localhost:8095/composeEdit/",
+          url: "http://localhost:8095/compose/",
           data: formData,
           headers: { "Content-Type": "multipart/form-data" }
         });

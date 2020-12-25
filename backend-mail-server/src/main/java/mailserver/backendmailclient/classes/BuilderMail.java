@@ -2,6 +2,7 @@ package mailserver.backendmailclient.classes;
 
 import java.io.*;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
 
 import mailserver.backendmailclient.jsonReaders.*;
@@ -23,7 +24,10 @@ public class BuilderMail {
 
         if (mail.getAttachments() != null) {
             for (MultipartFile f : mail.getAttachments()) {
-                f.transferTo(new File(mailfolder.getPath() + "/attachments/" + f.getOriginalFilename()));
+                byte[] bytes = f.getBytes();
+                Path p = Path.of(mailfolder.getPath() + "/attachments/" + f.getOriginalFilename());
+                System.out.println(p);
+                Files.write(p,bytes);
             }
         }
         return true;
