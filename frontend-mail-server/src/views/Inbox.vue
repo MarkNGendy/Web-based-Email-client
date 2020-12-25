@@ -242,10 +242,12 @@ export default {
   created: async function() {
     this.username = this.$route.params.username;
     this.emailAdd = this.$route.params.emailAdd;
+    console.log(this.emailAdd);
     const response = await axios.post("http://localhost:8095/mails/", {
       listname: "Inbox",
       user: this.emailAdd
     });
+    console.log(response.data);
     this.allMails = response.data;
     this.isFiltered = false;
     this.currIndex = 1;

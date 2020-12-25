@@ -27,7 +27,8 @@ public class MailsListJson extends Json {
             String filepath = "Server/" + listRequest.getuser() + "/folders/" + listRequest.getListname() + "/"
                     + header.getID() + "/mailfile.json";
             String input = toStringJson(filepath);
-            Mail temp = new Gson().fromJson(input, Mail.class);
+            Gson gson = new Gson();
+            Mail temp = gson.fromJson(input, Mail.class);
             retArray.add(temp);
         }
         return retArray;
