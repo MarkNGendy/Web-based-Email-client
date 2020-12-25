@@ -1,13 +1,13 @@
 package mailserver.backendmailclient.controllers;
 
-public class attachmentBody {
+public class AttachmentBody {
 
     private String user;
     private String mailID;
     private String srcFolder;
     private String attachment;
 
-    public attachmentBody(String user, String mailID, String srcFolder, String attachment){
+    public AttachmentBody(String user, String mailID, String srcFolder, String attachment){
         this.user = user;
         this.mailID = mailID;
         this.srcFolder = srcFolder;

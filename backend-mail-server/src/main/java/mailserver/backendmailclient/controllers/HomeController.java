@@ -4,14 +4,10 @@ import com.google.gson.Gson;
 import mailserver.backendmailclient.classes.*;
 import mailserver.backendmailclient.jsonReaders.*;
 
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.ConcurrentModificationException;
 import java.util.List;
 
 import org.springframework.http.HttpHeaders;
@@ -187,7 +183,7 @@ public class HomeController {
     }
 
     @PostMapping("/download/")
-    public ResponseEntity<byte[]> download(@RequestBody  attachmentBody attachmentBody){
+    public ResponseEntity<byte[]> download(@RequestBody AttachmentBody attachmentBody){
         File Cfile = new File("");
         String path = Cfile.getAbsolutePath();
         path += "Server/" +attachmentBody.getUser()+"/" +attachmentBody.getSrcFolder() +"/"+attachmentBody.getMailID()+"/attachments/"+attachmentBody.getAttachment();
