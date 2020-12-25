@@ -1,4 +1,7 @@
 <template>
+  <button class="tablink3" @click="deleteMails()">Add Folder</button>
+  <button class="tablink3" @click="deleteMails()">Rename Folder</button>
+  <button class="tablink3" @click="deleteMails()">Delete Folder</button>
   <input
     type="text"
     class="filterbox"
@@ -40,10 +43,11 @@
   <button class="filter" @click="search()">Search</button>
   <button class="filter" @click="gotoHome()">Home</button>
   <div>
-    <button class="tablink" @click="prevPage()">Previous Page</button>
-    <button class="tablink" @click="deleteMails()">Move</button>
-    <button class="tablink" @click="deleteMails()">Delete</button>
-    <button class="tablink" @click="nextPage()">Next Page</button>
+    <button class="tablink5" @click="prevPage()">Previous Page</button>
+    <button class="tablink5" @click="deleteMails()">Move</button>
+    <button class="tablink5" @click="deleteMails()">Restore</button>
+    <button class="tablink5" @click="deleteMails()">Delete</button>
+    <button class="tablink5" @click="nextPage()">Next Page</button>
   </div>
   <div class="inbox">
     <table class="content-table">
@@ -110,7 +114,8 @@ export default {
       currIndex: 1,
       filteredList: [],
       isFiltered: false,
-      deletedMails: []
+      deletedMails: [],
+      currfolder: ""
     };
   },
   methods: {
@@ -243,6 +248,7 @@ export default {
     console.log("sent tab");
     this.username = this.$route.params.username;
     this.emailAdd = this.$route.params.emailAdd;
+    this.currfolder = this.$route.params.currfolder;
     const response = await axios.post("http://localhost:8095/mails/", {
       listname: "Sent",
       user: this.emailAdd
@@ -290,7 +296,7 @@ export default {
   margin-top: 2px;
   margin-bottom: 2px;
 }
-.tablink {
+.tablink3 {
   background-color: #555;
   color: white;
   float: left;
@@ -299,9 +305,23 @@ export default {
   cursor: pointer;
   padding: 14px 16px;
   font-size: 17px;
-  width: 25%;
+  width: 33.3333%;
 }
-.tablink:hover {
+.tablink5 {
+  background-color: #555;
+  color: white;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  font-size: 17px;
+  width: 20%;
+}
+.tablink3:hover {
+  background-color: #777;
+}
+.tablink5:hover {
   background-color: #777;
 }
 .tabcontent {

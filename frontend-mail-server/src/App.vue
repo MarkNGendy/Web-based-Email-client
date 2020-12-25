@@ -1,15 +1,14 @@
 <template>
-<div id="app">
-  <router-view />  
-</div>
+  <div id="app">
+    <router-view />
+  </div>
 </template>
-
 
 <style lang="scss" scoped>
 @import "./components/styles/scss/variables.scss";
 @import "./components/styles/scss/main.scss";
 #app {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -20,5 +19,4 @@ body {
   padding: 0px;
   box-sizing: border-box;
 }
-
 </style>

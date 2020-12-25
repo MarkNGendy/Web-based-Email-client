@@ -1,55 +1,55 @@
 <template>
   <div class="container">
-  <form action="action_page.php">
-    <div class="row">
-      <div class="col-25">
-        <label for="fname">From</label>
+    <form action="action_page.php">
+      <div class="row">
+        <div class="col-25">
+          <label for="fname">From</label>
+        </div>
+        <div class="col-75">
+          <ul id="sender">
+            <dt>{{ sender }}</dt>
+          </ul>
+        </div>
       </div>
-      <div class="col-75">
-        <ul id="sender">
-          <dt>{{ sender }}</dt>
-        </ul>
+      <div class="row">
+        <div class="col-25">
+          <label for="fname">To</label>
+        </div>
+        <div class="col-75">
+          <ul id="recievers" v-for="item in receivers" :key="item">
+            <dt>{{ item }}</dt>
+          </ul>
+        </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-25">
-        <label for="fname">To</label>
+      <div class="row">
+        <div class="col-25">
+          <label for="lname">Subject</label>
+        </div>
+        <div class="col-75">
+          <label id="subject" name="subject">{{ subject }}</label>
+        </div>
       </div>
-      <div class="col-75">
-        <ul id="recievers" v-for="item in receivers" :key="item">
-          <dt>{{ item }}</dt>
-        </ul>
+      <div class="row">
+        <div class="col-25">
+          <label for="subject">Body</label>
+        </div>
+        <div class="col-75">
+          <p id="body" name="body">{{ body }}</p>
+        </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-25">
-        <label for="lname">Subject</label>
+      <div class="row">
+        <div class="col-25">
+          <label for="country">Attachments</label>
+        </div>
+        <div class="col-75">
+          <input type="file" multiple />
+        </div>
       </div>
-      <div class="col-75">
-        <label id="subject" name="subject">{{subject}}</label>
+      <div class="row">
+        <button class="submit" @click="gotoHome()">Home</button>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-25">
-        <label for="subject">Body</label>
-      </div>
-      <div class="col-75">
-        <p id="body" name="body">{{ body }}</p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-25">
-        <label for="country">Attachments</label>
-      </div>
-      <div class="col-75">
-        <input type="file" multiple>
-      </div>
-    </div>
-    <div class="row">
-      <button class="submit" @click="gotoHome()">Home</button>
-    </div>
-  </form>
-</div>
+    </form>
+  </div>
 </template>
 
 <script>
@@ -58,17 +58,20 @@ export default {
   name: "view-email",
   data() {
     return {
-      emails:[],
+      emails: [],
       id: "",
       receivers: [],
       subject: "",
       body: "",
-      sender: "",
-    }
+      sender: ""
+    };
   },
   methods: {
     gotoHome() {
-      this.$router.push({ name: "user", params: { username: this.username, emailAdd:this.email} });
+      this.$router.push({
+        name: "user",
+        params: { username: this.username, emailAdd: this.email }
+      });
     }
   },
   created: async function() {
@@ -76,10 +79,10 @@ export default {
     this.emailAdd = this.$route.params.emailAdd;
     this.id = this.$route.params.id;
     this.emails = JSON.parse(this.$route.params.emails);
-    console.log(this.emails)
+    console.log(this.emails);
     const response = await axios.post("http://localhost:8095/read/", {
-        list: this.emails,
-        ID: this.id
+      list: this.emails,
+      ID: this.id
     });
     console.log(response);
     this.receivers = response.data.receivers;
@@ -87,12 +90,15 @@ export default {
     this.body = response.data.body;
     this.sender = response.data.sender;
   }
-}
+};
 </script>
 
 <style scoped>
 /* Style inputs, select elements and textareas */
-input[type=text], select, textarea, input[type=file]{
+input[type="text"],
+select,
+textarea,
+input[type="file"] {
   width: 100%;
   padding: 12px;
   border: 1px solid #ccc;
@@ -109,7 +115,7 @@ label {
 
 /* Style the submit button */
 .submit {
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   padding: 12px 20px;
   margin-right: 5px;
@@ -149,7 +155,9 @@ label {
 
 /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 600px) {
-  .col-25, .col-75, input[type=submit] {
+  .col-25,
+  .col-75,
+  input[type="submit"] {
     width: 100%;
     margin-top: 0;
   }

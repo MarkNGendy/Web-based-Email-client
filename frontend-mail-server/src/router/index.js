@@ -81,6 +81,12 @@ const routes = [
         name:"view-email",
         component: () => import("../views/ViewEmail.vue"),
         props: true
+      },
+      {
+        path: "/userFolders",
+        name: "userFolders",
+        component: () => import("../views/userFolders.vue"),
+        props: true
       }
     ]
   }

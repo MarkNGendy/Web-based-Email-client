@@ -5,7 +5,7 @@
         <label for="fname">Name</label>
       </div>
       <div class="col-75">
-        <input type="text" id="name" placeholder="Enter new name..">
+        <input type="text" id="name" placeholder="Enter new name.." />
       </div>
     </div>
     <div class="row">
@@ -13,8 +13,8 @@
         <label for="fname">New email</label>
       </div>
       <div class="col-75">
-        <input type="text" id="email">
-      <button @click="updateEmails()" class="left-col">Add new email</button>
+        <input type="text" id="email" />
+        <button @click="updateEmails()" class="left-col">Add new email</button>
       </div>
     </div>
     <div class="row">
@@ -22,15 +22,15 @@
         <label for="fname">New Emails</label>
       </div>
       <div class="col-75">
-      <ul id="recievers" name="emails">
-          <option v-for="item in emails" :key="item">{{item}}</option>
-      </ul>
+        <ul id="recievers" name="emails">
+          <option v-for="item in emails" :key="item">{{ item }}</option>
+        </ul>
       </div>
     </div>
     <div class="row">
       <button class="submit" @click="send()">Save</button>
     </div>
-</div>
+  </div>
 </template>
 
 <script>
@@ -41,34 +41,37 @@ export default {
       id: "",
       emails: [],
       name: "",
-      username:"",
-      emailAdd:"",
+      username: "",
+      emailAdd: "",
       pass: ""
-    }
+    };
   },
   methods: {
     updateEmails() {
       var addedItem = document.getElementById("email");
-      if(this.emails.includes(addedItem.value)) {
+      if (this.emails.includes(addedItem.value)) {
         alert("email already added");
         document.getElementById("email").value = "";
-      } else{
+      } else {
         this.emails.push(addedItem.value);
       }
-    },
+    }
   },
   created: async function() {
     this.username = this.$route.params.username;
     this.emailAdd = this.$route.params.emailAdd;
     this.id = this.$route.params.id;
-    console.log(this.id)
+    console.log(this.id);
   }
-}
+};
 </script>
 
 <style scoped>
 /* Style inputs, select elements and textareas */
-input[type=text], select, textarea, input[type=file]{
+input[type="text"],
+select,
+textarea,
+input[type="file"] {
   width: 100%;
   padding: 12px;
   border: 1px solid #ccc;
@@ -85,7 +88,7 @@ label {
 
 /* Style the submit button */
 .submit {
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   padding: 12px 20px;
   margin-right: 5px;
@@ -112,7 +115,7 @@ label {
 .left-col {
   float: center;
   margin-top: 3px;
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   padding: 12px 20px;
   margin-right: 5px;
@@ -142,7 +145,9 @@ label {
 
 /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 600px) {
-  .col-25, .col-75, input[type=submit] {
+  .col-25,
+  .col-75,
+  input[type="submit"] {
     width: 100%;
     margin-top: 0;
   }

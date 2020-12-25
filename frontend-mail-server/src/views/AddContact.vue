@@ -20,7 +20,7 @@
   <div>
     <button class="addemail" @click="addemail()">add another email</button>
     <ul id="emails" name="emails">
-      <option v-for="item in Contact.emails" :key="item">{{item}}</option>
+      <option v-for="item in Contact.emails" :key="item">{{ item }}</option>
     </ul>
   </div>
   <div>
@@ -49,10 +49,10 @@ export default {
       console.log(this.Contact.emails);
       var mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
       var txt = document.getElementById("email").value;
-      if(!txt.match(mailformat)) {
+      if (!txt.match(mailformat)) {
         alert("Please enter a valid email");
-      }else {
-      this.Contact.emails.push(txt);         
+      } else {
+        this.Contact.emails.push(txt);
       }
       document.getElementById("email").value = "";
     },
@@ -64,13 +64,13 @@ export default {
       this.Contact.emails.push(txtemail);
 
       await Axios.post("http://localhost:8095/addContact/", {
-        userName: this.Contact.name, 
+        userName: this.Contact.name,
         mails: this.Contact.emails,
         user: this.emailAdd,
         ind: 0,
         editingMail: ""
       });
-      
+
       document.getElementById("email").value = "";
       document.getElementById("name").value = "";
       this.Contact.emails = [];

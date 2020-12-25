@@ -6,9 +6,13 @@
       </div>
       <div class="col-75">
         <select id="users" name="users">
-          <option v-bind:value="item" v-for="item in users" :key="item">{{item}}</option>
+          <option v-bind:value="item" v-for="item in users" :key="item">{{
+            item
+          }}</option>
         </select>
-      <button @click="updateReceivers()" class="left-col">Add to receivers</button>
+        <button @click="updateReceivers()" class="left-col">
+          Add to receivers
+        </button>
       </div>
     </div>
     <div class="row">
@@ -16,9 +20,9 @@
         <label for="fname">To</label>
       </div>
       <div class="col-75">
-      <ul id="recievers" name="emails">
-          <option v-for="item in receivers" :key="item">{{item}}</option>
-      </ul>
+        <ul id="recievers" name="emails">
+          <option v-for="item in receivers" :key="item">{{ item }}</option>
+        </ul>
       </div>
     </div>
     <div class="row">
@@ -26,7 +30,7 @@
         <label for="fname">Choose Importance</label>
       </div>
       <div class="col-75">
-      <select class="right-col" id="importance" name="emails">
+        <select class="right-col" id="importance" name="emails">
           <option value="1">1</option>
           <option value="2">2</option>
           <option value="3">3</option>
@@ -40,7 +44,13 @@
         <label for="lname">Subject</label>
       </div>
       <div class="col-75">
-        <input value="" type="text" id="subject" name="lastname" placeholder="Write subject of your email..">
+        <input
+          value=""
+          type="text"
+          id="subject"
+          name="lastname"
+          placeholder="Write subject of your email.."
+        />
       </div>
     </div>
     <div class="row">
@@ -48,41 +58,47 @@
         <label for="subject">Body</label>
       </div>
       <div class="col-75">
-        <textarea id="body" value="" cname="body" placeholder="Write something.." style="height:200px"></textarea>
+        <textarea
+          id="body"
+          value=""
+          cname="body"
+          placeholder="Write something.."
+          style="height:200px"
+        ></textarea>
       </div>
     </div>
     <form enctype="multipart/form-data">
-    <div class="row">
-      <div class="col-25">
-        <label for="country">Attachments</label>
+      <div class="row">
+        <div class="col-25">
+          <label for="country">Attachments</label>
+        </div>
+        <div class="col-75">
+          <input ref="files" type="file" multiple />
+        </div>
       </div>
-      <div class="col-75">
-        <input ref="files" type="file" multiple>
-      </div>
-    </div>
     </form>
     <div class="row">
       <button class="submit" @click="send()">Send</button>
       <button class="submit" @click="saveDraft()">Save to drafts</button>
     </div>
-</div>
+  </div>
 </template>
 
 <script>
-import axios from "axios"
+import axios from "axios";
 export default {
   data() {
     return {
       users: [],
-      receivers:[],
-      body:"",
-      importance:0,
-      username:"",
-      emailAdd:"",
+      receivers: [],
+      body: "",
+      importance: 0,
+      username: "",
+      emailAdd: "",
       pass: "",
       files: [],
       email: ""
-    }
+    };
   },
   methods: {
     updateReceivers() {
@@ -90,8 +106,8 @@ export default {
       this.receivers.push(addedItem.value);
       var newUsers = [];
       var i = 0;
-      for(i = 0; i < this.users.length; i++) {
-        if(!this.receivers.includes(this.users[i])) {
+      for (i = 0; i < this.users.length; i++) {
+        if (!this.receivers.includes(this.users[i])) {
           newUsers.push(this.users[i]);
         }
       }
@@ -130,40 +146,42 @@ export default {
         importance: this.importance
       });
       alert(response.data.ans);
-    },
+    }
   },
   created: async function() {
-    document.getElementById("subject").value = "Helllllooooo"
+    document.getElementById("subject").value = "Helllllooooo";
     this.username = this.$route.params.username;
     this.emailAdd = this.$route.params.emailAdd;
     this.email = JSON.parse(this.$route.params.email);
     this.id = JSON.parse(this.$route.params.id);
     console.log(this.email);
     var sub = document.getElementById("subject");
-    sub.setAttribute("value", this.email.subject)
+    sub.setAttribute("value", this.email.subject);
     sub = document.getElementById("body");
     sub.setAttribute("value", this.email.body);
     sub = document.getElementById("importance");
     sub.setAttribute("value", this.email.importance);
     const response = await axios.post("http://localhost:8095/read/users/", {
-        email: this.emailAdd,
-        password: "",
-        username: this.username,
+      email: this.emailAdd,
+      password: "",
+      username: this.username
     });
     var i = 0;
-    for(i = 0; i < response.data.length; i++) {
-      if(response.data[i].email != this.emailAdd){
+    for (i = 0; i < response.data.length; i++) {
+      if (response.data[i].email != this.emailAdd) {
         this.users.push(response.data[i].email);
       }
     }
-
   }
-}
+};
 </script>
 
 <style scoped>
 /* Style inputs, select elements and textareas */
-input[type=text], select, textarea, input[type=file]{
+input[type="text"],
+select,
+textarea,
+input[type="file"] {
   width: 100%;
   padding: 12px;
   border: 1px solid #ccc;
@@ -180,7 +198,7 @@ label {
 
 /* Style the submit button */
 .submit {
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   padding: 12px 20px;
   margin-right: 5px;
@@ -207,7 +225,7 @@ label {
 .left-col {
   float: center;
   margin-top: 3px;
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   padding: 12px 20px;
   margin-right: 5px;
@@ -237,7 +255,9 @@ label {
 
 /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 600px) {
-  .col-25, .col-75, input[type=submit] {
+  .col-25,
+  .col-75,
+  input[type="submit"] {
     width: 100%;
     margin-top: 0;
   }

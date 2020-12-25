@@ -1,28 +1,35 @@
 <template>
-  <button class="tablink" @click="prevPage()">Previous Page</button>
-  <button class="tablink" @click="deleteMails()">Delete</button>
-  <button class="tablink" @click="nextPage()">Next Page</button>
-  <input type="text" class="filterbox" placeholder="Enter filter value.." id="filter-val">
+  <input
+    type="text"
+    class="filterbox"
+    placeholder="Enter filter value.."
+    id="filter-val"
+  />
   <select class="filterbox" name="sort-type" id="filter">
     <option value="SUBJECT">Filter by subject</option>
     <option value="SENDER">Filter by sender</option>
   </select>
   <button class="filter" @click="filter()">Filter</button>
   <select class="filterbox" name="sort-type" id="sort">
-    <option  value="SUBJECT">Sort by subject</option>
-    <option  value="SENDER">Sort by sender</option>
-    <option  value="RECEIVERS">Sort by recievers</option>
-    <option  value="TIME">Sort by date</option>
-    <option  value="BODY">Sort by body</option>
-    <option  value="ATTACHMENTS">Sort by attachments</option>
-    <option  value="IMPORTANCE">Sort by importance</option>
+    <option value="SUBJECT">Sort by subject</option>
+    <option value="SENDER">Sort by sender</option>
+    <option value="RECEIVERS">Sort by recievers</option>
+    <option value="TIME">Sort by date</option>
+    <option value="BODY">Sort by body</option>
+    <option value="ATTACHMENTS">Sort by attachments</option>
+    <option value="IMPORTANCE">Sort by importance</option>
   </select>
   <select class="filterbox" name="sort-type" id="sort-type">
-    <option  value="ASCENDING">Ascending</option>
-    <option  value="DESCENDING">Descending</option>
+    <option value="ASCENDING">Ascending</option>
+    <option value="DESCENDING">Descending</option>
   </select>
   <button class="filter" @click="sort()">Sort</button>
-  <input id="search-val" type="text" class="filterbox" placeholder="Enter search value..">
+  <input
+    id="search-val"
+    type="text"
+    class="filterbox"
+    placeholder="Enter search value.."
+  />
   <select id="search-cat" class="filterbox" name="sort-type">
     <option value="SUBJECT">Search in subjects</option>
     <option value="SENDER">Search in senders</option>
@@ -32,6 +39,11 @@
   </select>
   <button class="filter" @click="search()">Search</button>
   <button class="filter" @click="gotoHome()">Home</button>
+  <div>
+    <button class="tablink" @click="prevPage()">Previous Page</button>
+    <button class="tablink" @click="deleteMails()">Delete</button>
+    <button class="tablink" @click="nextPage()">Next Page</button>
+  </div>
   <div class="inbox">
     <table class="content-table">
       <thead>
@@ -46,17 +58,40 @@
       </thead>
       <tbody v-for="item in emails" :key="item.subject">
         <tr>
-          <td><input v-bind:id="item.id" v-bind:value="JSON.stringify(item)" v-on:click="addMail($event)" type="checkbox" >{{item.id}}</td>
-          <td><router-link :to="{name: 'edit-email', params: {username: username,
-          emailAdd: emailAdd, id:item.id, email: JSON.stringify(item),emails: JSON.stringify(allMails)}}">
-          {{item.subject}}</router-link></td>
-          <td>{{item.sender}}</td>
           <td>
-            <ul>{{item.receivers}}
+            <input
+              v-bind:id="item.id"
+              v-bind:value="JSON.stringify(item)"
+              v-on:click="addMail($event)"
+              type="checkbox"
+            />{{ item.id }}
+          </td>
+          <td>
+            <router-link
+              :to="{
+                name: 'edit-email',
+                params: {
+                  username: username,
+                  emailAdd: emailAdd,
+                  id: item.id,
+                  email: JSON.stringify(item),
+                  emails: JSON.stringify(allMails)
+                }
+              }"
+            >
+              {{ item.subject }}</router-link
+            >
+          </td>
+          <td>{{ item.sender }}</td>
+          <td>
+            <ul>
+              {{
+                item.receivers
+              }}
             </ul>
           </td>
-          <td>{{item.date}}</td>
-          <td>{{item.importance}}</td>
+          <td>{{ item.date }}</td>
+          <td>{{ item.importance }}</td>
         </tr>
       </tbody>
     </table>
@@ -68,14 +103,14 @@ import axios from "axios";
 export default {
   data() {
     return {
-      username:"",
+      username: "",
       emailAdd: "",
       emails: [],
       allMails: [],
       currIndex: 1,
       filteredList: [],
       isFiltered: false,
-      deletedMails:[]
+      deletedMails: []
     };
   },
   methods: {
@@ -88,8 +123,8 @@ export default {
       } else {
         var i = 0;
         var tempArr = [];
-        for(i = 0; i < this.deletedMails.length; i++) {
-          if(this.deletedMails[i].id !== JSON.parse(value).id) {
+        for (i = 0; i < this.deletedMails.length; i++) {
+          if (this.deletedMails[i].id !== JSON.parse(value).id) {
             tempArr.push(this.deletedMails[i]);
           }
         }
@@ -99,11 +134,11 @@ export default {
     async deleteMails() {
       var response = await axios.post("http://localhost:8095/delete/mails/", {
         mails: this.deletedMails,
-        source: "Inbox",
+        source: "Inbox"
       });
       response = await axios.post("http://localhost:8095/mails/", {
         listname: "Inbox",
-        user: this.emailAdd,
+        user: this.emailAdd
       });
       console.log(response);
       this.allMails = response.data;
@@ -112,8 +147,8 @@ export default {
       this.paginate(this.allMails);
     },
     async nextPage() {
-      if(this.currIndex < (this.allMails.length / 5)) {
-        this.currIndex++; 
+      if (this.currIndex < this.allMails.length / 5) {
+        this.currIndex++;
       }
       if (this.isFiltered == true) {
         await this.paginate(this.filteredList);
@@ -122,8 +157,8 @@ export default {
       }
     },
     async prevPage() {
-      if(this.currIndex != 1) {
-        this.currIndex--; 
+      if (this.currIndex != 1) {
+        this.currIndex--;
       }
       if (this.isFiltered == true) {
         await this.paginate(this.filteredList);
@@ -133,11 +168,11 @@ export default {
     },
     paginate(mailsList) {
       var counter = 0;
-      var left = ((this.currIndex - 1) * (mailsList.length - 1));
-      var right = ((this.currIndex - 1) * (mailsList.length-1) + 4);
+      var left = (this.currIndex - 1) * (mailsList.length - 1);
+      var right = (this.currIndex - 1) * (mailsList.length - 1) + 4;
       var i = left;
       var list = [];
-      while(i <= right && i < mailsList.length) {
+      while (i <= right && i < mailsList.length) {
         list[counter] = mailsList[i];
         counter++;
         i++;
@@ -145,74 +180,77 @@ export default {
       this.emails = list;
     },
     async filter() {
-      var sel = document.getElementById('filter');
+      var sel = document.getElementById("filter");
       var field = sel.value;
-      var value = document.getElementById('filter-val');
+      var value = document.getElementById("filter-val");
       var criteria = value.value;
       const response = await axios.post("http://localhost:8095/filter/", {
         list: this.allMails,
         field: field,
         criteria: criteria
-    });
-    this.filteredList = response.data;
-    this.currIndex = 1;
-    this.isFiltered = true;
-    this.paginate(this.filteredList);
+      });
+      this.filteredList = response.data;
+      this.currIndex = 1;
+      this.isFiltered = true;
+      this.paginate(this.filteredList);
     },
     async sort() {
       var requestList;
-      if(this.isFiltered == true){
+      if (this.isFiltered == true) {
         requestList = this.filteredList;
       } else {
         requestList = this.allMails;
       }
-      var sel = document.getElementById('sort');
+      var sel = document.getElementById("sort");
       var field = sel.value;
-      var value = document.getElementById('sort-type');
+      var value = document.getElementById("sort-type");
       var criteria = value.value;
       const response = await axios.post("http://localhost:8095/sort/", {
         list: requestList,
         field: field,
         criteria: criteria
-    });
-    this.filteredList = response.data;
-    this.currIndex = 1;
-    this.isFiltered = true;
-    this.paginate(this.filteredList);
+      });
+      this.filteredList = response.data;
+      this.currIndex = 1;
+      this.isFiltered = true;
+      this.paginate(this.filteredList);
     },
     async search() {
-      var sel = document.getElementById('search-cat');
+      var sel = document.getElementById("search-cat");
       var field = sel.value;
-      var value = document.getElementById('search-val');
+      var value = document.getElementById("search-val");
       var criteria = value.value;
       const response = await axios.post("http://localhost:8095/search/", {
         list: this.allMails,
         field: field,
         criteria: criteria
-    });
-    this.filteredList = response.data;
-    this.currIndex = 1;
-    this.isFiltered = true;
-    this.paginate(this.filteredList);
+      });
+      this.filteredList = response.data;
+      this.currIndex = 1;
+      this.isFiltered = true;
+      this.paginate(this.filteredList);
     },
     gotoHome() {
-      this.$router.push({ name: "user", params: { username: this.username, emailAdd:this.email} });
-    },
+      this.$router.push({
+        name: "user",
+        params: { username: this.username, emailAdd: this.email }
+      });
+    }
   },
   created: async function() {
     console.log("draft");
     this.username = this.$route.params.username;
     this.emailAdd = this.$route.params.emailAdd;
     const response = await axios.post("http://localhost:8095/mails/", {
-        listname: "Draft",
-        user: this.emailAdd,
+      listname: "Draft",
+      user: this.emailAdd
     });
     this.allMails = response.data;
     this.isFiltered = false;
     this.currIndex = 1;
     this.paginate(this.allMails);
   }
-}
+};
 </script>
 
 <style scoped>
@@ -325,5 +363,4 @@ export default {
   font-weight: bold;
   color: #009879;
 }
-
 </style>

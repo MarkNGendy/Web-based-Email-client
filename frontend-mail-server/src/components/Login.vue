@@ -2,9 +2,11 @@
   <router-link to="/" class="hyptxt">Login</router-link> |
   <router-link to="/register" class="hyptxt">Register</router-link>
   <section class="container h-100">
-    <div class="row h-100 justify-content-center align-items-center"
-    align="center"
-    justify="center">
+    <div
+      class="row h-100 justify-content-center align-items-center"
+      align="center"
+      justify="center"
+    >
       <div class="col wrapper-box">
         <img
           class="mx-auto d-block"
@@ -12,7 +14,7 @@
           alt="DemoMail logo"
           title="DemoMail logo"
         />
-        <p class = "sign-in">Sign in</p>
+        <p class="sign-in">Sign in</p>
         <div>
           <form class="form form-newaccount" id="loginForm">
             <div class="form-group">
@@ -75,7 +77,8 @@ export default {
     return {
       input: {
         email: "",
-        password: ""
+        password: "",
+        folders: ["sports", "hi"]
       },
       error: ""
     };
@@ -89,9 +92,16 @@ export default {
         username: "",
         password: this.password
       });
-      if(response.data.success == true) {
+      if (response.data.success == true) {
         this.username = response.data.ans;
-        this.$router.push({ name: "user", params: { username: this.username, emailAdd:this.email} });
+        this.$router.push({
+          name: "user",
+          params: {
+            username: this.username,
+            emailAdd: this.email,
+            folderslist: this.folders
+          }
+        });
       } else {
         alert("You entered wrong email or password");
         return this.error === "";
@@ -111,44 +121,44 @@ body {
   align-self: center;
 }
 
-.sign-in{
+.sign-in {
   text-align: center;
-  font-family: 'Roboto',sans-serif;
-  font-weight:bolder;
+  font-family: "Roboto", sans-serif;
+  font-weight: bolder;
   font-size: 30px;
-  color: #00cc66;  
+  color: #00cc66;
 }
-.s-button{
-  display:inline-block;
+.s-button {
+  display: inline-block;
   width: 300px;
   height: 50px;
   background-color: black;
-  padding:0.35em 1.2em;
-  border:0.1em solid #FFFFFF;
+  padding: 0.35em 1.2em;
+  border: 0.1em solid #ffffff;
   font-size: 20px;
-  margin:10px;
-  border-radius:0.12em;
+  margin: 10px;
+  border-radius: 0.12em;
   box-sizing: border-box;
-  text-decoration:none;
-  font-family:'Roboto',sans-serif;
-  font-weight:100;
-  color:#ffffff;
-  text-align:center;
+  text-decoration: none;
+  font-family: "Roboto", sans-serif;
+  font-weight: 100;
+  color: #ffffff;
+  text-align: center;
   transition: all 0.2s;
 }
-.s-button:hover{
-  color:black;
-  background-color:#00cc66;
+.s-button:hover {
+  color: black;
+  background-color: #00cc66;
 }
 
 .fade-enter,
 .fade-leave-active {
   opacity: 0;
 }
-.hyptxt{
+.hyptxt {
   color: #000;
 }
-.hyptxt:hover{
+.hyptxt:hover {
   color: #00cc66;
 }
 .fade-enter-active,

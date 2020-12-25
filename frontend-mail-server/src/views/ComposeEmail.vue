@@ -136,11 +136,11 @@ export default {
 
       try {
         const response = await axios({
-    method: 'post',
-    url: "http://localhost:8095/composeEdit/",
-    data: formData,
-    headers: {'Content-Type': 'multipart/form-data' }
-    })
+          method: "post",
+          url: "http://localhost:8095/composeEdit/",
+          data: formData,
+          headers: { "Content-Type": "multipart/form-data" }
+        });
         alert(response.data.ans);
       } catch {
         console.log("test");

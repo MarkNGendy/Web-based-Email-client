@@ -43,7 +43,7 @@
                 id="email"
               />
             </div>
-            
+
             <div class="form-group">
               <label for="" style="margin: 6px">Password</label>
               <input
@@ -73,12 +73,14 @@
               />
             </div>
             <div class="row">
-                <div class="col-sm-12"></div>
-                <div class="col-sm-12">
-                  <span class="d-block bullet-pass-rounded"><span></span>
-                    password must contains at least 6 characters, 1 number and 1 uppercase letter</span>
-                </div>
+              <div class="col-sm-12"></div>
+              <div class="col-sm-12">
+                <span class="d-block bullet-pass-rounded"
+                  ><span></span> password must contains at least 6 characters, 1
+                  number and 1 uppercase letter</span
+                >
               </div>
+            </div>
             <input
               type="button"
               v-on:click="newUser()"
@@ -195,15 +197,18 @@ export default {
         password: this.password
       });
       console.log(response);
-      if(response.data.success == true) {
-        this.$router.push({ name: "user", params: { username: this.username } });
+      if (response.data.success == true) {
+        this.$router.push({
+          name: "user",
+          params: { username: this.username }
+        });
       } else {
         alert("This email already exists");
       }
       return this.error === "";
     },
     validUsername(username) {
-      if(username != "" && username.includes(" ") == false) return true;
+      if (username != "" && username.includes(" ") == false) return true;
       return false;
     },
     validEmail(email) {
@@ -251,40 +256,39 @@ export default {
 @import "./styles/scss/variables.scss";
 @import "./styles/scss/main.scss";
 @import "./styles/scss/form.scss";
-.sign-in{
+.sign-in {
   text-align: center;
-  font-family: 'Roboto',sans-serif;
-  font-weight:bolder;
+  font-family: "Roboto", sans-serif;
+  font-weight: bolder;
   font-size: 30px;
-  color: #00cc66;  
+  color: #00cc66;
 }
-.s-button{
-  display:inline-block;
+.s-button {
+  display: inline-block;
   width: 300px;
   height: 50px;
   background-color: black;
-  padding:0.35em 1.2em;
-  border:0.1em solid #FFFFFF;
+  padding: 0.35em 1.2em;
+  border: 0.1em solid #ffffff;
   font-size: 20px;
-  margin:10px;
-  border-radius:0.12em;
+  margin: 10px;
+  border-radius: 0.12em;
   box-sizing: border-box;
-  text-decoration:none;
-  font-family:'Roboto',sans-serif;
-  font-weight:100;
-  color:#ffffff;
-  text-align:center;
+  text-decoration: none;
+  font-family: "Roboto", sans-serif;
+  font-weight: 100;
+  color: #ffffff;
+  text-align: center;
   transition: all 0.2s;
 }
-.s-button:hover{
-  color:black;
-  background-color:#00cc66;
+.s-button:hover {
+  color: black;
+  background-color: #00cc66;
 }
-.hyptxt{
+.hyptxt {
   color: #000;
 }
-.hyptxt:hover{
+.hyptxt:hover {
   color: #00cc66;
 }
-
 </style>

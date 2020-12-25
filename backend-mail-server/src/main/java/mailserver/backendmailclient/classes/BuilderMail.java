@@ -21,9 +21,9 @@ public class BuilderMail {
         if (!createMAilFile(mailfolder, mail))
             return false;
 
-        if (mail.getAttachments() != null){
-            for(MultipartFile f:mail.getAttachments()){
-                f.transferTo(new File(mailfolder.getPath()+"/attachments/"+f.getOriginalFilename()));
+        if (mail.getAttachments() != null) {
+            for (MultipartFile f : mail.getAttachments()) {
+                f.transferTo(new File(mailfolder.getPath() + "/attachments/" + f.getOriginalFilename()));
             }
         }
         return true;
