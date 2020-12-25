@@ -67,8 +67,7 @@ export default {
         userName: this.Contact.name,
         mails: this.Contact.emails,
         user: this.emailAdd,
-        ind: 0,
-        editingMail: ""
+        id: 0
       });
 
       document.getElementById("email").value = "";

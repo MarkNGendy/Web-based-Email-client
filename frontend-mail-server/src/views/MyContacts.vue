@@ -15,20 +15,7 @@
     </div>
   </router-link>
 
-  <router-link
-    :to="{
-      name: 'edit-contact',
-      params: { username: username, emailAdd: emailAdd }
-    }"
-    active-class="active"
-    tag="button"
-    exact
-    class="tablink"
-  >
-    <div class="link-container">
-      Edit Contact
-    </div>
-  </router-link>
+
   <button class="tablink" @click="deleteMails()">Delete</button>
   <button class="tablink" @click="nextPage()">Next Page</button>
   <select class="filterbox" name="sort-type" id="sort-type">
@@ -178,56 +165,35 @@ export default {
       }
       this.emails = list;
     },
-    async filter() {
-      var sel = document.getElementById("filter");
-      var field = sel.value;
-      var value = document.getElementById("filter-val");
-      var criteria = value.value;
-      const response = await axios.post("http://localhost:8095/filter/", {
-        list: this.allMails,
-        field: field,
-        criteria: criteria
-      });
-      this.filteredList = response.data;
-      this.currIndex = 1;
-      this.isFiltered = true;
-      this.paginate(this.filteredList);
-    },
     async sort() {
       var requestList;
-      if (this.isFiltered == true) {
+      if(this.isFiltered == true){
         requestList = this.filteredList;
       } else {
         requestList = this.allMails;
       }
-      var sel = document.getElementById("sort");
-      var field = sel.value;
-      var value = document.getElementById("sort-type");
+      var value = document.getElementById('sort-type');
       var criteria = value.value;
-      const response = await axios.post("http://localhost:8095/sort/", {
-        list: requestList,
-        field: field,
+      const response = await axios.post("http://localhost:8095/sort/contacts/", {
+        contacts: requestList,
         criteria: criteria
-      });
-      this.filteredList = response.data;
-      this.currIndex = 1;
-      this.isFiltered = true;
-      this.paginate(this.filteredList);
+    });
+    this.filteredList = response.data;
+    this.currIndex = 1;
+    this.isFiltered = true;
+    this.paginate(this.filteredList);
     },
     async search() {
-      var sel = document.getElementById("search-cat");
-      var field = sel.value;
-      var value = document.getElementById("search-val");
+      var value = document.getElementById('search-val');
       var criteria = value.value;
-      const response = await axios.post("http://localhost:8095/search/", {
-        list: this.allMails,
-        field: field,
+      const response = await axios.post("http://localhost:8095/search/contacts/", {
+        contacts: this.allMails,
         criteria: criteria
-      });
-      this.filteredList = response.data;
-      this.currIndex = 1;
-      this.isFiltered = true;
-      this.paginate(this.filteredList);
+    });
+    this.filteredList = response.data;
+    this.currIndex = 1;
+    this.isFiltered = true;
+    this.paginate(this.filteredList);
     },
     gotoHome() {
       this.$router.push({
@@ -297,7 +263,7 @@ export default {
   cursor: pointer;
   padding: 14px 16px;
   font-size: 17px;
-  width: 19%;
+  width: 24%;
 }
 .tablink:hover {
   background-color: #777;

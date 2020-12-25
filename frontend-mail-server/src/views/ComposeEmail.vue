@@ -115,8 +115,7 @@ export default {
       }
       this.users = newUsers;
     },
-    async send() {
-      this.files = this.$refs.files.files;
+  async sendWithAttach() {
       var formData = new FormData();
       var sub = document.getElementById("subject");
       this.subject = sub.value;
@@ -143,7 +142,36 @@ export default {
         });
         alert(response.data.ans);
       } catch {
-        console.log("test");
+        alert(response.data.ans);
+      }
+    },
+    async sendWithoutAttach() {
+      var sub = document.getElementById("subject");
+      this.subject = sub.value;
+      sub = document.getElementById("body");
+      this.body = sub.value;
+      sub = document.getElementById("importance");
+      this.importance = sub.value;
+      var response;
+      try {
+        response = await axios.post("http://localhost:8095/compose-no-attach/", {
+          subject: this.subject,
+          body: this.body,
+          sender: this.emailAdd,
+          receivers: this.receivers,
+          importance: this.importance
+      });
+        alert(response.data.ans);
+      } catch {
+        alert(response.data.ans);
+      }
+    },
+    async send() {
+      this.files = this.$refs.files.files;
+      if(this.files.length == 0) {
+        this.sendWithoutAttach();
+      } else {
+        this.sendWithAttach();
       }
     },
     async saveDraft() {

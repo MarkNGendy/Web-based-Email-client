@@ -47,6 +47,13 @@ public class HomeController {
         return mail.sendMail(mailBody);
     }
 
+    @PostMapping("/compose-no-attach/")
+    public Answer composedMail(@RequestBody MailBody mailbody) throws IOException {
+        Mail mail = new Mail();
+        mailbody.setAttachments(null);
+        return mail.sendMail(mailbody);
+    }
+
     @PostMapping("/signin/")
     public Answer signin(@RequestBody DemoUsers user) {
         User user1 = new User();
@@ -172,6 +179,19 @@ public class HomeController {
     public List<Contact> removeMail(@RequestBody ContactBody contactBody) {
         User u = new User();
         return u.editContactMails(contactBody.getUser(), contactBody.getID(),contactBody.getUserName(),contactBody.getMails());
+    }
+
+
+    @PostMapping("/sort/contacts/")
+    public List<Contact> sortContacts(@RequestBody SSContactBody body) {
+        Sort sorter = new Sort();
+        return sorter.contactsSorter(body.getContacts(), body.getCriteria());
+    }
+
+    @PostMapping("/search/contacts/")
+    public List<Contact> searchContacts(@RequestBody SSContactBody body) {
+        Search searcher = new Search();
+        return searcher.contactsSearch(body.getContacts(), body.getCriteria());
     }
 
 

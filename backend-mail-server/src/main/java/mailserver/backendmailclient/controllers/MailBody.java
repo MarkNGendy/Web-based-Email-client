@@ -1,6 +1,5 @@
 package mailserver.backendmailclient.controllers;
 
-import java.io.File;
 import java.util.Date;
 import java.util.List;
 
@@ -10,7 +9,13 @@ import org.springframework.web.multipart.MultipartFile;
 public class MailBody {
     private String subject;
     private String body;
+    private String sender;
+    private List<String> receivers;
+    private int importance;
     private List<MultipartFile> attachments;
+
+    public MailBody() {
+    }
 
     public String getSubject() {
         return subject;
@@ -59,10 +64,6 @@ public class MailBody {
     public void setImportance(int importance) {
         this.importance = importance;
     }
-
-    private String sender;
-    private List<String> receivers;
-    private int importance;
 
     public MailBody(String subject, String body, String sender, List<String> receivers, int importance) {
         this.subject = subject;

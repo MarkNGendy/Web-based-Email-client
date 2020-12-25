@@ -22,19 +22,19 @@
         <label for="fname">New Emails</label>
       </div>
       <div class="col-75">
-        <ul id="recievers" name="emails">
+        <ul id="emails" name="emails">
           <option v-for="item in emails" :key="item">{{ item }}</option>
         </ul>
       </div>
     </div>
     <div class="row">
-      <button class="submit" @click="send()">Save</button>
+      <button class="submit" @click="editContact()">Save</button>
     </div>
   </div>
 </template>
 
 <script>
-// import axios from "axios"
+import axios from "axios"
 export default {
   data() {
     return {
@@ -43,7 +43,7 @@ export default {
       name: "",
       username: "",
       emailAdd: "",
-      pass: ""
+      pass: "",
     };
   },
   methods: {
@@ -55,13 +55,21 @@ export default {
       } else {
         this.emails.push(addedItem.value);
       }
-    }
+    },
+    async editContact() {
+      var name = document.getElementById("name");
+      await axios.post("http://localhost:8095/editContact/", {
+        userName: name.value,
+        mails: this.emails,
+        user: this.emailAdd,
+        id: this.id
+      });
+    },
   },
   created: async function() {
     this.username = this.$route.params.username;
     this.emailAdd = this.$route.params.emailAdd;
     this.id = this.$route.params.id;
-    console.log(this.id);
   }
 };
 </script>
