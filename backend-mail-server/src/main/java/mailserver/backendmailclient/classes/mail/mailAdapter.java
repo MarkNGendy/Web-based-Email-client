@@ -4,7 +4,7 @@ import java.util.Date;
 
 import mailserver.backendmailclient.controllers.requestdata.MailBody;
 
-public class AdapterMail {
+public class mailAdapter {
     public Mail toMail(MailBody mailBody) {
         Mail ans = new Mail(mailBody.getSender(), mailBody.getReceivers(), mailBody.getSubject(), mailBody.getBody(),
                 mailBody.getAttachments(), mailBody.getImportance());
