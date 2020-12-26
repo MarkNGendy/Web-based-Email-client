@@ -133,8 +133,10 @@ export default {
       }
     },
     async deleteMails() {
-      var response = await axios.post("http://localhost:8095/delete/Trash/",
-        this.deletedMails);
+      var response = await axios.post("http://localhost:8095/delete/Trash/", {
+        mails: this.deletedMails,
+        user: this.emailAdd,
+        currFolder: "Trash"});
       response = await axios.post("http://localhost:8095/mails/", {
         listname: "Trash",
         user: this.emailAdd
@@ -145,8 +147,11 @@ export default {
       this.paginate(this.allMails);
     },
     async restoreMails() {
-      var response = await axios.post("http://localhost:8095/restore/",
-        this.deletedMails);
+      var response = await axios.post("http://localhost:8095/restore/", {
+        mails: this.deletedMails,
+        user: this.emailAdd,
+        currFolder: "Trash"
+      });
       response = await axios.post("http://localhost:8095/mails/", {
         listname: "Trash",
         user: this.emailAdd

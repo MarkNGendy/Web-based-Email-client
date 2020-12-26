@@ -226,18 +226,20 @@ public class HomeController {
     }
 
     @PostMapping("/restore/")
-    public void restore(@RequestBody List<Mail> mail) {
+    public void restore(@RequestBody TrashBody trash) {
+        List<Mail> mail = trash.getMails();
         for (int i = 0; i < mail.size(); i++) {
             Mail m = mail.get(i);
-            String current = "Server/" + m.getSender() + "/folders/" + m.get;
+            String current = "Server/" + trash.getUser() + "/folders/" + trash.getCurrFolder();
             m.restoreMail(current, m.getID());
         }
     }
 
     @PostMapping("/delete/Trash/")
-    public void deleteFromServer(@RequestBody List<Mail> mails) {
+    public void deleteFromServer(@RequestBody TrashBody trash) {
+        List<Mail> mails = trash.getMails();
         for (Mail mail : mails) {
-            String current = "Server/" + mail.getSender() + "/folders/" + mail.getSrcFolder();
+            String current = "Server/" + trash.getUser() + "/folders/" + trash.getCurrFolder();
             mail.deleteFromServer(current, mail.getID());
         }
     }
