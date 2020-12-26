@@ -83,8 +83,8 @@ const routes = [
         props: true
       },
       {
-        path: "/userFolders",
-        name: "userFolders",
+        path: "/user-folders",
+        name: "user-folders",
         component: () => import("../views/userFolders.vue"),
         props: true
       }

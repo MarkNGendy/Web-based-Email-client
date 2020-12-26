@@ -1,10 +1,4 @@
 <template>
-<div>
-    <button class="tablink" @click="prevPage()">Previous Page</button>
-    <button class="tablink" @click="moveMails()">Move</button>
-    <button class="tablink" @click="deleteMails()">Delete</button>
-    <button class="tablink" @click="nextPage()">Next Page</button>
-  </div>
   <input
     type="text"
     class="filterbox"
@@ -45,6 +39,12 @@
   </select>
   <button class="filter" @click="search()">Search</button>
   <button class="filter" @click="gotoHome()">Home</button>
+  <div>
+    <button class="tablink" @click="prevPage()">Previous Page</button>
+    <button class="tablink" @click="deleteMails()">Move</button>
+    <button class="tablink" @click="deleteMails()">Delete</button>
+    <button class="tablink" @click="nextPage()">Next Page</button>
+  </div>
   <div class="inbox">
     <table class="content-table">
       <thead>
@@ -138,24 +138,6 @@ export default {
         mails: this.deletedMails,
         source: "Inbox",
         userEmail: this.emailAdd
-      });
-      response = await axios.post("http://localhost:8095/mails/", {
-        listname: "Inbox",
-        user: this.emailAdd
-      });
-      console.log(response);
-      this.allMails = response.data;
-      this.isFiltered = false;
-      this.currIndex = 1;
-      this.paginate(this.allMails);
-    },
-    async moveMails() {
-      var destination = prompt("Enter the destination folder name");
-      var response = await axios.post("http://localhost:8095/move/", {
-        mails: this.deletedMails,
-        user: this.emailAdd,
-        source: "Inbox",
-        target: destination
       });
       response = await axios.post("http://localhost:8095/mails/", {
         listname: "Inbox",

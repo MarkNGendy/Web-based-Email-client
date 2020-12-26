@@ -1,7 +1,7 @@
 <template>
-  <button class="tablink3" @click="deleteMails()">Add Folder</button>
-  <button class="tablink3" @click="deleteMails()">Rename Folder</button>
-  <button class="tablink3" @click="deleteMails()">Delete Folder</button>
+  <button class="tablink3" @click="addFolder()">Add Folder</button>
+  <button class="tablink3" @click="renameFolder()">Rename Folder</button>
+  <button class="tablink3" @click="deleteFolder()">Delete Folder</button>
   <div>
     <button class="tablink5" @click="prevPage()">Previous Page</button>
     <button class="tablink5" @click="moveMails()">Move</button>
@@ -115,7 +115,8 @@ export default {
       filteredList: [],
       isFiltered: false,
       deletedMails: [],
-      currfolder: ""
+      currfolder: "",
+      folderslist: []
     };
   },
   methods: {
@@ -237,6 +238,21 @@ export default {
       this.isFiltered = true;
       this.paginate(this.filteredList);
     },
+    async addFolder() {
+      var name = prompt("Enter folder name");
+      await axios.post("http://localhost:8095/addFolder/", {
+        listname: name,
+        newName: "",
+        user: this.emailAdd
+      });
+      this.$router.push({
+          name: "user",
+          params: {
+            username: this.username,
+            emailAdd: this.email
+          }
+      })
+    },
     async search() {
       var sel = document.getElementById("search-cat");
       var field = sel.value;
@@ -262,18 +278,18 @@ export default {
     }
   },
   created: async function() {
-    console.log("userfolders");
     this.username = this.$route.params.username;
     this.emailAdd = this.$route.params.emailAdd;
-    this.currfolder = this.$route.params.currfolder;
-    const response = await axios.post("http://localhost:8095/mails/", {
-      listname: "folders/" + this.currfolder,
-      user: this.emailAdd
-    });
-    this.allMails = response.data;
-    this.isFiltered = false;
-    this.currIndex = 1;
-    this.paginate(this.allMails);
+
+    // this.currfolder = this.$route.params.currfolder;
+    // const response = await axios.post("http://localhost:8095/mails/", {
+    //   listname: "UserFolders/" + this.currfolder,
+      // user: this.emailAdd
+    // });
+    // this.allMails = response.data;
+    // this.isFiltered = false;
+    // this.currIndex = 1;
+    // this.paginate(this.allMails);
   }
 };
 </script>

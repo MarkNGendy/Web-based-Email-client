@@ -2,18 +2,18 @@ package mailserver.backendmailclient.controllers;
 
 public class LFnameBody {
 
-    private String name;
+    private String listname;
     private String newName;
     private String user;
 
-    public LFnameBody(String name, String user, String newName) {
-        this.name = name;
+    public LFnameBody(String listname, String user, String newName) {
+        this.listname = listname;
         this.user = user;
         this.newName = newName;
     }
 
-    public String getName() {
-        return name;
+    public String getListname() {
+        return listname;
     }
 
     public String getUser() {

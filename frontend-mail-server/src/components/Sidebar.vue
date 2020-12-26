@@ -88,28 +88,19 @@
           Draft
         </div>
       </router-link>
-      <div class="title">
-        User Folders
-      </div>
       <router-link
         :to="{
-          name: 'userFolders',
-          params: {
-            username: username,
-            emailAdd: emailAdd,
-            currfolder: currfolder
-          }
+          name: 'user-folders',
+          params: { username: username, emailAdd: emailAdd }
         }"
         active-class="active"
         tag="button"
         exact
-        class="title"
+        class="side-btn"
       >
-        <select v-model="currfolder">
-          <option v-for="currfolder in folderslist" :key="currfolder">
-            {{ currfolder }}
-          </option>
-        </select>
+        <div class="link-container">
+          User Folder
+        </div>
       </router-link>
       <router-link
         to="/"
@@ -127,25 +118,18 @@
 </template>
 
 <script>
-import axios from "axios";
 export default {
   name: "Sidebar",
   data() {
     return {
       username: "",
       emailAdd: "",
-      currfolder: "",
-      folderslist: []
     };
   },
   created: async function() {
     this.username = this.$route.params.username;
     this.emailAdd = this.$route.params.emailAdd;
-    const response = await axios.post(
-      "http://localhost:8095/folders/?emailAdd=" + this.emailAdd
-    );
-    console.log(response.data);
-    this.folderslist = response.data;
+
   }
 };
 </script>
