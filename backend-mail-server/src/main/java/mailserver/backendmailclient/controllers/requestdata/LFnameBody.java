@@ -12,7 +12,7 @@ public class LFnameBody {
         this.newName = newName;
     }
 
-    public String getName() {
+    public String getListname() {
         return listname;
     }
 

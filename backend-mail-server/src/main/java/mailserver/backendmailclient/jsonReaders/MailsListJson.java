@@ -23,7 +23,7 @@ public class MailsListJson extends Json {
         List<Mail> retArray = new ArrayList<>();
         for (int i = 0; i < mailsHeaders.size(); i++) {
             DemoMail header = mailsHeaders.get(i);
-            String filepath = "Server/" + LFnameBody.getUser() + "/folders/" + LFnameBody.getName() + "/"
+            String filepath = "Server/" + LFnameBody.getUser() + "/folders/" + LFnameBody.getListname() + "/"
                     + header.getID() + "/mailfile.json";
             String input = toStringJson(filepath);
             Gson gson = new Gson();

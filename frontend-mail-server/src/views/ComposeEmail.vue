@@ -65,18 +65,18 @@
         ></textarea>
       </div>
     </div>
-    <div class="row">
-      <div class="col-25">
-        <label for="country">Attachments</label>
+      <div class="row">
+        <div class="col-25">
+          <label for="country">Attachments</label>
+        </div>
+        <div class="col-75">
+          <input ref="files" type="file" multiple />
+        </div>
       </div>
-      <div class="col-75">
-        <input ref="files" type="file" multiple />
+      <div class="row">
+        <button class="submit" @click="send()">Send</button>
+        <button class="submit" @click="saveDraft()">Save to drafts</button>
       </div>
-    </div>
-    <div class="row">
-      <button class="submit" @click="send()">Send</button>
-      <button class="submit" @click="saveDraft()">Save to drafts</button>
-    </div>
   </div>
 </template>
 
@@ -115,7 +115,7 @@ export default {
       }
       this.users = newUsers;
     },
-    async sendWithAttach() {
+  async sendWithAttach() {
       var formData = new FormData();
       var sub = document.getElementById("subject");
       this.subject = sub.value;
@@ -130,12 +130,12 @@ export default {
       this.mail.importance = this.importance;
       formData.append("mails", JSON.stringify(this.mail));
       var i = 0;
-      for (i = 0; i < this.files.length; i++) {
+      for(i=0;i<this.files.length;i++){
         formData.append("files", this.files[i]);
       }
       var response;
       try {
-        response = await axios({
+         response = await axios({
           method: "post",
           url: "http://localhost:8095/compose/",
           data: formData,
@@ -155,16 +155,13 @@ export default {
       this.importance = sub.value;
       var response;
       try {
-        response = await axios.post(
-          "http://localhost:8095/compose-no-attach/",
-          {
-            subject: this.subject,
-            body: this.body,
-            sender: this.emailAdd,
-            receivers: this.receivers,
-            importance: this.importance
-          }
-        );
+        response = await axios.post("http://localhost:8095/compose-no-attach/", {
+          subject: this.subject,
+          body: this.body,
+          sender: this.emailAdd,
+          receivers: this.receivers,
+          importance: this.importance
+      });
         alert(response.data.ans);
       } catch {
         alert(response.data.ans);
@@ -172,7 +169,7 @@ export default {
     },
     async send() {
       this.files = this.$refs.files.files;
-      if (this.files.length == 0) {
+      if(this.files.length == 0) {
         this.sendWithoutAttach();
       } else {
         this.sendWithAttach();

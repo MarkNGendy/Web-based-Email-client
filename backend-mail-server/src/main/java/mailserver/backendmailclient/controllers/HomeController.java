@@ -21,7 +21,7 @@ public class HomeController {
 
     @PostMapping("/mails/")
     public List<Mail> getUserMails(@RequestBody LFnameBody listNameBody) {
-        File file = new File("Server/" + listNameBody.getUser() + "/folders/" + listNameBody.getName() + "/mails.json");
+        File file = new File("Server/" + listNameBody.getUser() + "/folders/" + listNameBody.getListname() + "/mails.json");
         MailsListJson reader = new MailsListJson();
         List<DemoMail> temp = reader.readJson(file.getPath());
         return reader.readMailsFromFolders(temp, listNameBody);
@@ -247,32 +247,32 @@ public class HomeController {
         String source = "Server/" + moveBody.getUser() + "/folders/" + moveBody.getSource();
         String target = "Server/" + moveBody.getUser() + "/folders/" + moveBody.getTarget();
         for (Mail m : moveBody.getMails()) {
-            m.moveMail(source, target, m.getID());
+            m.copyMail(source, target, m.getID());
         }
     }
 
     @PostMapping("/addFolder/")
     public void addFolder(@RequestBody LFnameBody folderNameBody) {
         ProxyFolderManager proxy = new ProxyFolderManager();
-        proxy.createFolder(folderNameBody.getUser(), folderNameBody.getName());
+        proxy.createFolder(folderNameBody.getUser(), folderNameBody.getListname());
     }
 
     @PostMapping("/deleteFolder/")
     public void deleteFolder(@RequestBody LFnameBody folderNameBody) {
         ProxyFolderManager proxy = new ProxyFolderManager();
-        proxy.deleteFolder(folderNameBody.getUser(), folderNameBody.getName());
+        proxy.deleteFolder(folderNameBody.getUser(), folderNameBody.getListname());
     }
 
     @PostMapping("/renameFolder/")
     public void renameFolder(@RequestBody LFnameBody folderNameBody) {
         ProxyFolderManager proxy = new ProxyFolderManager();
-        proxy.renameFolder(folderNameBody.getUser(), folderNameBody.getName(), folderNameBody.getNewName());
+        proxy.renameFolder(folderNameBody.getUser(), folderNameBody.getListname(), folderNameBody.getNewName());
     }
 
-    @PostMapping("/folders")
+    @PostMapping("/folders/")
     public List<String> getFoldersList(@RequestParam String emailAdd) {
+        System.out.println(emailAdd);
         ProxyFolderManager proxy = new ProxyFolderManager();
         return proxy.foldersList(emailAdd);
     }
-
 }

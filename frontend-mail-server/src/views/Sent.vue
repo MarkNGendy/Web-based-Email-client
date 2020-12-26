@@ -1,7 +1,7 @@
 <template>
 <div>
     <button class="tablink" @click="prevPage()">Previous Page</button>
-    <button class="tablink" @click="moveMails()">Move</button>
+    <button class="tablink" @click="moveMails()">Copy</button>
     <button class="tablink" @click="deleteMails()">Delete</button>
     <button class="tablink" @click="nextPage()">Next Page</button>
   </div>
@@ -135,6 +135,7 @@ export default {
     },
     async moveMails() {
       var destination = prompt("Enter the destination folder name");
+      destination = "UserFolders/" + destination;
       var response = await axios.post("http://localhost:8095/move/", {
         mails: this.deletedMails,
         user: this.emailAdd,
