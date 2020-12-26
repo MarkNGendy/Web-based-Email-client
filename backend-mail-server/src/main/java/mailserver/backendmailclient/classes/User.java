@@ -40,7 +40,7 @@ public class User extends DemoUsers implements IUser {
     public List<String> getFolderList(String user) {
         File userfolders = new File("Server/" + user + "/folders/UserFolders");
         String[] ans = userfolders.list();
-        List<String> t = Arrays.asList(ans);
+        List<String> t = (ans == null) ? new ArrayList<>() : Arrays.asList(ans);
         return t;
     }
 

@@ -141,11 +141,11 @@ export default {
       var response = await axios.post("http://localhost:8095/move/", {
         mails: this.deletedMails,
         user: this.emailAdd,
-        source: "folders/" + this.currfolder,
+        source: "UserFolders/" + this.currfolder,
         target: destination
       });
       response = await axios.post("http://localhost:8095/mails/", {
-        listname: "folders/" + this.currfolder,
+        listname: "UserFolders/" + this.currfolder,
         user: this.emailAdd
       });
       this.allMails = response.data;
@@ -156,11 +156,11 @@ export default {
     async deleteMails() {
       var response = await axios.post("http://localhost:8095/deleteMails/", {
         mails: this.deletedMails,
-        source: "folders/" + this.currfolder,
+        source: "UserFolders/" + this.currfolder,
         userEmail: this.emailAdd
       });
       response = await axios.post("http://localhost:8095/mails/", {
-        listname: "folders/" + this.currfolder,
+        listname: "UserFolders/" + this.currfolder,
         user: this.emailAdd
       });
       this.allMails = response.data;
@@ -266,11 +266,13 @@ export default {
     this.username = this.$route.params.username;
     this.emailAdd = this.$route.params.emailAdd;
     this.currfolder = this.$route.params.currfolder;
-    const response = await axios.post("http://localhost:8095/mails/", {
-      listname: "folders/" + this.currfolder,
-      user: this.emailAdd
-    });
-    this.allMails = response.data;
+    if (this.currfolder != ""){
+      const response = await axios.post("http://localhost:8095/mails/", {
+        listname: "UserFolders/" + this.currfolder,
+        user: this.emailAdd
+      });
+      this.allMails = response.data;
+    }
     this.isFiltered = false;
     this.currIndex = 1;
     this.paginate(this.allMails);
