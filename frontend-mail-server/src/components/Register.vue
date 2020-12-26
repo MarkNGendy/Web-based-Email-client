@@ -18,7 +18,7 @@
         <div>
           <form class="form form-newaccount" id="passwordForm">
             <div class="form-group">
-              <label for="" style="margin: 5px">Full Name</label>
+              <label for="" style="margin: 4px">Full Name</label>
               <input
                 type="text"
                 v-model="input.username"
