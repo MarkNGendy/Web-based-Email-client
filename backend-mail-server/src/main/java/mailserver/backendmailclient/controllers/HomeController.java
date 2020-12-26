@@ -20,7 +20,6 @@ import org.springframework.web.multipart.MultipartFile;
 @CrossOrigin
 public class HomeController {
 
-
     @PostMapping("/mails/")
     public List<Mail> getUserMails(@RequestBody ListRequest listRequest) {
         File file = new File(
@@ -36,10 +35,10 @@ public class HomeController {
         return mail.saveDraft(mailBody);
     }
 
-    @PostMapping(value = "/compose/", consumes = {
-            MediaType.APPLICATION_JSON_VALUE,
-            MediaType.MULTIPART_FORM_DATA_VALUE})
-    public Answer composedMail(@RequestPart("mails") String mails, @RequestPart("files") List<MultipartFile> files) throws IOException {
+    @PostMapping(value = "/compose/", consumes = { MediaType.APPLICATION_JSON_VALUE,
+            MediaType.MULTIPART_FORM_DATA_VALUE })
+    public Answer composedMail(@RequestPart("mails") String mails, @RequestPart("files") List<MultipartFile> files)
+            throws IOException {
         Gson gson = new Gson();
         MailBody mailBody = gson.fromJson(mails, MailBody.class);
         List<String> names = new ArrayList<>();
@@ -55,7 +54,7 @@ public class HomeController {
     public Answer composedMail(@RequestBody MailBody mailbody) throws IOException {
         Mail mail = new Mail();
         mailbody.setAttachments(new ArrayList<>());
-        return mail.sendMail(mailbody,new ArrayList<>());
+        return mail.sendMail(mailbody, new ArrayList<>());
     }
 
     @PostMapping("/signin/")
@@ -130,6 +129,7 @@ public class HomeController {
             return sortBody.getList();
         }
     }
+
     @CrossOrigin
     @PostMapping("/deleteMails/")
     public void deleteMails(@RequestBody DeleteBody deleteBody) {
@@ -183,16 +183,18 @@ public class HomeController {
     @PostMapping("/editContact/")
     public List<Contact> removeMail(@RequestBody ContactBody contactBody) {
         User u = new User();
-        return u.editContactMails(contactBody.getUser(), contactBody.getID(),contactBody.getUserName(),contactBody.getMails());
+        return u.editContactMails(contactBody.getUser(), contactBody.getID(), contactBody.getUserName(),
+                contactBody.getMails());
     }
-    
+
     @GetMapping("/download/")
     public ResponseEntity<byte[]> download(@RequestParam String user, @RequestParam String srcFolder,
-                                           @RequestParam String mailID, @RequestParam String attachment){
+            @RequestParam String mailID, @RequestParam String attachment) {
         AttachmentBody attachmentBody = new AttachmentBody(user, mailID, srcFolder, attachment);
         File Cfile = new File("");
         String path = Cfile.getAbsolutePath();
-        path += "/Server/" +attachmentBody.getUser()+"/folders/" +attachmentBody.getSrcFolder() +"/"+attachmentBody.getMailID()+"/attachments/"+attachmentBody.getAttachment();
+        path += "/Server/" + attachmentBody.getUser() + "/folders/" + attachmentBody.getSrcFolder() + "/"
+                + attachmentBody.getMailID() + "/attachments/" + attachmentBody.getAttachment();
         File src = new File(path);
         byte[] bytes = new byte[0];
         try {
@@ -200,14 +202,13 @@ public class HomeController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return ResponseEntity.ok().contentLength(bytes.length)
-                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+        return ResponseEntity.ok().contentLength(bytes.length).contentType(MediaType.APPLICATION_OCTET_STREAM)
                 .body(bytes);
 
     }
 
     @PostMapping("/delete/draft/")
-    public void deleteFromDraft (@RequestBody Mail mail) {
+    public void deleteFromDraft(@RequestBody Mail mail) {
         String current = "Server/" + mail.getSender() + "/folders/" + mail.getSrcFolder();
         mail.deleteFromServer(current, mail.getID());
     }
@@ -225,21 +226,20 @@ public class HomeController {
     }
 
     @PostMapping("/restore/")
-    public void restore(@RequestBody List<Mail> mail){
+    public void restore(@RequestBody List<Mail> mail) {
         for (int i = 0; i < mail.size(); i++) {
             Mail m = mail.get(i);
-            String current = "Server/" + m.getSender() + "/folders/" + m.getSrcFolder();
+            String current = "Server/" + m.getSender() + "/folders/" + m.get;
             m.restoreMail(current, m.getID());
         }
     }
 
     @PostMapping("/delete/Trash/")
     public void deleteFromServer(@RequestBody List<Mail> mails) {
-        for(Mail mail:mails){
+        for (Mail mail : mails) {
             String current = "Server/" + mail.getSender() + "/folders/" + mail.getSrcFolder();
             mail.deleteFromServer(current, mail.getID());
         }
     }
-
 
 }
