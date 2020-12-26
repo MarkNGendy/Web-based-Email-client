@@ -2,6 +2,13 @@
   <button class="tablink3" @click="deleteMails()">Add Folder</button>
   <button class="tablink3" @click="deleteMails()">Rename Folder</button>
   <button class="tablink3" @click="deleteMails()">Delete Folder</button>
+  <div>
+    <button class="tablink5" @click="prevPage()">Previous Page</button>
+    <button class="tablink5" @click="moveMails()">Move</button>
+    <button class="tablink5" @click="deleteMails()">Restore</button>
+    <button class="tablink5" @click="deleteMails()">Delete</button>
+    <button class="tablink5" @click="nextPage()">Next Page</button>
+  </div>
   <input
     type="text"
     class="filterbox"
@@ -42,13 +49,6 @@
   </select>
   <button class="filter" @click="search()">Search</button>
   <button class="filter" @click="gotoHome()">Home</button>
-  <div>
-    <button class="tablink5" @click="prevPage()">Previous Page</button>
-    <button class="tablink5" @click="deleteMails()">Move</button>
-    <button class="tablink5" @click="deleteMails()">Restore</button>
-    <button class="tablink5" @click="deleteMails()">Delete</button>
-    <button class="tablink5" @click="nextPage()">Next Page</button>
-  </div>
   <div class="inbox">
     <table class="content-table">
       <thead>
@@ -136,16 +136,33 @@ export default {
         this.deletedMails = tempArr;
       }
     },
-    async deleteMails() {
-      var response = await axios.post("http://localhost:8095/delete/mails/", {
+    async moveMails() {
+      var destination = prompt("Enter the destination folder name");
+      var response = await axios.post("http://localhost:8095/move/", {
         mails: this.deletedMails,
-        source: "Inbox"
+        user: this.emailAdd,
+        source: this.currfolder,
+        target: destination
       });
       response = await axios.post("http://localhost:8095/mails/", {
-        listname: "Inbox",
+        listname: this.currfolder,
         user: this.emailAdd
       });
-      console.log(response);
+      this.allMails = response.data;
+      this.isFiltered = false;
+      this.currIndex = 1;
+      this.paginate(this.allMails);
+    },
+    async deleteMails() {
+      var response = await axios.post("http://localhost:8095/deleteMails/", {
+        mails: this.deletedMails,
+        source: this.currfolder,
+        userEmail: this.emailAdd
+      });
+      response = await axios.post("http://localhost:8095/mails/", {
+        listname: this.currfolder,
+        user: this.emailAdd
+      });
       this.allMails = response.data;
       this.isFiltered = false;
       this.currIndex = 1;
@@ -250,7 +267,7 @@ export default {
     this.emailAdd = this.$route.params.emailAdd;
     this.currfolder = this.$route.params.currfolder;
     const response = await axios.post("http://localhost:8095/mails/", {
-      listname: "Sent",
+      listname: this.currfolder,
       user: this.emailAdd
     });
     this.allMails = response.data;
