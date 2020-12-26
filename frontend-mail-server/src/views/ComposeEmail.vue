@@ -168,8 +168,9 @@ export default {
       }
     },
     async send() {
-      if(this.receivers.length == 0) {
-        alert("You didn't enter receivers")
+      var sub = document.getElementById("subject");
+      if(this.receivers.length == 0 || sub.value == "") {
+        alert("Please fill the email data correctly")
       } else{
       this.files = this.$refs.files.files;
       if(this.files.length == 0) {
@@ -186,6 +187,10 @@ export default {
       this.body = sub.value;
       sub = document.getElementById("importance");
       this.importance = sub.value;
+      sub = document.getElementById("subject");
+      if(this.receivers.length == 0 || sub.value == "") {
+          alert("Please fill the email data correctly")
+      } else{
       const response = await axios.post("http://localhost:8095/saveDraft/", {
         subject: this.subject,
         body: this.body,
@@ -194,6 +199,7 @@ export default {
         importance: this.importance
       });
       alert(response.data.ans);
+      }
     }
   },
   created: async function() {
