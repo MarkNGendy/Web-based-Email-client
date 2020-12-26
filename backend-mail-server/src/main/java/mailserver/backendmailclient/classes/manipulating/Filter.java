@@ -1,4 +1,4 @@
-package mailserver.backendmailclient.classes.filter;
+package mailserver.backendmailclient.classes.manipulating;
 
 import mailserver.backendmailclient.classes.mail.Mail;
 import mailserver.backendmailclient.interfaces.IFilter;

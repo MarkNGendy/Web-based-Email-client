@@ -11,7 +11,4 @@ public interface IContact {
 
     public List<String> getMails();
 
-    public void removeMail(int index);
-
-    public void addMail(String email);
 }

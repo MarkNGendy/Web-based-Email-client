@@ -8,7 +8,7 @@ import java.util.*;
 import mailserver.backendmailclient.jsonReaders.*;
 import org.springframework.web.multipart.MultipartFile;
 
-public class FacaseMail {
+public class FaçadeMail {
     public boolean buildMail(Mail mail) throws IOException {
         File mainfolder = new File("Server/" + mail.getSender() + "/folders/" + mail.getSrcFolder());
         File mailfolder = new File(mainfolder, mail.getID());

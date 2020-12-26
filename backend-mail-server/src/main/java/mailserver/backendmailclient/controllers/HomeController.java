@@ -6,7 +6,7 @@ import mailserver.backendmailclient.classes.mail.*;
 import mailserver.backendmailclient.classes.user.*;
 import mailserver.backendmailclient.controllers.requestdata.*;
 import mailserver.backendmailclient.jsonReaders.*;
-import mailserver.backendmailclient.classes.filter.*;
+import mailserver.backendmailclient.classes.manipulating.*;
 import mailserver.backendmailclient.classes.folder.*;
 
 import java.io.File;

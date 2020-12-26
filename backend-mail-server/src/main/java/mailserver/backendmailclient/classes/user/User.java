@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.*;
 
 import mailserver.backendmailclient.classes.*;
-import mailserver.backendmailclient.classes.filter.*;
+import mailserver.backendmailclient.classes.manipulating.*;
 import mailserver.backendmailclient.classes.folder.*;
 import mailserver.backendmailclient.classes.mail.*;
 import mailserver.backendmailclient.interfaces.*;
