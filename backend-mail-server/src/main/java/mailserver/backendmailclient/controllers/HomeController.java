@@ -10,7 +10,6 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,12 +20,12 @@ import org.springframework.web.multipart.MultipartFile;
 public class HomeController {
 
     @PostMapping("/mails/")
-    public List<Mail> getUserMails(@RequestBody ListRequest listRequest) {
+    public List<Mail> getUserMails(@RequestBody LFnameBody listNameBody) {
         File file = new File(
-                "Server/" + listRequest.getuser() + "/folders/" + listRequest.getListname() + "/mails.json");
+                "Server/" + listNameBody.getUser() + "/folders/" + listNameBody.getName() + "/mails.json");
         MailsListJson reader = new MailsListJson();
         List<DemoMail> temp = reader.readJson(file.getPath());
-        return reader.readMailsFromFolders(temp, listRequest);
+        return reader.readMailsFromFolders(temp, listNameBody);
     }
 
     @PostMapping("/saveDraft/")
@@ -252,4 +251,23 @@ public class HomeController {
             m.moveMail(source,target,m.getID());
         }
     }
+    @PostMapping("/addFolder/")
+    public void addFolder(@RequestBody LFnameBody folderNameBody){
+        ProxyFolderManager proxy = new ProxyFolderManager();
+        proxy.CreateFolder(folderNameBody.getUser(),folderNameBody.getName());
+    }
+
+    @PostMapping("/deleteFolder/")
+    public void deleteFolder(@RequestBody LFnameBody folderNameBody){
+        ProxyFolderManager proxy = new ProxyFolderManager();
+        proxy.deleteFolder(folderNameBody.getUser(),folderNameBody.getName());
+    }
+
+    @PostMapping("/renameFolder/")
+    public void renameFolder(@RequestBody LFnameBody folderNameBody){
+        ProxyFolderManager proxy = new ProxyFolderManager();
+        proxy.renameFolder(folderNameBody.getUser(),folderNameBody.getName(),folderNameBody.getNewName());
+    }
+
+
 }

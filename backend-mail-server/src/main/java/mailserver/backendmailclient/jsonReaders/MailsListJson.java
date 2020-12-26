@@ -7,7 +7,7 @@ import com.google.gson.Gson;
 
 import mailserver.backendmailclient.classes.DemoMail;
 import mailserver.backendmailclient.classes.Mail;
-import mailserver.backendmailclient.controllers.ListRequest;
+import mailserver.backendmailclient.controllers.LFnameBody;
 
 public class MailsListJson extends Json {
 
@@ -20,11 +20,11 @@ public class MailsListJson extends Json {
         list = l;
     }
 
-    public List<Mail> readMailsFromFolders(List<DemoMail> mailsHeaders, ListRequest listRequest) {
+    public List<Mail> readMailsFromFolders(List<DemoMail> mailsHeaders, LFnameBody LFnameBody) {
         List<Mail> retArray = new ArrayList<>();
         for (int i = 0; i < mailsHeaders.size(); i++) {
             DemoMail header = mailsHeaders.get(i);
-            String filepath = "Server/" + listRequest.getuser() + "/folders/" + listRequest.getListname() + "/"
+            String filepath = "Server/" + LFnameBody.getUser() + "/folders/" + LFnameBody.getName() + "/"
                     + header.getID() + "/mailfile.json";
             String input = toStringJson(filepath);
             Gson gson = new Gson();
