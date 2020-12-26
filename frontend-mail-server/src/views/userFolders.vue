@@ -5,9 +5,15 @@
   <div>
     <button class="tablink5" @click="prevPage()">Previous Page</button>
     <button class="tablink5" @click="moveMails()">Move</button>
-    <button class="tablink5" @click="deleteMails()">Restore</button>
     <button class="tablink5" @click="deleteMails()">Delete</button>
     <button class="tablink5" @click="nextPage()">Next Page</button>
+  </div>
+  <div>
+  <select @change="onChange($event)" class="selector" id="folderslist" name="folders">
+          <option v-bind:value="item" v-for="item in folderslist" :key="item">{{
+            item
+          }}</option>
+        </select>
   </div>
   <input
     type="text"
@@ -137,16 +143,28 @@ export default {
         this.deletedMails = tempArr;
       }
     },
+    async onChange(event) {
+      var folderName = event.target.value;
+      this.currfolder = folderName;
+      var response = await axios.post("http://localhost:8095/mails/", {
+        listname: "UserFolders/" + folderName,
+        user: this.emailAdd,
+      });
+      this.allMails = response.data;
+      this.isFiltered = false;
+      this.currIndex = 1;
+      this.paginate(this.allMails);
+    },
     async moveMails() {
       var destination = prompt("Enter the destination folder name");
       var response = await axios.post("http://localhost:8095/move/", {
         mails: this.deletedMails,
         user: this.emailAdd,
-        source: "folders/" + this.currfolder,
-        target: destination
+        source: "UserFolders/" + this.currfolder,
+        target: "UserFolders/" + destination
       });
       response = await axios.post("http://localhost:8095/mails/", {
-        listname: "folders/" + this.currfolder,
+        listname: "UserFolders/" + this.currfolder,
         user: this.emailAdd
       });
       this.allMails = response.data;
@@ -245,13 +263,26 @@ export default {
         newName: "",
         user: this.emailAdd
       });
-      this.$router.push({
-          name: "user",
-          params: {
-            username: this.username,
-            emailAdd: this.email
-          }
-      })
+      this.loadCurrFolderMails();
+    },
+    async renameFolder() {
+      var name = this.currfolder;
+      var newName = prompt("Enter folder new name");
+      await axios.post("http://localhost:8095/renameFolder/", {
+        listname: name,
+        newName: newName,
+        user: this.emailAdd
+      });
+      this.loadCurrFolderMails();
+    },
+    async deleteFolder() {
+      var name = this.currfolder;
+      await axios.post("http://localhost:8095/deleteFolder/", {
+        listname: name,
+        newName: "",
+        user: this.emailAdd
+      });
+      this.loadCurrFolderMails();
     },
     async search() {
       var sel = document.getElementById("search-cat");
@@ -275,21 +306,39 @@ export default {
         name: "user",
         params: { username: this.username, emailAdd: this.email }
       });
+    },
+    async loadCurrFolderMails() {
+      var response = await axios.post(
+      "http://localhost:8095/folders/?emailAdd=" + this.emailAdd
+    );
+    this.folderslist = response.data;
+    this.currfolder = this.folderslist[0];
+    response = await axios.post("http://localhost:8095/mails/", {
+      listname: "UserFolders/" + this.currfolder,
+      user: this.emailAdd
+    });
+    this.allMails = response.data;
+    this.isFiltered = false;
+    this.currIndex = 1;
+    this.paginate(this.allMails);
     }
   },
   created: async function() {
     this.username = this.$route.params.username;
     this.emailAdd = this.$route.params.emailAdd;
-
-    // this.currfolder = this.$route.params.currfolder;
-    // const response = await axios.post("http://localhost:8095/mails/", {
-    //   listname: "UserFolders/" + this.currfolder,
-      // user: this.emailAdd
-    // });
-    // this.allMails = response.data;
-    // this.isFiltered = false;
-    // this.currIndex = 1;
-    // this.paginate(this.allMails);
+    var response = await axios.post(
+      "http://localhost:8095/folders/?emailAdd=" + this.emailAdd
+    );
+    this.folderslist = response.data;
+    this.currfolder = this.folderslist[0];
+    response = await axios.post("http://localhost:8095/mails/", {
+      listname: "UserFolders/" + this.currfolder,
+      user: this.emailAdd
+    });
+    this.allMails = response.data;
+    this.isFiltered = false;
+    this.currIndex = 1;
+    this.paginate(this.allMails);
   }
 };
 </script>
@@ -349,7 +398,7 @@ export default {
   cursor: pointer;
   padding: 14px 16px;
   font-size: 17px;
-  width: 20%;
+  width: 25%;
 }
 .tablink3:hover {
   background-color: #777;
@@ -417,5 +466,10 @@ export default {
 .content-table tbody tr.active-row {
   font-weight: bold;
   color: #009879;
+}
+.selector {
+  text-align: center;
+  padding: 5px;
+  width: 100%;
 }
 </style>
