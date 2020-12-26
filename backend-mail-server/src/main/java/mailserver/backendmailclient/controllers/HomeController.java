@@ -244,4 +244,12 @@ public class HomeController {
         }
     }
 
+    @PostMapping("/move/")
+    public void moveMails(@RequestBody MoveBody moveBody){
+        String source = "Server/"+moveBody.getUser()+"/folders/"+moveBody.getSource();
+        String target = "Server/"+moveBody.getUser()+"/folders/"+moveBody.getTarget();
+        for(Mail m:moveBody.getMails()){
+            m.moveMail(source,target,m.getID());
+        }
+    }
 }

@@ -1,4 +1,10 @@
 <template>
+<div>
+    <button class="tablink" @click="prevPage()">Previous Page</button>
+    <button class="tablink" @click="restoreMails()">Restore</button>
+    <button class="tablink" @click="deleteMails()">Delete</button>
+    <button class="tablink" @click="nextPage()">Next Page</button>
+  </div>
   <input
     type="text"
     class="filterbox"
@@ -39,12 +45,6 @@
   </select>
   <button class="filter" @click="search()">Search</button>
   <button class="filter" @click="gotoHome()">Home</button>
-  <div>
-    <button class="tablink" @click="prevPage()">Previous Page</button>
-    <button class="tablink" @click="restoreMails()">Restore</button>
-    <button class="tablink" @click="deleteMails()">Delete</button>
-    <button class="tablink" @click="nextPage()">Next Page</button>
-  </div>
   <div class="inbox">
     <table class="content-table">
       <thead>
