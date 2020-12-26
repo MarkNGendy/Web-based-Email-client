@@ -47,16 +47,6 @@ public class Contact implements IContact {
         return mails;
     }
 
-    @Override
-    public void removeMail(int index) {
-        mails.remove(index);
-    }
-
-    @Override
-    public void addMail(String email) {
-        mails.add(email);
-    }
-
     public void writeContacts(List<Contact> contacts, String user) {
         JsonFactory factory = new JsonFactory();
         Json readList = factory.jsfactory(ReaderType.CONTACTS, contacts);
