@@ -1,4 +1,4 @@
-package mailserver.backendmailclient.controllers;
+package mailserver.backendmailclient.controllers.requestdata;
 
 import mailserver.backendmailclient.classes.Mail;
 
@@ -10,7 +10,7 @@ public class MoveBody {
     private String source;
     private String target;
 
-    public MoveBody(List<Mail> mails, String user, String source, String target){
+    public MoveBody(List<Mail> mails, String user, String source, String target) {
         this.mails = mails;
         this.user = user;
         this.source = source;

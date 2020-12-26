@@ -1,4 +1,4 @@
-package mailserver.backendmailclient.controllers;
+package mailserver.backendmailclient.controllers.requestdata;
 
 import mailserver.backendmailclient.classes.Mail;
 
@@ -25,7 +25,6 @@ public class TrashBody {
         this.user = user;
         this.currFolder = currFolder;
     }
-
 
     public List<Mail> getMails() {
         return mails;

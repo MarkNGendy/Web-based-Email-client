@@ -1,4 +1,4 @@
-package mailserver.backendmailclient.classes;
+package mailserver.backendmailclient.classes.folder;
 
 import java.io.*;
 import java.nio.file.Files;

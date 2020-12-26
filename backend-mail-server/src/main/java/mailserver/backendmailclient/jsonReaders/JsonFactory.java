@@ -3,6 +3,8 @@ package mailserver.backendmailclient.jsonReaders;
 import java.util.List;
 
 import mailserver.backendmailclient.classes.*;
+import mailserver.backendmailclient.classes.mail.*;
+import mailserver.backendmailclient.classes.user.*;
 
 public class JsonFactory {
 

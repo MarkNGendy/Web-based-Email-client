@@ -1,4 +1,4 @@
-package mailserver.backendmailclient.controllers;
+package mailserver.backendmailclient.controllers.requestdata;
 
 import java.util.Date;
 import java.util.List;
@@ -72,21 +72,13 @@ public class MailBody {
         this.importance = importance;
     }
 
-    public MailBody(String sender, List<String> receivers, String subject, String body, List<String> attachments, int importance) {
+    public MailBody(String sender, List<String> receivers, String subject, String body, List<String> attachments,
+            int importance) {
         this.sender = sender;
         this.receivers = receivers;
         this.subject = subject;
         this.body = body;
         this.attachments = attachments;
         this.importance = importance;
-    }
-
-    public Mail toMail() {
-        Mail ans = new Mail(sender, receivers, subject, body, attachments,importance);
-        Long time = System.currentTimeMillis();
-        String mailname = Long.toString(time);
-        ans.setID(mailname);
-        ans.setDate(new Date(time));
-        return ans;
     }
 }

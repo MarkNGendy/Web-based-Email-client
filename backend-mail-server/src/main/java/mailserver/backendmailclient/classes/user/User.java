@@ -1,9 +1,13 @@
-package mailserver.backendmailclient.classes;
+package mailserver.backendmailclient.classes.user;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
+import mailserver.backendmailclient.classes.*;
+import mailserver.backendmailclient.classes.filter.*;
+import mailserver.backendmailclient.classes.folder.*;
+import mailserver.backendmailclient.classes.mail.*;
 import mailserver.backendmailclient.interfaces.*;
 import mailserver.backendmailclient.jsonReaders.*;
 
@@ -28,12 +32,6 @@ public class User extends DemoUsers implements IUser {
 
     public void setFriends(List<Contact> friends) {
         this.friends = friends;
-    }
-
-    @Override
-    public boolean setFolderList(List<IFolder> folders) {
-        // TODO Auto-generated method stub
-        return false;
     }
 
     @Override

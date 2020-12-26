@@ -1,4 +1,4 @@
-package mailserver.backendmailclient.controllers;
+package mailserver.backendmailclient.controllers.requestdata;
 
 public class AttachmentBody {
 
@@ -7,7 +7,7 @@ public class AttachmentBody {
     private String srcFolder;
     private String attachment;
 
-    public AttachmentBody(String user, String mailID, String srcFolder, String attachment){
+    public AttachmentBody(String user, String mailID, String srcFolder, String attachment) {
         this.user = user;
         this.mailID = mailID;
         this.srcFolder = srcFolder;

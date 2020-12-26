@@ -1,4 +1,4 @@
-package mailserver.backendmailclient.classes;
+package mailserver.backendmailclient.classes.user;
 
 import java.io.File;
 import java.io.IOException;

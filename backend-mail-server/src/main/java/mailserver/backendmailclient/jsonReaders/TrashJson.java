@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.google.gson.Gson;
 
-import mailserver.backendmailclient.classes.Trash;
+import mailserver.backendmailclient.classes.mail.*;
 
 public class TrashJson extends Json {
 

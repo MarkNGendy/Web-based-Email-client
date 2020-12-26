@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.google.gson.Gson;
 
-import mailserver.backendmailclient.classes.DemoUsers;
+import mailserver.backendmailclient.classes.user.*;
 
 public class UsersJson extends Json {
 

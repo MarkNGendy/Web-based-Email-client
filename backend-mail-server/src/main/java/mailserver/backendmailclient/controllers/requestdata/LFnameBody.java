@@ -1,4 +1,4 @@
-package mailserver.backendmailclient.controllers;
+package mailserver.backendmailclient.controllers.requestdata;
 
 public class LFnameBody {
 

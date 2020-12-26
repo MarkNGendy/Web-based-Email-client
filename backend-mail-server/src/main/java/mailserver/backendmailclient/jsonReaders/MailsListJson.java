@@ -5,9 +5,8 @@ import java.util.List;
 
 import com.google.gson.Gson;
 
-import mailserver.backendmailclient.classes.DemoMail;
-import mailserver.backendmailclient.classes.Mail;
-import mailserver.backendmailclient.controllers.LFnameBody;
+import mailserver.backendmailclient.classes.mail.*;
+import mailserver.backendmailclient.controllers.requestdata.*;
 
 public class MailsListJson extends Json {
 

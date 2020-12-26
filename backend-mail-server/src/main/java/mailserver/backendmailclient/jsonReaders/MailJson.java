@@ -2,7 +2,7 @@ package mailserver.backendmailclient.jsonReaders;
 
 import com.google.gson.Gson;
 
-import mailserver.backendmailclient.classes.Mail;
+import mailserver.backendmailclient.classes.mail.*;
 
 public class MailJson extends Json {
 

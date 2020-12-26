@@ -1,4 +1,4 @@
-package mailserver.backendmailclient.classes;
+package mailserver.backendmailclient.classes.mail;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -8,7 +8,7 @@ import java.util.*;
 import mailserver.backendmailclient.jsonReaders.*;
 import org.springframework.web.multipart.MultipartFile;
 
-public class BuilderMail {
+public class FacaseMail {
     public boolean buildMail(Mail mail) throws IOException {
         File mainfolder = new File("Server/" + mail.getSender() + "/folders/" + mail.getSrcFolder());
         File mailfolder = new File(mainfolder, mail.getID());
@@ -30,7 +30,7 @@ public class BuilderMail {
             for (MultipartFile f : files) {
                 byte[] bytes = f.getBytes();
                 Path p = Path.of(mailfolder.getPath() + "/attachments/" + f.getOriginalFilename());
-                Files.write(p,bytes);
+                Files.write(p, bytes);
             }
         }
     }

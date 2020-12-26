@@ -1,7 +1,6 @@
-package mailserver.backendmailclient.controllers;
+package mailserver.backendmailclient.controllers.requestdata;
 
 import mailserver.backendmailclient.classes.Mail;
-import mailserver.backendmailclient.classes.User;
 
 import java.util.List;
 

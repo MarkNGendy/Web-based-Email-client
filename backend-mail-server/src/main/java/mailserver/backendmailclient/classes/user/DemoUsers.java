@@ -1,4 +1,4 @@
-package mailserver.backendmailclient.classes;
+package mailserver.backendmailclient.classes.user;
 
 public class DemoUsers {
     protected String email = "";

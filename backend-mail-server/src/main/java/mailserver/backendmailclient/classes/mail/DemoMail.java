@@ -1,4 +1,4 @@
-package mailserver.backendmailclient.classes;
+package mailserver.backendmailclient.classes.mail;
 
 import java.util.*;
 
@@ -59,7 +59,11 @@ public class DemoMail {
         this.receivers = receivers;
     }
 
-    public int getImportance() { return importance; }
+    public int getImportance() {
+        return importance;
+    }
 
-    public void setImportance(int importance) { this.importance = importance; }
+    public void setImportance(int importance) {
+        this.importance = importance;
+    }
 }

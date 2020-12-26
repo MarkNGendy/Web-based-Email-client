@@ -1,9 +1,8 @@
-package mailserver.backendmailclient.controllers;
+package mailserver.backendmailclient.controllers.requestdata;
 
 import mailserver.backendmailclient.classes.Contact;
 
 import java.util.List;
-
 
 public class ContactBody {
     private String userName;
@@ -12,9 +11,7 @@ public class ContactBody {
     private String user;
     private long ID;
 
-
-
-    public ContactBody(String userName, List<String> mails, List<Contact> RContacts, String user,long ID) {
+    public ContactBody(String userName, List<String> mails, List<Contact> RContacts, String user, long ID) {
         this.userName = userName;
         this.mails = mails;
         this.RContacts = RContacts;
@@ -57,8 +54,6 @@ public class ContactBody {
     public String getUser() {
         return user;
     }
-
-
 
     public List<Contact> getRContacts() {
         return RContacts;

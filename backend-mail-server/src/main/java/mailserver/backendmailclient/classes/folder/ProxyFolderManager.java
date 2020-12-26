@@ -1,6 +1,8 @@
-package mailserver.backendmailclient.classes;
+package mailserver.backendmailclient.classes.folder;
 
 import java.util.List;
+
+import mailserver.backendmailclient.classes.user.*;
 
 public class ProxyFolderManager {
 

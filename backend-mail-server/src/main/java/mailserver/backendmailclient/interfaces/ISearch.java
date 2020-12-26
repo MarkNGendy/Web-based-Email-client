@@ -1,7 +1,7 @@
 package mailserver.backendmailclient.interfaces;
 
 import mailserver.backendmailclient.classes.Contact;
-import mailserver.backendmailclient.classes.Mail;
+import mailserver.backendmailclient.classes.mail.Mail;
 
 import java.util.List;
 
@@ -18,6 +18,5 @@ public interface ISearch {
     public List<Mail> wholeSearch(List<Mail> list, String search);
 
     public List<Contact> contactsSearch(List<Contact> contacts, String search);
-
 
 }

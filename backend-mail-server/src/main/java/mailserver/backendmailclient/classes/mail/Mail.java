@@ -1,13 +1,16 @@
-package mailserver.backendmailclient.classes;
+package mailserver.backendmailclient.classes.mail;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+
 import java.util.Comparator;
 
-import mailserver.backendmailclient.interfaces.IFolder;
+import mailserver.backendmailclient.classes.*;
+import mailserver.backendmailclient.classes.folder.*;
+import mailserver.backendmailclient.controllers.requestdata.*;
+import mailserver.backendmailclient.interfaces.*;
 import mailserver.backendmailclient.jsonReaders.*;
-import mailserver.backendmailclient.controllers.MailBody;
 import org.springframework.web.multipart.MultipartFile;
 
 public class Mail extends DemoMail {
@@ -46,9 +49,10 @@ public class Mail extends DemoMail {
     private String wrong = "Something wrong!\nerror code: ";
 
     public Answer saveDraft(MailBody mailBody) throws IOException {
-        Mail mail = mailBody.toMail();
+        AdapterMail adapterMail = new AdapterMail();
+        Mail mail = adapterMail.toMail(mailBody);
         mail.setSrcFolder("Draft");
-        BuilderMail builderMail = new BuilderMail();
+        FacaseMail builderMail = new FacaseMail();
         if (builderMail.buildMail(mail)) {
             return new Answer(true, "Draft saved successfully.");
         }
@@ -56,9 +60,10 @@ public class Mail extends DemoMail {
     }
 
     public Answer sendMail(MailBody mailBody, List<MultipartFile> files) throws IOException {
-        Mail mail = mailBody.toMail();
+        AdapterMail adapterMail = new AdapterMail();
+        Mail mail = adapterMail.toMail(mailBody);
         mail.setSrcFolder("Sent");
-        BuilderMail builderMail = new BuilderMail();
+        FacaseMail builderMail = new FacaseMail();
         if (!builderMail.buildMail(mail)) {
             return new Answer(false, wrong + "Mail.Send.0001");
         }
@@ -95,7 +100,7 @@ public class Mail extends DemoMail {
         if (target == null)
             return bad;
 
-        BuilderMail builderMail = new BuilderMail();
+        FacaseMail builderMail = new FacaseMail();
         builderMail.addToMailsFile(dest, target);
         return new Answer(true, "Mail moved successfully.");
     }
@@ -119,7 +124,7 @@ public class Mail extends DemoMail {
         if (target == null)
             return bad;
 
-        BuilderMail builderMail = new BuilderMail();
+        FacaseMail builderMail = new FacaseMail();
         builderMail.addToMailsFile(dest, target);
         return new Answer(true, "Mail moved successfully.");
     }
@@ -197,12 +202,7 @@ public class Mail extends DemoMail {
         public int compare(Mail m1, Mail m2) {
             String MailSubject1 = m1.getSubject().toUpperCase();
             String MailSubject2 = m2.getSubject().toUpperCase();
-
-            // ascending order
             return MailSubject1.compareTo(MailSubject2);
-
-            // descending order
-            // return MailSubject2.compareTo(MailSubject1);
         }
     };
     public static Comparator<Mail> DMailSubjectComparator = new Comparator<Mail>() {
@@ -210,11 +210,6 @@ public class Mail extends DemoMail {
         public int compare(Mail m1, Mail m2) {
             String MailSubject1 = m1.getSubject().toUpperCase();
             String MailSubject2 = m2.getSubject().toUpperCase();
-
-            // descending order
-            // return MailSubject1.compareTo(MailSubject2);
-
-            // ascending order
             return MailSubject2.compareTo(MailSubject1);
         }
     };
@@ -225,12 +220,7 @@ public class Mail extends DemoMail {
         public int compare(Mail m1, Mail m2) {
             String MailSender1 = m1.getSender().toUpperCase();
             String MailSender2 = m2.getSender().toUpperCase();
-
-            // ascending order
             return MailSender1.compareTo(MailSender2);
-
-            // descending order
-            // return MailSender2.compareTo(MailSender1);
         }
     };
     public static Comparator<Mail> DMailSenderComparator = new Comparator<Mail>() {
@@ -238,11 +228,6 @@ public class Mail extends DemoMail {
         public int compare(Mail m1, Mail m2) {
             String MailSender1 = m1.getSender().toUpperCase();
             String MailSender2 = m2.getSender().toUpperCase();
-
-            // ascending order
-            // return MailSender1.compareTo(MailSender2);
-
-            // descending order
             return MailSender2.compareTo(MailSender1);
         }
     };
@@ -254,11 +239,7 @@ public class Mail extends DemoMail {
             int MailReceivers1 = m1.getReceivers().size();
             int MailReceivers2 = m2.getReceivers().size();
 
-            // ascending order
             return MailReceivers1 - MailReceivers2;
-
-            // descending order
-            // return MailReceivers2 - MailReceivers1;
         }
     };
     public static Comparator<Mail> DMailReceiversComparator = new Comparator<Mail>() {
@@ -266,11 +247,6 @@ public class Mail extends DemoMail {
         public int compare(Mail m1, Mail m2) {
             int MailReceivers1 = m1.getReceivers().size();
             int MailReceivers2 = m2.getReceivers().size();
-
-            // ascending order
-            // return MailReceivers1 - MailReceivers2;
-
-            // descending order
             return MailReceivers2 - MailReceivers1;
         }
     };
@@ -281,12 +257,7 @@ public class Mail extends DemoMail {
         public int compare(Mail m1, Mail m2) {
             int MailImp1 = m1.getImportance();
             int MailImp2 = m2.getImportance();
-
-            // ascending order
             return MailImp1 - MailImp2;
-
-            // descending order
-            // return MailImp2 - MailImp1;
         }
     };
     public static Comparator<Mail> DMailImportanceComparator = new Comparator<Mail>() {
@@ -294,11 +265,6 @@ public class Mail extends DemoMail {
         public int compare(Mail m1, Mail m2) {
             int MailImp1 = m1.getImportance();
             int MailImp2 = m2.getImportance();
-
-            // ascending order
-            // return MailImp1 - MailImp2;
-
-            // descending order
             return MailImp2 - MailImp1;
         }
     };
@@ -309,12 +275,7 @@ public class Mail extends DemoMail {
         public int compare(Mail m1, Mail m2) {
             long MailTime1 = Long.valueOf(m1.getID());
             long MailTime2 = Long.valueOf(m2.getID());
-
-            // ascending order
             return (int) (MailTime1 - MailTime2);
-
-            // descending order
-            // return (int)(MailTime2 - MailTime1);
         }
     };
     public static Comparator<Mail> DMailDateComparator = new Comparator<Mail>() {
@@ -322,11 +283,6 @@ public class Mail extends DemoMail {
         public int compare(Mail m1, Mail m2) {
             long MailTime1 = Long.valueOf(m1.getID());
             long MailTime2 = Long.valueOf(m2.getID());
-
-            // ascending order
-            // return (int)(MailTime1 - MailTime2);
-
-            // descending order
             return (int) (MailTime2 - MailTime1);
         }
     };
@@ -337,12 +293,7 @@ public class Mail extends DemoMail {
         public int compare(Mail m1, Mail m2) {
             int MailAttachments1 = m1.getAttachments().size();
             int MailAttachments2 = m2.getAttachments().size();
-
-            // ascending order
             return MailAttachments1 - MailAttachments2;
-
-            // descending order
-            // return MailAttachments2 - MailAttachments1;
         }
     };
     public static Comparator<Mail> DMailAttachmentsComparator = new Comparator<Mail>() {
@@ -350,11 +301,6 @@ public class Mail extends DemoMail {
         public int compare(Mail m1, Mail m2) {
             int MailAttachments1 = m1.getAttachments().size();
             int MailAttachments2 = m2.getAttachments().size();
-
-            // ascending order
-            // return MailAttachments1 - MailAttachments2;
-
-            // descending order
             return MailAttachments2 - MailAttachments1;
         }
     };
@@ -365,12 +311,7 @@ public class Mail extends DemoMail {
         public int compare(Mail m1, Mail m2) {
             int MailBody1 = m1.getBody().length();
             int MailBody2 = m2.getBody().length();
-
-            // ascending order
             return MailBody1 - MailBody2;
-
-            // descending order
-            // return MailBody2 - MailBody1;
         }
     };
     public static Comparator<Mail> DMailBodyComparator = new Comparator<Mail>() {
@@ -378,11 +319,6 @@ public class Mail extends DemoMail {
         public int compare(Mail m1, Mail m2) {
             int MailBody1 = m1.getBody().length();
             int MailBody2 = m2.getBody().length();
-
-            // ascending order
-            // return MailBody1 - MailBody2;
-
-            // descending order
             return MailBody2 - MailBody1;
         }
     };
