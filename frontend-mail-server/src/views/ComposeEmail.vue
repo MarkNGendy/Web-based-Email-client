@@ -168,11 +168,15 @@ export default {
       }
     },
     async send() {
+      if(this.receivers.length == 0) {
+        alert("You didn't enter receivers")
+      } else{
       this.files = this.$refs.files.files;
       if(this.files.length == 0) {
         this.sendWithoutAttach();
       } else {
         this.sendWithAttach();
+      }
       }
     },
     async saveDraft() {
