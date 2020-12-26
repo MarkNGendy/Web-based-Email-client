@@ -49,8 +49,8 @@ public class Mail extends DemoMail {
     private String wrong = "Something wrong!\nerror code: ";
 
     public Answer saveDraft(MailBody mailBody) throws IOException {
-        AdapterMail adapterMail = new AdapterMail();
-        Mail mail = adapterMail.toMail(mailBody);
+        mailAdapter mailAdapter = new mailAdapter();
+        Mail mail = mailAdapter.toMail(mailBody);
         mail.setSrcFolder("Draft");
         FaçadeMail builderMail = new FaçadeMail();
         if (builderMail.buildMail(mail)) {
@@ -60,8 +60,8 @@ public class Mail extends DemoMail {
     }
 
     public Answer sendMail(MailBody mailBody, List<MultipartFile> files) throws IOException {
-        AdapterMail adapterMail = new AdapterMail();
-        Mail mail = adapterMail.toMail(mailBody);
+        mailAdapter mailAdapter = new mailAdapter();
+        Mail mail = mailAdapter.toMail(mailBody);
         mail.setSrcFolder("Sent");
         FaçadeMail builderMail = new FaçadeMail();
         if (!builderMail.buildMail(mail)) {

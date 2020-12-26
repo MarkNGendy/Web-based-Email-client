@@ -47,6 +47,7 @@ public class Contact implements IContact {
         return mails;
     }
 
+
     public void writeContacts(List<Contact> contacts, String user) {
         JsonFactory factory = new JsonFactory();
         Json readList = factory.jsfactory(ReaderType.CONTACTS, contacts);

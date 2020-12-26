@@ -96,10 +96,10 @@ export default {
   created: async function() {
     this.username = this.$route.params.username;
     this.emailAdd = this.$route.params.emailAdd;
+    console.log(this.$route.params.email);
     this.id = this.$route.params.id;
     this.email = JSON.parse(this.$route.params.email);
     this.emails = JSON.parse(this.$route.params.emails);
-    console.log(this.email);
     const response = await axios.post("http://localhost:8095/read/", {
       list: this.emails,
       ID: this.id
@@ -109,7 +109,6 @@ export default {
     this.body = response.data.body;
     this.sender = response.data.sender;
     this.attachments = response.data.attachments;
-    console.log(this.attachments);
   }
 };
 </script>
