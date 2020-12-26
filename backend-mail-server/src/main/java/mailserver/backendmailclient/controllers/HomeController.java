@@ -257,6 +257,15 @@ public class HomeController {
         }
     }
 
+    @PostMapping("/move/user/folders/")
+    public void moveMail(@RequestBody MoveBody moveBody) {
+        String source = "Server/" + moveBody.getUser() + "/folders/" + moveBody.getSource();
+        String target = "Server/" + moveBody.getUser() + "/folders/" + moveBody.getTarget();
+        for (Mail m : moveBody.getMails()) {
+            m.moveMail(source, target, m.getID());
+        }
+    }
+
     @PostMapping("/addFolder/")
     public void addFolder(@RequestBody LFnameBody folderNameBody) {
         ProxyFolderManager proxy = new ProxyFolderManager();

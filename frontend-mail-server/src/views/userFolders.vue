@@ -4,7 +4,6 @@
   <button class="tablink3" @click="deleteFolder()">Delete Folder</button>
   <div>
     <button class="tablink5" @click="prevPage()">Previous Page</button>
-    <button class="tablink5" @click="moveMails()">Move</button>
     <button class="tablink5" @click="deleteMails()">Delete</button>
     <button class="tablink5" @click="nextPage()">Next Page</button>
   </div>
@@ -163,7 +162,7 @@ export default {
     },
     async moveMails() {
       var destination = prompt("Enter the destination folder name");
-      var response = await axios.post("http://localhost:8095/move/", {
+      var response = await axios.post("http://localhost:8095/move/user/folders/", {
         mails: this.deletedMails,
         user: this.emailAdd,
         source: "UserFolders/" + this.currfolder,
@@ -179,10 +178,10 @@ export default {
       this.paginate(this.allMails);
     },
     async deleteMails() {
-      var response = await axios.post("http://localhost:8095/deleteMails/", {
+      var response = await axios.post("http://localhost:8095/delete/Trash/", {
         mails: this.deletedMails,
-        source: "UserFolders/" + this.currfolder,
-        userEmail: this.emailAdd
+        currFolder: "UserFolders/" + this.currfolder,
+        user: this.emailAdd
       });
       response = await axios.post("http://localhost:8095/mails/", {
         listname: "UserFolders/" + this.currfolder,
@@ -406,7 +405,7 @@ export default {
   cursor: pointer;
   padding: 14px 16px;
   font-size: 17px;
-  width: 25%;
+  width: 33.33333%;
 }
 .tablink3:hover {
   background-color: #777;
