@@ -38,8 +38,10 @@ public class User extends DemoUsers implements IUser {
 
     @Override
     public List<String> getFolderList(String user) {
-        File userfolders = new File("Server/" + user + "/UserFolders");
-        return Arrays.asList(userfolders.list());
+        File userfolders = new File("Server/" + user + "/folders/UserFolders");
+        String[] ans = userfolders.list();
+        List<String> t = Arrays.asList(ans);
+        return t;
     }
 
     @Override
@@ -96,7 +98,7 @@ public class User extends DemoUsers implements IUser {
         int index = list.indexOf(name);
         if (index != -1)
             return false;
-        File newfolder = new File("Server/" + user + "/UserFolders/" + name);
+        File newfolder = new File("Server/" + user + "/folders/UserFolders/" + name);
         newfolder.mkdir();
         File mails = new File(newfolder, "mails.json");
         try {
@@ -114,8 +116,8 @@ public class User extends DemoUsers implements IUser {
         int index = list.indexOf(newName);
         if (index != -1)
             return false;
-        File oldFolder = new File("Server/" + user + "/UserFolders/" + oldName);
-        File newFolder = new File("Server/" + user + "/UserFolders/" + newName);
+        File oldFolder = new File("Server/" + user + "/folders/UserFolders/" + oldName);
+        File newFolder = new File("Server/" + user + "/folders/UserFolders/" + newName);
         return oldFolder.renameTo(newFolder);
     }
 
@@ -125,7 +127,7 @@ public class User extends DemoUsers implements IUser {
         int index = list.indexOf(name);
         if (index == -1)
             return false;
-        File target = new File("Server/" + user + "/UserFolders/" + name);
+        File target = new File("Server/" + user + "/folders/UserFolders/" + name);
         IFolder folder = new Folder();
         return folder.deleteFolder(target);
     }

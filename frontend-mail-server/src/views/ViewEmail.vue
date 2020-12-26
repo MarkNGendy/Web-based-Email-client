@@ -1,56 +1,69 @@
 <template>
   <div class="container">
-      <div class="row">
-        <div class="col-25">
-          <label for="fname">From</label>
-        </div>
-        <div class="col-75">
-          <ul id="sender">
-            <dt>{{ sender }}</dt>
-          </ul>
-        </div>
+    <div class="row">
+      <div class="col-25">
+        <label for="fname">From</label>
       </div>
-      <div class="row">
-        <div class="col-25">
-          <label for="fname">To</label>
-        </div>
-        <div class="col-75">
-          <ul id="recievers" v-for="item in receivers" :key="item">
-            <dt>{{ item }}</dt>
-          </ul>
-        </div>
+      <div class="col-75">
+        <ul id="sender">
+          <dt>{{ sender }}</dt>
+        </ul>
       </div>
-      <div class="row">
-        <div class="col-25">
-          <label for="lname">Subject</label>
-        </div>
-        <div class="col-75">
-          <label id="subject" name="subject">{{ subject }}</label>
-        </div>
+    </div>
+    <div class="row">
+      <div class="col-25">
+        <label for="fname">To</label>
       </div>
-      <div class="row">
-        <div class="col-25">
-          <label for="subject">Body</label>
-        </div>
-        <div class="col-75">
-          <p id="body" name="body">{{ body }}</p>
-        </div>
+      <div class="col-75">
+        <ul id="recievers" v-for="item in receivers" :key="item">
+          <dt>{{ item }}</dt>
+        </ul>
       </div>
-      <div class="row">
-        <div class="col-25">
-          <label for="country">Attachments</label>
-        </div>
-        <div class="col-75">
-          <ul id="attachments" v-for="item in attachments" :key="item">
-            <a :href="'http://localhost:8095/download/?user=' + emailAdd + '&srcFolder=' + email.srcFolder + '&mailID=' + id + '&attachment=' + item">
-            <dt><button v-bind:id="item" v-bind:value="item">{{ item }}</button></dt>
-            </a>
-          </ul>
-        </div>
+    </div>
+    <div class="row">
+      <div class="col-25">
+        <label for="lname">Subject</label>
       </div>
-      <div class="row">
-        <button class="submit" @click="gotoHome()">Home</button>
+      <div class="col-75">
+        <label id="subject" name="subject">{{ subject }}</label>
       </div>
+    </div>
+    <div class="row">
+      <div class="col-25">
+        <label for="subject">Body</label>
+      </div>
+      <div class="col-75">
+        <p id="body" name="body">{{ body }}</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-25">
+        <label for="country">Attachments</label>
+      </div>
+      <div class="col-75">
+        <ul id="attachments" v-for="item in attachments" :key="item">
+          <a
+            :href="
+              'http://localhost:8095/download/?user=' +
+                emailAdd +
+                '&srcFolder=' +
+                email.srcFolder +
+                '&mailID=' +
+                id +
+                '&attachment=' +
+                item
+            "
+          >
+            <dt>
+              <button v-bind:id="item" v-bind:value="item">{{ item }}</button>
+            </dt>
+          </a>
+        </ul>
+      </div>
+    </div>
+    <div class="row">
+      <button class="submit" @click="gotoHome()">Home</button>
+    </div>
   </div>
 </template>
 
@@ -67,7 +80,7 @@ export default {
       subject: "",
       body: "",
       sender: "",
-      attachments:[],
+      attachments: [],
       emailAdd: "",
       username: ""
     };
@@ -78,7 +91,7 @@ export default {
         name: "user",
         params: { username: this.username, emailAdd: this.email }
       });
-    },
+    }
   },
   created: async function() {
     this.username = this.$route.params.username;
@@ -86,7 +99,7 @@ export default {
     this.id = this.$route.params.id;
     this.email = JSON.parse(this.$route.params.email);
     this.emails = JSON.parse(this.$route.params.emails);
-    console.log(this.email)
+    console.log(this.email);
     const response = await axios.post("http://localhost:8095/read/", {
       list: this.emails,
       ID: this.id

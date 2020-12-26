@@ -21,10 +21,10 @@ public class UserBuilder {
             e1.printStackTrace();
             return false;
         }
-        userfolder = new File(userfolder, "UserFolders");
-        userfolder.mkdir();
         userfolder = new File(userfolder, "folders");
         userfolder.mkdir();
+        File changebleFolders = new File(userfolder, "UserFolders");
+        changebleFolders.mkdir();
 
         for (String folder : folders) {
             File currfolder = new File(userfolder, folder);

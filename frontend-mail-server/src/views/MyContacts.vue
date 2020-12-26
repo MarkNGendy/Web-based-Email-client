@@ -15,7 +15,6 @@
     </div>
   </router-link>
 
-
   <button class="tablink" @click="deleteMails()">Delete</button>
   <button class="tablink" @click="nextPage()">Next Page</button>
   <select class="filterbox" name="sort-type" id="sort-type">
@@ -167,33 +166,39 @@ export default {
     },
     async sort() {
       var requestList;
-      if(this.isFiltered == true){
+      if (this.isFiltered == true) {
         requestList = this.filteredList;
       } else {
         requestList = this.allMails;
       }
-      var value = document.getElementById('sort-type');
+      var value = document.getElementById("sort-type");
       var criteria = value.value;
-      const response = await axios.post("http://localhost:8095/sort/contacts/", {
-        contacts: requestList,
-        criteria: criteria
-    });
-    this.filteredList = response.data;
-    this.currIndex = 1;
-    this.isFiltered = true;
-    this.paginate(this.filteredList);
+      const response = await axios.post(
+        "http://localhost:8095/sort/contacts/",
+        {
+          contacts: requestList,
+          criteria: criteria
+        }
+      );
+      this.filteredList = response.data;
+      this.currIndex = 1;
+      this.isFiltered = true;
+      this.paginate(this.filteredList);
     },
     async search() {
-      var value = document.getElementById('search-val');
+      var value = document.getElementById("search-val");
       var criteria = value.value;
-      const response = await axios.post("http://localhost:8095/search/contacts/", {
-        contacts: this.allMails,
-        criteria: criteria
-    });
-    this.filteredList = response.data;
-    this.currIndex = 1;
-    this.isFiltered = true;
-    this.paginate(this.filteredList);
+      const response = await axios.post(
+        "http://localhost:8095/search/contacts/",
+        {
+          contacts: this.allMails,
+          criteria: criteria
+        }
+      );
+      this.filteredList = response.data;
+      this.currIndex = 1;
+      this.isFiltered = true;
+      this.paginate(this.filteredList);
     },
     gotoHome() {
       this.$router.push({

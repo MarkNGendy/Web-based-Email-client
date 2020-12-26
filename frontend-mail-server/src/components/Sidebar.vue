@@ -127,6 +127,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "Sidebar",
   data() {
@@ -137,10 +138,14 @@ export default {
       folderslist: []
     };
   },
-  created: function() {
+  created: async function() {
     this.username = this.$route.params.username;
     this.emailAdd = this.$route.params.emailAdd;
-    this.folderslist = this.$route.params.folderslist;
+    const response = await axios.post(
+      "http://localhost:8095/folders/?emailAdd=" + this.emailAdd
+    );
+    console.log(response.data);
+    this.folderslist = response.data;
   }
 };
 </script>

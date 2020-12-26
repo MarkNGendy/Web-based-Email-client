@@ -77,8 +77,7 @@ export default {
     return {
       input: {
         email: "",
-        password: "",
-        folders: ["sports", "hi"]
+        password: ""
       },
       error: ""
     };
@@ -98,8 +97,7 @@ export default {
           name: "user",
           params: {
             username: this.username,
-            emailAdd: this.email,
-            folderslist: this.folders
+            emailAdd: this.email
           }
         });
       } else {

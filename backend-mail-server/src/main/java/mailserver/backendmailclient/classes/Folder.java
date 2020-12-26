@@ -3,7 +3,6 @@ package mailserver.backendmailclient.classes;
 import java.io.*;
 import java.nio.file.Files;
 
-import com.google.gson.Gson;
 import mailserver.backendmailclient.interfaces.IFolder;
 
 public class Folder implements IFolder {

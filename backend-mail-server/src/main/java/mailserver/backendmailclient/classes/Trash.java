@@ -3,7 +3,6 @@ package mailserver.backendmailclient.classes;
 import java.io.File;
 import java.util.List;
 
-import mailserver.backendmailclient.interfaces.IFolder;
 import mailserver.backendmailclient.jsonReaders.*;
 
 public class Trash {
