@@ -3,7 +3,7 @@ package mailserver.backendmailclient.controllers.requestdata;
 import java.util.Date;
 import java.util.List;
 
-import mailserver.backendmailclient.classes.Mail;
+import mailserver.backendmailclient.classes.mail.*;
 
 public class MailBody {
     private String subject;

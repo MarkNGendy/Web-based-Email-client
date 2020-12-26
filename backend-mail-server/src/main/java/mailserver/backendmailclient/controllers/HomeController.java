@@ -2,7 +2,12 @@ package mailserver.backendmailclient.controllers;
 
 import com.google.gson.Gson;
 import mailserver.backendmailclient.classes.*;
+import mailserver.backendmailclient.classes.mail.*;
+import mailserver.backendmailclient.classes.user.*;
+import mailserver.backendmailclient.controllers.requestdata.*;
 import mailserver.backendmailclient.jsonReaders.*;
+import mailserver.backendmailclient.classes.filter.*;
+import mailserver.backendmailclient.classes.folder.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,7 +26,8 @@ public class HomeController {
 
     @PostMapping("/mails/")
     public List<Mail> getUserMails(@RequestBody LFnameBody listNameBody) {
-        File file = new File("Server/" + listNameBody.getUser() + "/folders/" + listNameBody.getListname() + "/mails.json");
+        File file = new File(
+                "Server/" + listNameBody.getUser() + "/folders/" + listNameBody.getListname() + "/mails.json");
         MailsListJson reader = new MailsListJson();
         List<DemoMail> temp = reader.readJson(file.getPath());
         return reader.readMailsFromFolders(temp, listNameBody);
