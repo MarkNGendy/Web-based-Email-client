@@ -52,7 +52,7 @@ public class Mail extends DemoMail {
         AdapterMail adapterMail = new AdapterMail();
         Mail mail = adapterMail.toMail(mailBody);
         mail.setSrcFolder("Draft");
-        FacaseMail builderMail = new FacaseMail();
+        FaçadeMail builderMail = new FaçadeMail();
         if (builderMail.buildMail(mail)) {
             return new Answer(true, "Draft saved successfully.");
         }
@@ -63,7 +63,7 @@ public class Mail extends DemoMail {
         AdapterMail adapterMail = new AdapterMail();
         Mail mail = adapterMail.toMail(mailBody);
         mail.setSrcFolder("Sent");
-        FacaseMail builderMail = new FacaseMail();
+        FaçadeMail builderMail = new FaçadeMail();
         if (!builderMail.buildMail(mail)) {
             return new Answer(false, wrong + "Mail.Send.0001");
         }
@@ -100,7 +100,7 @@ public class Mail extends DemoMail {
         if (target == null)
             return bad;
 
-        FacaseMail builderMail = new FacaseMail();
+        FaçadeMail builderMail = new FaçadeMail();
         builderMail.addToMailsFile(dest, target);
         return new Answer(true, "Mail moved successfully.");
     }
@@ -124,7 +124,7 @@ public class Mail extends DemoMail {
         if (target == null)
             return bad;
 
-        FacaseMail builderMail = new FacaseMail();
+        FaçadeMail builderMail = new FaçadeMail();
         builderMail.addToMailsFile(dest, target);
         return new Answer(true, "Mail moved successfully.");
     }
