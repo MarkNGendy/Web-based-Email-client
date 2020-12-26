@@ -11,8 +11,8 @@ import mailserver.backendmailclient.controllers.MailBody;
 public class test {
     public static void main(String[] args) {
         List<String> receiver = new ArrayList<>();
-        receiver.add("abdo@demo.com");
-        MailBody mailBody = new MailBody("mina@demo.com", receiver, "fdsjgksdfhl", "dsfj;hgdflh", null, 5);
+        receiver.add("abdo@csed.com");
+        MailBody mailBody = new MailBody("mina@csed.com", receiver, "fdsjgksdfhl", "dsfj;hgdflh", null, 5);
         Mail mail = new Mail();
         Answer ans;
         try {

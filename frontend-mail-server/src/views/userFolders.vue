@@ -175,11 +175,11 @@ export default {
     async deleteMails() {
       var response = await axios.post("http://localhost:8095/deleteMails/", {
         mails: this.deletedMails,
-        source: "folders/" + this.currfolder,
+        source: "UserFolders/" + this.currfolder,
         userEmail: this.emailAdd
       });
       response = await axios.post("http://localhost:8095/mails/", {
-        listname: "folders/" + this.currfolder,
+        listname: "UserFolders/" + this.currfolder,
         user: this.emailAdd
       });
       this.allMails = response.data;
