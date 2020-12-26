@@ -18,7 +18,7 @@ public class Mail extends DemoMail {
     }
 
     public Mail(String sender, List<String> receivers, String subject, String body, List<String> attachments,
-                int importance) {
+            int importance) {
         this.sender = sender;
         this.receivers = receivers;
         this.subject = subject;
@@ -89,6 +89,30 @@ public class Mail extends DemoMail {
 
         Index x = new Index();
         DemoMail target = x.getCopyThenDelete(src, mailID);
+        JsonFactory factory = new JsonFactory();
+        Json readerList = factory.jsfactory(ReaderType.MAILSLIST, x.getDemoList());
+        readerList.writeJson(readerList, src.getPath() + "/mails.json");
+        if (target == null)
+            return bad;
+
+        BuilderMail builderMail = new BuilderMail();
+        builderMail.addToMailsFile(dest, target);
+        return new Answer(true, "Mail moved successfully.");
+    }
+
+    public Answer copyMail(String source, String destination, String mailID) {
+        Answer bad = new Answer(false, wrong + "Mail.move.0005");
+        File src = new File(source);
+        File dest = new File(destination);
+        File destmailfolder = new File(dest, mailID);
+        File srcmailfolder = new File(src, mailID);
+        IFolder folder = new Folder();
+        if (!folder.copyFolder(srcmailfolder, destmailfolder))
+            return bad;
+
+        Index x = new Index();
+        x.getfromfile(src, mailID);
+        DemoMail target = x.getDemoList().get(x.getIndex());
         JsonFactory factory = new JsonFactory();
         Json readerList = factory.jsfactory(ReaderType.MAILSLIST, x.getDemoList());
         readerList.writeJson(readerList, src.getPath() + "/mails.json");

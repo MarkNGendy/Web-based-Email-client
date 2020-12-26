@@ -1,5 +1,7 @@
 package mailserver.backendmailclient.classes;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 import mailserver.backendmailclient.interfaces.*;
@@ -9,7 +11,6 @@ public class User extends DemoUsers implements IUser {
 
     private List<DemoMail> mails;
     private List<Contact> friends;
-    private List<IFolder> folders;
     private String wrong = "Something wrong!";
     private String usersPath = "Server/Users.json";
 
@@ -36,9 +37,9 @@ public class User extends DemoUsers implements IUser {
     }
 
     @Override
-    public List<IFolder> getFolderList() {
-        // TODO Auto-generated method stub
-        return null;
+    public List<String> getFolderList(String user) {
+        File userfolders = new File("Server/" + user + "/UserFolders");
+        return Arrays.asList(userfolders.list());
     }
 
     @Override
@@ -90,15 +91,43 @@ public class User extends DemoUsers implements IUser {
     }
 
     @Override
-    public boolean addFolder(String name) {
-        // TODO Auto-generated method stub
-        return false;
+    public boolean addFolder(String user, String name) {
+        List<String> list = getFolderList(user);
+        int index = list.indexOf(name);
+        if (index != -1)
+            return false;
+        File newfolder = new File("Server/" + user + "/UserFolders/" + name);
+        newfolder.mkdir();
+        File mails = new File(newfolder, "mails.json");
+        try {
+            mails.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
     @Override
-    public boolean removeFolder(int index) {
-        // TODO Auto-generated method stub
-        return false;
+    public boolean renameFolder(String user, String oldName, String newName) {
+        List<String> list = getFolderList(user);
+        int index = list.indexOf(newName);
+        if (index != -1)
+            return false;
+        File oldFolder = new File("Server/" + user + "/UserFolders/" + oldName);
+        File newFolder = new File("Server/" + user + "/UserFolders/" + newName);
+        return oldFolder.renameTo(newFolder);
+    }
+
+    @Override
+    public boolean removeFolder(String user, String name) {
+        List<String> list = getFolderList(user);
+        int index = list.indexOf(name);
+        if (index == -1)
+            return false;
+        File target = new File("Server/" + user + "/UserFolders/" + name);
+        IFolder folder = new Folder();
+        return folder.deleteFolder(target);
     }
 
     @Override
@@ -106,9 +135,9 @@ public class User extends DemoUsers implements IUser {
         Contact c = new Contact();
         Sort s = new Sort();
         friends = c.readContacts(user);
-        for(Contact con: friends){
-            if(con.getUserName().equalsIgnoreCase(contact.getUserName()))
-                return new Answer(false,"the contact name is already exist !");
+        for (Contact con : friends) {
+            if (con.getUserName().equalsIgnoreCase(contact.getUserName()))
+                return new Answer(false, "the contact name is already exist !");
         }
         friends.add(contact);
         s.contactsSorter(friends, "ASCENDING");
@@ -120,9 +149,9 @@ public class User extends DemoUsers implements IUser {
     public List<Contact> removeContact(List<Contact> RContacts, String user) {
         Contact c = new Contact();
         friends = c.readContacts(user);
-        for(Contact con: RContacts){
-            for(Contact con2: friends){
-                if(con.getUserName().equalsIgnoreCase(con2.getUserName())){
+        for (Contact con : RContacts) {
+            for (Contact con2 : friends) {
+                if (con.getUserName().equalsIgnoreCase(con2.getUserName())) {
                     friends.remove(con2);
                     break;
                 }
@@ -136,8 +165,8 @@ public class User extends DemoUsers implements IUser {
     public List<Contact> editContactMails(String user, Long ID, String username, List<String> mails) {
         Contact c = new Contact();
         friends = c.readContacts(user);
-        for(Contact con : friends){
-            if(con.getId()==ID){
+        for (Contact con : friends) {
+            if (con.getId() == ID) {
                 con.setMails(mails);
                 con.setUserName(username);
                 break;
@@ -146,6 +175,5 @@ public class User extends DemoUsers implements IUser {
         c.writeContacts(friends, user);
         return friends;
     }
-
 
 }

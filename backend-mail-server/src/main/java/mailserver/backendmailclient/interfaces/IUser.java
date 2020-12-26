@@ -14,11 +14,13 @@ public interface IUser {
 
     public boolean setFolderList(List<IFolder> folders);
 
-    public List<IFolder> getFolderList();
+    public List<String> getFolderList(String user);
 
-    public boolean addFolder(String name);
+    public boolean addFolder(String user, String name);
 
-    public boolean removeFolder(int index);
+    public boolean renameFolder(String user, String oldName, String newName);
+
+    public boolean removeFolder(String user, String name);
 
     public Answer addContact(Contact contact, String user);
 
