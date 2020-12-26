@@ -253,7 +253,7 @@ public class HomeController {
         String source = "Server/" + moveBody.getUser() + "/folders/" + moveBody.getSource();
         String target = "Server/" + moveBody.getUser() + "/folders/" + moveBody.getTarget();
         for (Mail m : moveBody.getMails()) {
-            m.moveMail(source, target, m.getID());
+            m.copyMail(source, target, m.getID());
         }
     }
 
