@@ -56,6 +56,8 @@ public class User extends DemoUsers implements IUser {
         for (DemoUsers demoUsers : userslist) {
             if (input.getemail().equalsIgnoreCase(demoUsers.getemail())
                     && input.getPassword().equals(demoUsers.getPassword())) {
+                Trash trash = new Trash();
+                trash.day30(input.getemail());
                 return new Answer(true, demoUsers.getUsername());
             }
         }

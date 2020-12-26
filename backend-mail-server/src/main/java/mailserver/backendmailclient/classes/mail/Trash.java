@@ -1,6 +1,7 @@
 package mailserver.backendmailclient.classes.mail;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import mailserver.backendmailclient.jsonReaders.*;
@@ -50,5 +51,27 @@ public class Trash {
         trashlist.remove(index);
         readlist = factory.jsfactory(ReaderType.TRASH, trashlist);
         readlist.writeJson(readlist, trashFile.getPath());
+    }
+
+    public void day30(String user) {
+        List<String> targetmails = new ArrayList<>();
+        File trashFolder = new File("Server/" + user + "/folders/Trash/");
+        File trashFile = new File(trashFolder, "Trashfile.json");
+
+        JsonFactory factory = new JsonFactory();
+        Json readlist = factory.jsfactory(ReaderType.TRASH, null);
+        List<Trash> trashlist = (List<Trash>) readlist.readJson(trashFile.getPath());
+
+        long _30days = (long) 2.592e9;
+        Long currenttime = System.currentTimeMillis();
+        for (Trash trash : trashlist) {
+            if (currenttime - Long.parseLong(trash.getTrashDate()) > _30days) {
+                targetmails.add(trash.getID());
+            }
+        }
+        Mail mail = new Mail();
+        for (String id : targetmails) {
+            mail.deleteFromServer(trashFolder.getPath(), id);
+        }
     }
 }
