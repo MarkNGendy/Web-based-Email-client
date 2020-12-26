@@ -196,11 +196,11 @@ export default {
         username: this.username,
         password: this.password
       });
-      console.log(response);
       if (response.data.success == true) {
         this.$router.push({
           name: "user",
-          params: { username: this.username }
+          params: { username: this.username,
+            emailAdd: this.email}
         });
       } else {
         alert("This email already exists");
